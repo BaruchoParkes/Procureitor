@@ -1,0 +1,119 @@
+03/10/2024
+Adaptar projects.ts que es la data que envía a la tabla ProjectListTable.  Que cargue los procesos desde el procesosjson.  
+Antes redefinir columnas.
+8:37
+llegué hasta Recorrida List Table.  Esa es la table que tengo que llenar con el json de mtosjson (que son los mtos que no están done).
+antes tengo que ver el tema de las columnas.  no entiendo donde se pone el nombre de la columna.
+para empezar a trabajar rapido la tabla esta solo necesita los autos y un botón para hacer update.
+
+08/10/2024> en Recorrida.ts quiero exportar los movimientos.  llega la url.  la carga en la variable.  pero la funcion que 
+va a buscar la url es async, creo que el problema es que la variable se exporta vacia.
+La variable llega vacia a la view, eso seguro.  creo que llega vacia porque la funcion que le asigna el json es async.
+
+08/10/2024.
+BUENO, tenemos tabla.  tengo ganas de llorar realmente.  fue muy dificil.
+ahora tengo que poner la accion de updatear en la segunda columna.
+tengo que traer la accion del otro frontend y pegarla en la columna de la nueva tabla.  y ahi voy a poder recorrer.
+después: Agregar el botón de Update para poder hacer la recorrida desde esta tabla.
+
+Listo La Recorrida.
+Ahora vamos por la tabla procesos.  1ero la tabla ProcesosListTable, despues la view.
+17:02 hacer la tabla procesosListTable, definir las columnas.
+antes: projects.ts, ahí se define la clase, la type proceso.
+
+14/10/2024.
+Tengo que adaptar la timeline para que refleje los movimientos y poder hacer movimientos.  
+el fetch de los movimientos está hecho en ProcesoDetails, así que la data viene de ahí.
+tengo que copiar el componente timeline, armar "ProcesoTimeline", que cargue los movimientos, y con click que abra el componente Movimiento.
+esto me va a demorar una hora mas o menos.
+16:13, bueno, la timeline carga los movimientos.  ahora debería trabajar quizas en el tema fechas.  
+a todo esto estoy haciendo typescript en el aire.
+
+15/10/2024
+9:20 en una hora tengo que poder cargar un movimiento.  
+10:34.  no llegué.  solo a navegar al componente que crea el nuevo movimiento, está bien es bastante.
+hice la botonera y el boton navega hasta el componente de agregar.
+el componente de agregar no funciona todavía.
+después tengo que mejorar el componente de agrear, usando el de agregar evento del calendar.
+mas completo.  tiene hora.  pero usa reducer, que todavía no lo entiendo.
+
+18/10/2024
+Proceso Component agrega un movimiento.
+Proximo: despues agregarlo, que navegue al componente movimiento de ese nuevo movimiento.
+Primero tengo que armar ese componente de movimiento que cargue las variables de cada movimiento.
+
+22/10/2024
+Movimiento Component que cargue fecha y actualice fecha.
+Necesito hacer dos agendamientos hoy.
+9:10.  9:55.  bueno, carga fecha.  PEro tuve que sacarle el componente de Phoenix DatePicker porque era muy complejo.  
+y quedó el HTML básico medio feo.
+tengo q pulir el componente.  y tengo que arreglar el formato porque está mmddyyyy.
+
+en la vista procesos, poder ver solo mis procesos.
+28/10/2024 - 16:20.  17:10 ya tengo mi lista.  copiada de procesos. 
+29/10/2024 - inserté la toolbar. fundamental para la indentación.
+30/10/2024 - Text Editor que cargue titulo y cuerpo del modelo de escrito.
+bueno, gracias al crack de chatGPT ya tengo que carga titulo y cuerpo.  y boton para imprimir.  crack.
+
+
+cargar "recursos"
+cargar "Pagos"
+generar formulario de Giros, o sea, cuando libran un giro, ahí tiene que haber un seguimiento de giros.
+que el recibo salga de p3, sino tienen que cargar recibo en lex, después prcrtrr, mucha vuelta
+
+Ahora que puedo agendar movimientos, tengo que hacer una vista de "pendientes".
+Listo la vista de pendientes.
+Para hacer la lista de pendientes correctamente tengo que hacer varias cosas para que funcione bien.
+1) cargar los tipos de escritos.
+28/10 - 13:29.  tengo 15 minutos.
+2) que haya una business logic, que cuando se carga un movimiento, el sistema cargue el pendiente, 
+de acuerdo a la tabla de tipos de movimientos.
+3) también se tiene que poder cargar un pendiente manualmente.
+4) armar una tabla en la base de datos, many to many, de procesos y pendientes. // no hace falta
+5) la vista pendientes carga esa tabla, join con los datos del proceso.
+
+i) Mail
+instalé el nodemailer, me trabé.
+i) API Google calendar
+i) API Whatsapp
+lo tengo iniciado en glitch.
+acá tengo que sacar la APP de mi compu y ponerla en internet para que pueda intercambiar.
+por ahora los GET y POST son intramáquina.  jeje. ni siquiera IntraRed.
+i) Sistema de logueo de ususarios (sin esto solo uso yo)
+i) LLM
+
+
+10/02/2024
+acabo de crear la tabla procureitor en la db.  proximo: poblarla.  
+Creo que deberia ser una funcion en el backend: lo más sencillo: si ultimo movimiento hace más de 3 meses, repetir el mismo movimiento.
+me conviene empezar a hacer recorrida: controlar los mtos del día anterior y cargarlos.  cargar estados y últimos mtos.
+Después correr prcrtr a ver qué dice.
+
+13/02/2025
+componente proceso carga como mto predeterminado WA pido CBU.  sacar eso.
+
+19/02/2025
+una funcion en el backend que loopea el array de objectos
+con los mtos del dia anterior y por cada uno mete un mto
+en la db en la tabla mtos
+tengo que ver donde pongo esa funcion, como la inserto
+en el codigo
+tengo que ver como poner bien el campo de fecha
+
+24-02-2025
+estan cargados en la db los mtos del dia anterior.
+ahora tengo q hacer un query que los levante y los analice.  diga cuantos mtos se hicieron, cuantos cada uno, etc.
+para disparar ese query estaria bueno hacerlo desde la vista calendar.
+la vista calendar muy importante así que ya empiezo a hacerla.
+son las 10:03.  estaría bueno terminarla para las 11.
+para eso tengo que: 
+1- revolver el Phoenix y encontrar la vista calendario y habilitarla en el mapa del sitio y ponerle link en la barra navegadora.
+2 - calculo que cuando clickeas el dia va a la vista de dia, para eso hace un query con el dia.
+es un query en tabla mtos. voy a tener q cambiar el controller y router de mtos.
+3- vista dia va a ser un quilombo de componentes son typescript y todo eso.
+4- una vez que tengo la vista dia tengo que ver todos los mtos y el analisis.  
+veamos hasta donde llegamos en 45 minutos.
+
+para clickear en la fecha e ir a vista día me choqué con la complejidad del calendar hecho con reducer y provider.
+(payload, etc)
+GROK me quiso ayudar pero no es tan facil.

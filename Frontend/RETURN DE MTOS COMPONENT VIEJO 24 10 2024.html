@@ -1,0 +1,67 @@
+ <div>
+      <h2 className="mb-4">Movimiento en {mto.Proc.ACTO} C/ {mto.Proc.DEMA}</h2>
+      <Row>
+      <Col /* xs={12} xl={9} */>
+      <input type='date'  onChange={handleFechaChange}></input>
+      </Col>
+        <Col /* xs={8} sm={4} */ onChange={handleSelectChange}>
+          <Form.Select size="sm">
+            <option>Realizado</option>
+            <option>Pendiente</option>
+          </Form.Select>
+        </Col>
+        </Row>
+      {/* <DatePicker
+  render={(_, ref) => {
+    return (
+      <Form.Floating>
+        <Form.Control
+          type="date" // Use "date" type to get date input
+          placeholder="Fecha"
+          ref={ref}
+          id="fechaDeRealizacion"
+          value={fecha instanceof Date ? fecha.toISOString().split('T')[0] : ''} // Only format if it's a valid Date
+          onChange={handleFechaChange}
+        />
+        <label htmlFor="fechaDeRealizacion" className="ps-6">
+          Fecha de Realización
+        </label>
+      </Form.Floating>
+    );
+  }} */}
+
+      <br></br>
+      <br></br>
+
+      <Row as="form" className="g-3 mb-6">
+      <Col sm={6} md={8}>
+        
+        <Form.Control type="text"
+                  value={descripcion}
+                  onChange={handleDescripcionChange} />
+            </Col>
+           
+        <TextEditor text={texto} handleTextChange={handleTextChange} />
+
+           {/*  <iframe
+      src="https://docs.google.com/document/d/1EwHS_z0FWmxrrnuV-Z2vhEEQO6vLEzSxWZwmM5NfA_4/edit"
+      width="100%"
+      height="600px"
+      title="Google Docs"
+    /> */}
+            
+            <Col xs={12} className="gy-6">
+              <div className="d-flex justify-content-end gap-3">
+                <Button variant="phoenix-primary" className="px-5">
+                  Cancel
+                </Button>
+                <Button variant="primary" className="px-5 px-sm-15"
+                  type="submit" 
+                  onClick={handleSubmit}>
+                  Guardar
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        
+    </div>

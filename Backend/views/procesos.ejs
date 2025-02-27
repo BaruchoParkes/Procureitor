@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <%- include('./partials/menu') %>  
+
+   <h2>Procesos</h2>
+   <h3><%= listaProcesos.length %></h3>
+
+   <ul>
+    <% for (let i=0; i<listaProcesos.length ; i++)
+    { %>
+       <li> <%= listaProcesos[i].ACTO  %> C/ <%= listaProcesos[i].DEMA %> </li> 
+    <% } %>
+   </ul>
+
+  </body>
+</html>
+
+

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <%- include('./partials/menu') %>  
+
+   <h2>Procesos</h2>
+
+   <h3>Cantidad de Movimientos: <%= listaMtos.length %></h3>
+
+   <ul>
+    <% for (let i=0; i<listaMtos.length ; i++)
+    { 
+
+      %>
+       <li> <%= listaMtos[i].fecha %> <%= listaMtos[i].Proc.ACTO  %> C/ <%= listaMtos[i].Proc.DEMA %> <%= listaMtos[i].Proc.MIEM %> </li> 
+    <% } %>
+   </ul>
+
+   <h3></h3>
+
+
+  </body>
+</html>
+
+

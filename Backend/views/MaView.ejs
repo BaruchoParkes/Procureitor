@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <%- include('./partials/menu') %>  
+
+
+    <table>
+      <tr>
+        <th>Autos</th>
+        <th>Expte</th>
+        <th>Tipo de Proceso</th>
+        <th>Estado Procesal</th>
+        <th>Movimiento</th>
+      </tr>
+ 
+        <% for (let i=0; i<listaMaView.length ; i++) { %>
+            <tr>
+              <td> <%= listaMaView[i].acto %> C/ <%= listaMaView[i].dema %> </td>
+              <td> <span class="exp1"><%= listaMaView[i].exp1 %></span></td>
+              <td><span class="tipoDeProceso"><%= listaMaView[i].tipoDeProceso %></span> </td>
+              <td><span class="estadoProcesal"><%= listaMaView[i].estadoProcesal %></span></td>
+              <td><span class="pendiente1"><%= listaMaView[i].descripcion %></span></td>
+            </tr>
+      <% } %>
+
+
+
+
+
+      
+
+
+
+
+   <!--      <% for (let i=0; i<listaMaView.length ; i++) { %>
+        <li data-id=<%= listaMaView[i].id %>>
+          <a href='/MaView/id/5yURv0&B4J_1'      
+            <span class="acto"><%= listaMaView[i].acto %></span> C/
+            <span class="dema"><%= listaMaView[i].dema %></span>
+            (<span class="exp1"><%= listaMaView[i].exp1 %></span>)
+            <span class="tipoDeProceso"><%= listaMaView[i].tipoDeProceso %></span>
+            <span class="estadoProcesal"><%= listaMaView[i].estadoProcesal %></span>
+            <span class="pendiente1"><%= listaMaView[i].pendiente1 %></span>
+        </a>
+      </li>
+    <% } %>
+    <ul id="recordList">
+      <% for (let i=0; i<listaMaView.length ; i++) { %>
+          <li data-id=<%= listaMaView[i].id %>>
+            <a href='/MaView/id/5yURv0&B4J_1'      
+              <span class="acto"><%= listaMaView[i].acto %></span> C/
+              <span class="dema"><%= listaMaView[i].dema %></span>
+              (<span class="exp1"><%= listaMaView[i].exp1 %></span>)
+              <span class="tipoDeProceso"><%= listaMaView[i].tipoDeProceso %></span>
+              <span class="estadoProcesal"><%= listaMaView[i].estadoProcesal %></span>
+              <span class="pendiente1"><%= listaMaView[i].pendiente1 %></span>
+          </a>
+        </li>
+      <% } %>
+  </ul>
+-->
+
+  <div id="editFormContainer" style="display: none;">
+      <form id="editForm" action ="/procesos/create" action="" method="Post">
+          <input type="hidden" id="recordId">
+          <label for="acto">Acto:</label>
+          <input type="text" id="acto"><br>
+          <label for="dema">Dema:</label>
+          <input type="text" id="dema"><br>
+          <label for="exp1">Exp1:</label>
+          <input type="text" id="exp1"><br>
+          <label for="tipoDeProceso">Tipo De Proceso:</label>
+          <input type="text" id="tipoDeProceso"><br>
+          <label for="estadoProcesal">Estado Procesal:</label>
+          <input type="text" id="estadoProcesal"><br>
+          <label for="pendiente1">Pendiente1:</label>
+          <input type="text" id="pendiente1"><br>
+          <button type="Guardar" >Submit</button>
+      </form>
+  </div>
+
+  <script src="path/to/your/javascript.js"></script>
+  </body>
+</html>

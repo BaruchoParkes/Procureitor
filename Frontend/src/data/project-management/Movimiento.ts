@@ -25,7 +25,7 @@ export interface Movimiento {
   createdAt: Date;
   fechaDeRealizacion: Date;
   tipoDeMovimiento: string;
-  Responsable: string;
+  usuario: string;
   descripcion: string;
   Realizado: string;
   texto: string;
@@ -37,5 +37,8 @@ export interface Movimiento {
     ACTO: string;
     DEMA: string;
   };
-  Miembro: string
+  Miembro: string,
+  cobros_fk: number,
+  whatsapp: string,
+  grok: string
 }

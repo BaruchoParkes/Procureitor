@@ -117,3 +117,80 @@ veamos hasta donde llegamos en 45 minutos.
 para clickear en la fecha e ir a vista día me choqué con la complejidad del calendar hecho con reducer y provider.
 (payload, etc)
 GROK me quiso ayudar pero no es tan facil.
+
+11/03/2025
+objetivo: crear row en caja.
+problema: row en caja no está cargando el campo "transferencia_fk"
+problema: row en mto no está cargando el campo "transferencia"
+recapitulando
+mto tiene que generar transferencia y caja
+mto esta generadno efectivamente row en transferencia y en caja
+el problema es que 
+1) row en mto no esta cargando la fk de transferencia
+2) row en caja no esta cargando la fk de transferencia
+empiezo a solucionar a las 9:27.
+
+10:17, solucione: row en mto esta cargando la fk de transferencia
+
+pero me doy cuenta de error grave anterior: la entidad transferencia esta mal nombrada.
+no tiene que llamarse transferencia.  tiene que llamarse cobro. son cobros.  cobros y pagos.
+transferencia es una modalidad de pago o modalidad de cobro.
+que pelotudo.
+pasa que modifique todos los escritos de giro a transferencia y venia embaladado y le puse transferencia a toda la entidad.
+que pelotazo.
+tengo que armar toda la entidad de nuevo. o sea
+tabla en base de datos
+referencias en base de datos
+model
+app
+router
+controller
+controllers de referencias
+frontend
+
+voy a tardar facil una hora y van a seguir llegando errores.
+el estudio ya no va a existir para cuando termine esta aplicacion.
+11:34 termine de cambiar el nombre de la entidad, de transferencia a cobro
+
+12:26, toda la situacion solucionada digamos.
+
+12/03/2025
+11:07 - voy a cargar dos giros a vev si cargan bien.
+11:09 giro geo, al presionar guardar, se cuelga la página.  
+carga el mto.  CON referencia al cobro.  no carga el cobro.  no carga el mto de caja.
+11:12 a debuggear.
+
+13/03/2025
+1. que el mto component haga populacion dinamica en forma correctamente
+2. que mto component y el select "quien cobra" cargue correctamente los miembros
+3. que mto component guarde correctamente en la db el ususario en mto y en cobro  y en caja quien cobra
+
+9:20 empiezo.  10:06, el label descripcion se popula correctamente.
+
+14/03/2025
+EN CAJA NO CARGA CORRECTAMENTE EL VALOR "CAJA"
+ayer ví que el frontend envía el objeto con caja="geo", así que no se porque eso no llega a la db
+7:24 empiezo.  
+7:43 tampoco carga el quien_cobra del cobro
+mto: no carga el usuario
+8:26.  listo.  el problema era capitalizacion.  caja y Caja.  LRPM. que boludo, una hora desperdiciada.
+
+17/03/2025
+bueno, suficiente con el mto component.  hoy oquiero terminar pago component, así ya medio queda cocinado el reemplazo de appsheet.
+el pago componente tiene que hacer algo parecido al mto component.  es decir, traer los tipos, cargar los selects, ir generando un pago, etgc.  ok.
+vamos.  espero terminarlo hoy.
+
+19/03/2025
+ayer dejé en la tabla caja.  en las columnas de cobroFK y pagoFK, hay que poner bien los links de navegacion así al clickear uno va al cobro o pago.
+cobro es ir al mto.  pago ir al pago.  las vistas de detalle.
+y pagos pagado tiene que crear row en caja.
+las fechas están en mmddyyyy, hay que cambiar eso sino es para lío.
+la vista de detalle de proceso tiene que tener la tabla de siempre para los movimientos.  puse ese timeline que es muy sutil, muy fino, no sirve.
+realmente estaría bueno empezar a usar en abril la app porquee ya me aburro y ya se va a fundir el estudio cuando termine.
+tambien hay que hacer los logueos, el bloqueo cuando nno hay logueo, y las vistas condicionadas al usuario.
+
+19/03/2025
+CratePago tiene que crear row en caja cuando carga  un pago pagado.
+9:25 arranco.  9:36, listo.  
+
+la caja tiene que actualizar los valores de las cajas cuando hay un nuevo movimiento.

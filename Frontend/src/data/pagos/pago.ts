@@ -8,7 +8,6 @@ import bg57 from 'assets/img/generic/57.png';
 
 import { BadgeBg } from 'components/base/Badge';
 import { Member, members } from 'data/miembros';
-import axios from 'axios';
 
 
 
@@ -21,38 +20,39 @@ export interface Status {
 
 export interface Pago {
 
-  pagoId:  string, 
+  pagoId:  number, 
   pagoLabel: string,
   gastoIdFkEnPagos: string,
   concepto: string,
   importe:  number,
   fechaDeCarga: string,
-  factura: string,
-  documento: string,
+  factura: File | string | null,
+  documento: File | string | null,
   aclaracion: string,
-  comprobante: string,
+  comprobante: File | string | null,
   estado: string,
   paga: string,
-  fechadepago: string
-
+  fechadepago: Date | string | null,
+  usuario: string
 }
 
 
 export const pagoInicial: Pago ={
 
-  pagoId:  "", 
+  pagoId: 1, 
   pagoLabel: "",
   gastoIdFkEnPagos: "",
   concepto: "",
   importe:  0,
   fechaDeCarga: "",
-  factura: "",
-  documento: "",
+  factura: null,
+  documento: null,
   aclaracion:"",
-  comprobante: "",
+  comprobante: null,
   estado: "",
   paga: "",
-  fechadepago: ""
+  fechadepago: new Date,
+  usuario:""
 
 }
 

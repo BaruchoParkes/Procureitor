@@ -38,7 +38,7 @@ export const RecorridaListTableColumns: ColumnDef<Movimiento>[] = [
     cell: ({ row: { original } }) => {
       const handleUpdate = () => {
         axios
-          .post('http://localhost:2000/mtos/update2', { id: original.mtoId })
+          .post('0/mtos/update2', { id: original.mtoId })
           .then((response) => {
             console.log('Update successful:', response.data);
           })

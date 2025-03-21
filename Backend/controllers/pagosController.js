@@ -1,98 +1,88 @@
-let db = require('../database/models');
-let op = db.Sequelize.Op;
-const { v4: uuidv4 } = require('uuid');
+const multer = require('multer');
+const path = require('path');
+const db = require('../database/models');
 
-
-let pagosController = {
-  
-  index: function(req, res, next) {
-    db.Pagos.findAll()
-    .then(function(data){
-      
-      res.send(data);
-    })
-    .catch(function(e){
-      console.log(e)
-    })
+// Multer config
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Save files to uploads/ folder
   },
+  filename: (req, file, cb) => {
+    const timestamp = Date.now();
+    cb(null, `${timestamp}-${file.originalname}`); // e.g., "1710691200000-factura.jpg"
+  }
+});
 
-  index100: function(req, res, next) {
-    db.Pagos.findAll({ limit: 100, order: [['fechaDeCarga', 'DESC']] })
-    .then(function(data){      
-      res.send(data);
-    })
-    .catch(function(e){
-      console.log(e)
-    })
-  },
+const upload = multer({ storage }).fields([
+  { name: 'factura', maxCount: 1 },
+  { name: 'documento', maxCount: 1 },
+  { name: 'comprobante', maxCount: 1 }
+]);
 
-  show: function(req, res, next) {
-    let id = req.params.id
-    db.Pagos.findByPk(id)
-      .then(function(data){
-        res.send(data);
-    })
-    .catch(function(e){
-      console.log(e)
-    })
-  },
+const pagosController = {
 
-  search: function (req,res){
-    let searchTerm = req.query.search
-    db.Pagos.findAll({
-      where: [{acto: {[op.like]:'%RODRIGUEZ%'}}]
-    })
-      .then(function(data){
-      return res.send(data);
-
-    res.render ('searchResults' , {title: "Resultados de la Busqueda", searchTerm})
-    })
-    .catch(function(e){
-      console.log(e)
-    })
-  },
-
-  create: function (req,res){
-    res.render ('nuevoPago', {title: "Nuevo Pago"})
-  },
-
-  store: function (req,res){
-    let info = req.body;
-    console.log(info)
-    const newId = uuidv4();
-    const today = new Date().toISOString();
-    db.Pagos.create({
-      pagoId: newId, 
-      pagoLabel: req.body.pagoLabel,
-      gastoIdFkEnPagos: req.body.gastoIdFkEnPagos,
-      concepto: req.body.concepto,
-      importe: req.body.importe,
-      fechaDeCarga: today,
-      factura: req.body.factura,
-      documento: req.body.documento,
-      aclaracion: req.body.aclaracion,
-      comprobante: req.body.comprobante,
-      estado: req.body.estado,
-      paga: req.body.paga,
-      fechadepago: req.body.fechadepago
-    })
-    .then(function(mto){
-    res.send(mto)
-    } )
-    .catch(function(e){
-       console.log(e)
-    })     
-  },
-
-
-  update: function (req,res){
-    let info = req.body;
-    db.Pagos.create(proce)
-  .then(function(newProce){
-    return res.send(newProce)
+index: function(req, res, next) {
+  db.Pagos.findAll()
+  .then(function(data){
+      return res.send(data); 
   })
-    return res.redirect('/');
-}};
+  .catch(function(e){
+    console.log(e)
+  })
+},
 
+show: function(req, res, next) {
+  let id = req.params.id
+  db.Pagos.findByPk( id)
+    .then(function(data){
+      res.send(data);
+  })
+  .catch(function(e){
+    console.log(e)
+  })
+},
 
-module.exports = pagosController
+  store: async (req, res) => {
+    upload(req, res, async (err) => {
+      if (err) {
+        console.error('Multer error:', err);
+        return res.status(500).json({ error: 'File upload failed' });
+      }
+
+      try {
+        const newPago = await db.Pagos.create({
+          pagoLabel: req.body.pagoLabel || `${req.body.concepto} - ${req.body.fechadepago}`,
+          gastoIdFkEnPagos: req.body.gastoIdFkEnPagos,
+          concepto: req.body.concepto,
+          importe: parseInt(req.body.importe, 10),
+          fechaDeCarga: req.body.fechaDeCarga,
+          factura: req.files?.['factura'] ? req.files['factura'][0].path : null,
+          documento: req.files?.['documento'] ? req.files['documento'][0].path : null,
+          aclaracion: req.body.aclaracion,
+          comprobante: req.files?.['comprobante'] ? req.files['comprobante'][0].path : null,
+          estado: req.body.estado,
+          paga: req.body.paga,
+          fechadepago: req.body.fechadepago || null,
+          usuario: req.body.usuario
+        });
+        console.log('New pago created:', newPago.toJSON());
+        res.status(201).json(newPago.pagoId);
+      } catch (error) {
+        console.error('Error creating pago:', error);
+        res.status(500).json({ error: 'Error creating pago' });
+      }
+    });
+  },
+
+  update: function(req, res, next){
+    db.Pagos.update({where: {cobro_id: req.body.cobro_id}})
+    .then(()=>{ res.send('fijate update');})
+    .catch(function(e){
+      console.error(e);
+      res.status(500).send('An error occurred while updating the record');
+    })
+  },
+  
+};
+
+module.exports = pagosController;

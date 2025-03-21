@@ -11,27 +11,28 @@ var MaViewRouter = require('./routes/MaView');
 var tMtosRouter = require('./routes/tiposDeMtos');
 var tEstadosRouter = require('./routes/tiposDeEstados');
 var mtosRouter = require('./routes/mtos');
+var cobrosRouter = require('./routes/cobros');
 var miembrosRouter = require('./routes/miembros');
 var resumenesRouter = require('./routes/resumenes');
 var procEstM2mRouter = require('./routes/procEstM2m');
 var gastosRouter = require('./routes/gastos');
 var pagosRouter = require('./routes/pagos');
+var cajaRouter = require('./routes/caja');
 
-var app = express();
 const cors = require('cors');
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+//view engine setup
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
-app.use('/', procesosRouter);
+//app.use('/', procesosRouter);
 app.use('/users', usersRouter);
 app.use('/procesos', procesosRouter);
 app.use('/MaView', MaViewRouter);
@@ -39,12 +40,20 @@ app.use('/tMtos', tMtosRouter);
 app.use('/tEstado', tEstadosRouter);
 app.use('/procEstM2m', procEstM2mRouter);
 app.use('/mtos', mtosRouter);
+app.use('/cobros', cobrosRouter); 
 app.use('/miembros', miembrosRouter);
 app.use('/resumenes', resumenesRouter);
 app.use('/gastos', gastosRouter);
-app.use('/pagos', pagosRouter);
+app.use('/pagos', pagosRouter); 
+app.use('/caja', cajaRouter); 
 
 
+//Serve React Frontend
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+app.get('*', (req, res) => {
+  console.log('Serving index.html for', req.url);
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -61,8 +70,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
-
 
 module.exports = app;

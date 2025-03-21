@@ -12,8 +12,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect} from 'react'
 
-
-
 const ProjectListView = () => {
 
   const [procesos, setProcesos] = useState([]);
@@ -21,7 +19,7 @@ const ProjectListView = () => {
   useEffect(() => {
   const fetchProcesos = async () => {  
     try{
-      const response = await axios.get(`http://localhost:2000/procesosajson`)
+      const response = await axios.get(`/procesos/procesosajson`)
       const data = await response.data
       setProcesos(data)
     }

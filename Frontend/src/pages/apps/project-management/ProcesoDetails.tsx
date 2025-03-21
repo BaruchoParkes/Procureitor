@@ -48,7 +48,7 @@ const [isVisible, setIsVisible] = useState(false);
 useEffect(() => {
   const fetchProc = async () => {  
   try{
-    const response = await axios.get(`http://localhost:2000/procesos/id/${id}`)
+    const response = await axios.get(`/procesos/id/${id}`)
     const data = await response.data
     setProc(data)}
   catch(error){
@@ -60,7 +60,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchMtos = async () => {  
   try{
-    const response = await axios.get(`http://localhost:2000/mtos/proc/${id}`)
+    const response = await axios.get(`/mtos/proc/${id}`)
     const data = await response.data
     setMtos(data)}
   catch(error){
@@ -72,7 +72,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchEstados = async () => {  
   try{
-    const response = await axios.get(`http://localhost:2000/procEstM2m/proc/${id}`)
+    const response = await axios.get(`/procEstM2m/proc/${id}`)
     const data = await response.data
     setestados(data)}
     catch(error){
@@ -84,7 +84,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchTEstados = async () => {  
   try{
-    const response = await axios.get(`http://localhost:2000/tEstado`)
+    const response = await axios.get(`/tEstado`)
     const data = await response.data
     settipoDeEstado(data)}
   catch(error){
@@ -96,7 +96,7 @@ useEffect(() => {
 useEffect(() => {
   const fetchResumen = async () => {  
   try{
-    const response = await axios.get(`http://localhost:2000/resumenes/id/${id}`)
+    const response = await axios.get(`/resumenes/id/${id}`)
     const data = await response.data
     setresumenes(data)}
   catch(error){
@@ -146,7 +146,7 @@ const handleTEstadoSelectChange = async (selectedOption: SingleValue<EstadoOptio
   if (!selectedOption) return; // Handle the case when selection is cleared
   const selectedEstado = selectedOption.value;
   try {
-    await axios.post(`http://localhost:2000/procEstM2m/create`, {
+    await axios.post(`/procEstM2m/create`, {
       proc: id,
       estado: selectedEstado,
     });
@@ -156,7 +156,7 @@ const handleTEstadoSelectChange = async (selectedOption: SingleValue<EstadoOptio
   }
 };
 
-var resumen = resumenes.resumen;
+const resumen = resumenes.resumen;
 
 const [isSelectVisible, setIsSelectVisible] = useState(false);
 
@@ -166,7 +166,7 @@ const handleButtonClick = () => {
 
 const handleArchivarButton = () => {
   axios
-  .post('http://localhost:2000/procesos/archivar', { PROC: proc.PROC })
+  .post('/procesos/archivar', { PROC: proc.PROC })
   .then((response) => {
     console.log('Update successful:', response.data);
   })
@@ -178,6 +178,21 @@ const handleArchivarButton = () => {
   });
 }
 
+const handleButtonClickNewMto = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  e.preventDefault();
+  try {
+    const response = await axios.post('/mtos/store', {
+      proc: proc.PROC // Only send required fields
+      // Add other fields as needed, e.g., descripcion, fecha, etc.
+    });
+    const newId = response.data.mtoId; // Assuming backend returns the new row or ID
+    //console.log('New row created with ID:', newId);
+    navigate(`/apps/project-management/movimiento/${newId}`);
+  } catch (error) {
+    console.error('Error creating row:', error);
+  }
+};
+
 return (
 <Row className="g-0">
   <Col xs={12} xxl={8} className="px-0 bg-body">
@@ -185,18 +200,18 @@ return (
       <div className="mb-5">
         <div className="d-flex justify-content-between">
           <h2 className="text-body-emphasis fw-bolder mb-2">
-              {proc?.AUX8}
+            {proc?.AUX8}
           </h2>
         </div>
       </div>
       <Row className="gx-0 gx-sm-5 gy-8 mb-8">
         <Col xs={12} xl={3} xxl={4} className="pe-xl-0">
-          <ProcesoDetailsSummary {...proc} />
+          <ProcesoDetailsSummary {...proc}/>
         </Col>
   <Col xs={12} xl={9} xxl={8}> 
   <div className="d-flex flex-wrap gap-2">
   {estados.map(tag => (
-  <Badge variant="tag" key={tag} >
+  <Badge variant="tag" key={tag}>
     {tag}
   </Badge>))}
   </div>
@@ -208,44 +223,30 @@ return (
     placeholder="Select Estado"
     isClearable
   />
-
         <br></br>
         <div className='d-flex gap-2'>
           <Button variant='primary'
-          /* 
-        Mas adelante implementar esto, con el add de Calendar, mas completo, pero usa REDUCER y context.
-          onClick={() => {
-            calendarDispatch({
-              type: SET_CALENDAR_STATE,
-              payload: { openNewEventModal: true }
-            });
-          }}
-          variant="primary"
-          size="sm"
-          startIcon={<FontAwesomeIcon icon={faPlus} className="fs-10 me-2" />} */
-          
-          onClick={
-            async (e) => {
-              e.preventDefault(); // Prevent default form submission
-              try {
-                  const response = await axios.post('http://localhost:2000/mtos/store', {
-                  proc: proc.PROC
-                });              
-                console.log('Update successful:', response);
-              } catch (error) {
-                console.error('Error updating:', error);
-              }
-            }  
-          }
-          > 
-          Agregar Escrito </Button>
+            /* 
+            Mas adelante implementar esto, con el add de Calendar, mas completo, pero usa REDUCER y context.
+            onClick={() => {
+              calendarDispatch({
+                type: SET_CALENDAR_STATE,
+                payload: { openNewEventModal: true }
+              });
+            }}
+            variant="primary"
+            size="sm"
+            startIcon={<FontAwesomeIcon icon={faPlus} className="fs-10 me-2" />} */      
+            onClick={ handleButtonClickNewMto}
+          >
+            Agregar Movimiento </Button>
           <Button variant='primary'
           onClick={handleButtonClick}
           // {isSelectVisible ? 'Hide Select' : 'Show Select'}
           >
           Agregar Estado 
           </Button>
-          <Button variant='primary' onClick={handleArchivarButton}>  Archivar </Button>
+          <Button variant='primary' onClick={handleArchivarButton}>Archivar</Button>
       </div>
 
         </Col>
@@ -272,5 +273,4 @@ return (
 </Row>
 )
 }
-
 export default ProcesoDetails;

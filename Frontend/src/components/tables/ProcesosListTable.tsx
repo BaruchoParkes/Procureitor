@@ -63,7 +63,7 @@ export const procesosListTableColumns: ColumnDef<Proceso>[] = [
 
       const handleUpdate = () => {
         axios
-          .post('http://localhost:2000/procesos/update2', { PROC: PROC })
+          .post('0/procesos/update2', { PROC: PROC })
           .then((response) => {
             console.log('Update successful:', response.data);
           })

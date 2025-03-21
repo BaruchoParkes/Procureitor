@@ -23,9 +23,9 @@ export interface Movimiento {
   mtoId: number;
   proc: string;
   createdAt: string;
-  fechaDeRealizacion: Date;
+  fecha: Date;
   tipoDeMovimiento: string;
-  Responsable: string;
+  usuario: string;
   descripcion: string;
   Realizado: string;
   texto: string;

@@ -37,7 +37,7 @@ const PagoDetails = () => {
   useEffect(() => {
     const fetchPago = async () => {  
     try{
-      const response = await axios.get(`http://localhost:2000/pagos/id/${id}`)
+      const response = await axios.get(`/pagos/id/${id}`)
       const data = await response.data
       setpago(data)}
     catch(error){
@@ -70,7 +70,7 @@ const PagoDetails = () => {
     <p>Importe: $ {pago.importe} </p>
     <p>Estado: {pago.estado}</p>
     <p>Quien Paga : {pago.paga}</p>
-    <p>Fecha de Pago: {pago.fechadepago}</p>
+    <p>Fecha de Pago: {pago.fechadepago?.toString()}</p>
   </form>
 
 

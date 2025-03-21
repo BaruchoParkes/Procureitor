@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Quill } from 'react-quill';
-import './QuillEditor.css'
+import './QuillEditor.css';
 
 
 export const TextEditor = ({ text, titulo, cuerpo, autos, handleTextChange }: { text: string, titulo: string, cuerpo: string, autos: string, handleTextChange: (newValue: string) => void }) => {
@@ -17,7 +17,7 @@ export const TextEditor = ({ text, titulo, cuerpo, autos, handleTextChange }: { 
       .insert('\nDr. CRISTIAN ANDRES PARKES, abogado inscripto al Tº 115 F° 831 CPACF, CUIT 20-29006501-2, IVA Responsable Inscripto, en mi carácter de Letrado apoderado de la parte Actora, en los autos '+ autos + ' a VS, respetuosamente digo: \n') // Regular text between title and body
       .insert(cuerpo + '\n', { indent: 1, align: "justified" })  // Body with first-line indentation
       .insert('PROVEER DE CONFORMIDAD\n',  {indent: 1 }) // Regular text between title and body
-      .insert('SERA JUSTICIA\n',  {indent: 1 }) // Regular text between title and body
+      .insert('SERA JUSTICIA\n',  {indent: 1 }); // Regular text between title and body
 
     // Apply the Delta as initial content to the editor
     setValue(initialContent);
@@ -31,7 +31,7 @@ export const TextEditor = ({ text, titulo, cuerpo, autos, handleTextChange }: { 
   const handleTextoChange = (newValue: string) => {
     setValue(newValue); // Updates local state
     handleTextChange(newValue); // Passes the new text to the parent
-    console.log(newValue)
+    //console.log(newValue);
   };
 
   useEffect(() => {

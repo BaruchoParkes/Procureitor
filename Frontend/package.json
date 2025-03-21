@@ -1,7 +1,8 @@
 {
-  "name": "phoenix-react",
-  "version": "1.5.0",
-  "private": true,
+  "name": "phoenix",
+  "version": "1.0.0",
+  "private":"true",
+  "proxy": "http://localhost:2000",
   "type": "module",
   "dependencies": {
     "@changey/react-leaflet-markercluster": "^4.0.0-rc1",
@@ -32,6 +33,7 @@
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "classnames": "^2.3.2",
+    "craco": "^0.0.3",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.7",
     "dhtmlx-gantt": "^8.0.1",
@@ -76,7 +78,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco --max_old_space_size=4096 build",
+    "build": "craco --max_old_space_size=4096 build --no lint",
     "test": "craco test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,jsx,ts,tsx,json ./src",

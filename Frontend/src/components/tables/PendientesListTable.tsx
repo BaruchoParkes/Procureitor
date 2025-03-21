@@ -40,9 +40,9 @@ export const PendientesListTableColumns: ColumnDef<Movimiento>[] = [
     accessorKey: 'fecha',
     header: 'Fecha',
     cell: ({ row: { original } }) => {
-      const { fechaDeRealizacion } = original;
+      const { fecha } = original;
       return (
-        <p>  {fechaDeRealizacion.toString().split('T')[0]} </p>
+        <p>  {fecha.toString().split('T')[0]} </p>
       );
     },
     meta: {

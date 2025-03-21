@@ -50,27 +50,13 @@ export const routes: RouteItems[] = [
       active: true,
     },
     {
-      name: 'procesos-cap',
-      icon: 'list',
-      path: '/apps/project-management/procesos-list-view-CAP',
-      pathName: 'project-management-procesos-list-view-CAP',
-      active: true,
-    },
-    {
-      name: 'recorrida',
-      icon: 'list',
-      path: '/apps/project-management/recorrida-list-view',
-      pathName: 'project-management-recorrida-list-view',
-      active: true
-    },
-    {
       name: 'pendientes',
       icon: 'list',
       path: '/apps/project-management/pendientes-list-view',
       pathName: 'project-management-pendientes-list-view',
       active: true
     },
-    {
+/*     {
       name: 'calendar',
       icon: 'calendar',
       path: 'apps/calendar',
@@ -84,8 +70,8 @@ export const routes: RouteItems[] = [
       pathName: 'email-inbox',
       active: true
     },
-    {
-      name: 'members',
+ */    {
+      name: 'Miembros',
       icon: 'users',
       path: '/pages/members',
       pathName: 'members-page',
@@ -98,6 +84,14 @@ export const routes: RouteItems[] = [
       pathName: 'pagos-list-view',
       active: true
     },
+    {
+      name: 'Caja',
+      icon: 'dollar-sign',
+      path: '/apps/project-management/caja-list-view',
+      pathName: 'caja-list-view',
+      active: true
+    },
+    /* ,
     {
       name: 'authentication',
       icon: 'lock',
@@ -114,7 +108,7 @@ export const routes: RouteItems[] = [
               active: true
             }]
         }]
-    }
+    } */
   ]
  }
 ];

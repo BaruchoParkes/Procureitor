@@ -24,7 +24,7 @@ const PendientesListView = () => {
   useEffect(() => {
     const fetchMtos = async () => {  
       try{
-        const response = await axios.get(`http://localhost:2000/mtos/pendientes`)
+        const response = await axios.get(`/mtos/pendientes`)
         const data = await response.data
         setMtos(data)
       }

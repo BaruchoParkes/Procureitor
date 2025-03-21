@@ -59,7 +59,7 @@ const MovimientosTimeline = ({ data }: ActivityTimelineProps) => {
 
                 <p className="fs-9">
                   
-                  {format(new Date(item.fechaDeRealizacion), 'dd/MM/yyyy hh:mm')}
+                  {format(new Date(item.fecha), 'dd/MM/yyyy hh:mm')}
                    
                 </p>
                 <p

@@ -54,7 +54,7 @@ const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         id = '5yURv0uW0H'
     }
     try {
-      const response = await axios.get(`http://localhost:2000/miembros/id/${id}`)
+      const response = await axios.get(`/miembros/id/${id}`)
       const data = await response.data
       localStorage.setItem('iniciales', data.Iniciales)
       localStorage.setItem('miemID', data.miemID)

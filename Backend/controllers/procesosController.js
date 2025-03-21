@@ -67,7 +67,7 @@ let procesosController = {
     .then(function(data){
       // return res.send(data);
       let procList = data;
-      res.render('procesos', { title: 'PROCESOS', listaProcesos: procList});
+      //res.render('procesos', { title: 'PROCESOS', listaProcesos: procList});
     })
 
     .catch(function(e){

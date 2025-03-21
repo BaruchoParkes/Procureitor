@@ -19,19 +19,5 @@ let config ={
 
 const Gastos = sequelize.define(alias, cols, config);
 
-/* Procesos.associate = function (models){
-
-    Procesos.belongsTo(models.Miembro, {
-        as: 'Miembro',
-        foreignKey: 'MIEM'
-    })
-
-    Procesos.belongsToMany(models.Mtos, {
-        as: 'Mtos',
-        through: "PROC_MTOS",
-        foreignKey: 'PROC',
-        otherKey: 'mto_id'
-    } )
-} */
 return Gastos
 }

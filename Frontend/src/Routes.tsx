@@ -79,10 +79,10 @@ import Refund from 'pages/apps/e-commerce/admin/Refund';
 import CustomerDetails from 'pages/apps/e-commerce/admin/CustomerDetails';
 import ProjectManagement from 'pages/dashboard/ProjectManagement';
 import CreateNewMovimiento from 'pages/apps/project-management/MovimientoComponent';
-import RecorridaListView from 'pages/apps/project-management/RecorridaListView';
 import PendientesListView from 'pages/apps/project-management/Pendientes';
 import ProcesosListView from 'pages/apps/project-management/ProcesosListView';
-import ProcesosListViewCAP from 'pages/apps/project-management/ProcesosListViewCAP';
+import CajaListView from 'pages/apps/project-management/CajaListView';
+
 import ProjectDetails from 'pages/apps/project-management/ProjectDetails';
 import ProcesoDetails from 'pages/apps/project-management/ProcesoDetails';
 import GastosListView from 'pages/apps/pagos/GastosListView';
@@ -319,8 +319,7 @@ const routes: RouteObject[] = [
               },
               {
                 path: 'project-management',
-                children: [
-                  
+                children: [  
                   {
                     path: 'movimiento',
                     element: <MovimientoComponent />
@@ -330,13 +329,10 @@ const routes: RouteObject[] = [
                     element: <ProcesosListView />
                   },
                   {
-                    path: 'procesos-list-view-CAP',
-                    element: <ProcesosListViewCAP />
+                    path: 'caja-list-view',
+                    element: <CajaListView />
                   },
-                  {
-                    path: 'recorrida-list-view',
-                    element: <RecorridaListView />
-                  },
+
                   {
                     path: 'pendientes-list-view',
                     element: <PendientesListView />
@@ -348,8 +344,7 @@ const routes: RouteObject[] = [
                   {
                     path: 'movimiento/:id',
                     element: <MovimientoComponent />
-                  }
-                  ,
+                  },
                   {
                     path: 'resumenes/:id',
                     element: <ResumenComponent />
@@ -359,7 +354,6 @@ const routes: RouteObject[] = [
               {
                 path: 'pagos',
                 children: [
-                  
                   {
                     path: 'gastos-list-view',
                     element: <GastosListView />

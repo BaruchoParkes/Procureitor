@@ -31,7 +31,7 @@ const ResumenComponent = () => {
   useEffect(() => {
     const fetchResumen = async () => {  
     try{
-      const response = await axios.get(`http://localhost:2000/resumenes/id/${id}`)
+      const response = await axios.get(`/resumenes/id/${id}`)
       const data = await response.data
       setresumenes(data)}
     catch(error){
@@ -49,7 +49,7 @@ const ResumenComponent = () => {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent default form submission
     try {
-      const response = await axios.post('http://localhost:2000/resumenes/update', {
+      const response = await axios.post('/resumenes/update', {
         id: aidi, 
         resumenes: resumen,  
       });

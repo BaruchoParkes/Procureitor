@@ -22,7 +22,7 @@ const PagosListView = () => {
   useEffect(() => {
     const fetchPagos = async () => {  
       try{
-        const response = await axios.get(`http://localhost:2000/pagos/100`)
+        const response = await axios.get(`/pagos`)
         const data = await response.data
         setpagos(data)
       }

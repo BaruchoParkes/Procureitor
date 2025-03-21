@@ -20,7 +20,7 @@ export interface CalendarEvent {
   start: Date | string;
   end?: Date | string;
   url?: string;
-  [key: string]: any;
+  key: string;
 }
 
 export interface CalendarState {

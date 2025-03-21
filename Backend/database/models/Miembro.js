@@ -1,50 +1,61 @@
-module.exports = function (sequelize, dataTypes){
+const { DataTypes } = require('sequelize');
 
-    let alias = 'Miembro' // mismo  nombre q el modelo, nombre con el cual sequelize identificara al modelo
+module.exports = function (sequelize) {
+  let alias = 'Miembro';
 
-    const cols = {
-        Iniciales:{type:dataTypes.STRING},
-        Name:{type:dataTypes.STRING},
-        Fecha_de_Ingreso:{type:dataTypes.STRING},
-        Horario_de_Trabajo:{type:dataTypes.STRING},
-        Horario_Libros:{type:dataTypes.STRING},
-        Antiguedad:{type:dataTypes.STRING},
-        Empleador:{type:dataTypes.STRING},
-        Email:{type:dataTypes.STRING},
-        Whatsapp:{type:dataTypes.STRING},
-        Telefono:{type:dataTypes.STRING},
-        Interno:{type:dataTypes.STRING},
-        Descripcion_de_Posicion:{type:dataTypes.STRING},
-        Oficinas_Judiciales:{type:dataTypes.STRING},
-        Backup:{type:dataTypes.STRING},
-        Matricula_Provincia:{type:dataTypes.STRING},
-        Matricula_CABA:{type:dataTypes.STRING},
-        Teléfono_Personal:{type:dataTypes.STRING},
-        Dirección:{type:dataTypes.STRING},
-        Contacto_de_emergencia:{type:dataTypes.STRING},
-        CUIL:{type:dataTypes.STRING},
-        CBU:{type:dataTypes.STRING},
-        DNI_Frente:{type:dataTypes.STRING},
-        DNI_Dorso:{type:dataTypes.STRING},
-        Fecha_de_Nacimiento:{type:dataTypes.STRING},
-        Edad:{type:dataTypes.STRING},
-        Fecha_de_Egreso:{type:dataTypes.STRING},
-        Activo:{type:dataTypes.STRING},
-        Condicion_Impositiva:{type:dataTypes.STRING},
-        Sueldos:{type:dataTypes.STRING},
-        miemID:{type:dataTypes.STRING, primaryKey:true},
-        contrasena:{type:dataTypes.STRING},
-        usuario:{type:dataTypes.STRING}
-}
-    
-    let config ={
-        tableName: 'MIEM',
-        timestamps: false,
-        underscored: false
-    }
-    
-    const Miembros = sequelize.define(alias, cols, config)
-   
+  const cols = {
+    Iniciales: { type: DataTypes.STRING },
+    Name: { type: DataTypes.STRING },
+    Fecha_de_Ingreso: { type: DataTypes.STRING },
+    Horario_de_Trabajo: { type: DataTypes.STRING },
+    Horario_Libros: { type: DataTypes.STRING },
+    Antiguedad: { type: DataTypes.STRING },
+    Empleador: { type: DataTypes.STRING },
+    Email: { type: DataTypes.STRING },
+    Whatsapp: { type: DataTypes.STRING },
+    Telefono: { type: DataTypes.STRING },
+    Interno: { type: DataTypes.STRING },
+    Descripcion_de_Posicion: { type: DataTypes.STRING },
+    Oficinas_Judiciales: { type: DataTypes.STRING },
+    Backup: { type: DataTypes.STRING },
+    Matricula_Provincia: { type: DataTypes.STRING },
+    Matricula_CABA: { type: DataTypes.STRING },
+    Teléfono_Personal: { type: DataTypes.STRING },
+    Dirección: { type: DataTypes.STRING },
+    Contacto_de_emergencia: { type: DataTypes.STRING },
+    CUIL: { type: DataTypes.STRING },
+    CBU: { type: DataTypes.STRING },
+    DNI_Frente: { type: DataTypes.STRING },
+    DNI_Dorso: { type: DataTypes.STRING },
+    Fecha_de_Nacimiento: { type: DataTypes.STRING },
+    Edad: { type: DataTypes.STRING },
+    Fecha_de_Egreso: { type: DataTypes.STRING },
+    Activo: { type: DataTypes.STRING },
+    Condicion_Impositiva: { type: DataTypes.STRING },
+    Sueldos: { type: DataTypes.STRING },
+    miemID: { type: DataTypes.STRING, primaryKey: true },
+    contrasena: { type: DataTypes.STRING },
+    usuario: { type: DataTypes.STRING },
+    lex_id: { type: DataTypes.STRING }
 
-    return Miembros
-}
+  };
+
+  let config = {
+    tableName: 'MIEM',
+    timestamps: false,
+    underscored: false
+  };
+
+  const Miembros = sequelize.define(alias, cols, config);
+
+  Miembros.associate = function (models) {
+    // New association with cobros
+    Miembros.hasMany(models.Cobros, {
+      foreignKey: 'quien_cobra', // Foreign key in Cobros
+      sourceKey: 'miemID',       // Primary key in Miembro
+      as: 'cobros'       // Alias for the relationship
+    });
+  };
+
+  return Miembros;
+};

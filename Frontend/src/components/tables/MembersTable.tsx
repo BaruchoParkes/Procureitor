@@ -4,17 +4,19 @@ import { Link } from 'react-router-dom';
 import AdvanceTableFooter from 'components/base/AdvanceTableFooter';
 import Avatar from 'components/base/Avatar';
 import { Member } from 'data/members';
+import { Miembro } from 'data/miembros';
 
-export const membersTablecolumns: ColumnDef<Member>[] = [
+
+export const membersTablecolumns: ColumnDef<Miembro>[] = [
   {
-    accessorKey: 'name',
-    header: 'Member',
+    accessorKey: 'Name',
+    header: 'Miembro',
     cell: ({ row: { original } }) => {
-      const { name, avatar } = original;
+      const { Name, avatar } = original;
       return (
         <Link to="#!" className=" d-flex align-items-center text-body">
           <Avatar src={avatar} size="m" />
-          <p className="mb-0 ms-3 text-body-emphasis fw-semibold">{name}</p>
+          <p className="mb-0 ms-3 text-body-emphasis fw-semibold">{Name}</p>
         </Link>
       );
     },
@@ -27,13 +29,13 @@ export const membersTablecolumns: ColumnDef<Member>[] = [
     }
   },
   {
-    accessorKey: 'email',
+    accessorKey: 'Email',
     header: 'Email',
     cell: ({ row: { original } }) => {
-      const { email } = original;
+      const { Email } = original;
       return (
-        <Link to={`mailto:${email}`} className="fw-semibold">
-          {email}
+        <Link to={`mailto:${Email}`} className="fw-semibold">
+          {Email}
         </Link>
       );
     },
@@ -46,12 +48,12 @@ export const membersTablecolumns: ColumnDef<Member>[] = [
   },
   {
     accessorKey: 'mobile',
-    header: 'Mobile Number',
+    header: 'Celular',
     cell: ({ row: { original } }) => {
-      const { mobile } = original;
+      const { Telefono } = original;
       return (
-        <Link to={`tel:${mobile}`} className="fw-bold text-body-emphasis">
-          {mobile}
+        <Link to={`tel:${Telefono}`} className="fw-bold text-body-emphasis">
+          {Telefono}
         </Link>
       );
     },
@@ -63,14 +65,14 @@ export const membersTablecolumns: ColumnDef<Member>[] = [
     }
   },
   {
-    accessorKey: 'city',
-    header: 'City',
+    accessorKey: 'CBU',
+    header: 'CBU',
     meta: {
       headerProps: { style: { width: '10%' } },
       cellProps: { className: 'text-body' }
     }
   },
-  {
+/*   {
     accessorKey: 'lastActive',
     header: 'Last Active',
     meta: {
@@ -96,13 +98,13 @@ export const membersTablecolumns: ColumnDef<Member>[] = [
       }
     }
   }
-];
+ */];
 
 const MembersTable = () => {
   return (
     <div>
       <AdvanceTable tableProps={{ className: 'phoenix-table fs-9' }} />
-      <AdvanceTableFooter pagination />
+{/*       <AdvanceTableFooter pagination /> */}
     </div>
   );
 };

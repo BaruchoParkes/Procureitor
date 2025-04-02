@@ -6,7 +6,8 @@ import {
   UilDocumentLayoutRight,
   UilFilesLandscapesAlt,
   UilPuzzlePiece
-} from '@iconscout/react-unicons';
+} from '@iconscout/react-unicons'; 
+import { useAuth } from 'providers/AuthProvider';
 
 export interface Route {
   name: string;
@@ -22,6 +23,7 @@ export interface Route {
   new?: boolean;
   hasNew?: boolean;
   next?: boolean;
+  nivel_acceso?: string[]; // Add access restriction
 }
 
 export interface RouteItems {
@@ -34,81 +36,74 @@ export interface RouteItems {
   active?: boolean;
 }
 
-export const routes: RouteItems[] = [
- {  
-  label: 'procesos',
-  horizontalNavLabel: 'home',
-  active: true,
-  icon: UilChartPie,
-  labelDisabled: true,
-  pages: [
+const getRoutes = (nivel_acceso: string | null): RouteItems[] => {
+  const baseRoutes: RouteItems[] = [
     {
-      name: 'procesos',
-      icon: 'list',
-      path: '/apps/project-management/procesos-list-view',
-      pathName: 'project-management-procesos-list-view',
+      label: 'procesos',
+      horizontalNavLabel: 'home',
       active: true,
-    },
-    {
-      name: 'pendientes',
-      icon: 'list',
-      path: '/apps/project-management/pendientes-list-view',
-      pathName: 'project-management-pendientes-list-view',
-      active: true
-    },
-/*     {
-      name: 'calendar',
-      icon: 'calendar',
-      path: 'apps/calendar',
-      pathName: 'app-calendar',
-      active: true
-    },
-    {
-      name: 'Email',
-      icon: 'mail',
-      path: '/apps/email/inbox',
-      pathName: 'email-inbox',
-      active: true
-    },
- */    {
-      name: 'Miembros',
-      icon: 'users',
-      path: '/pages/members',
-      pathName: 'members-page',
-      active: true
-    },
-    {
-      name: 'Pagos',
-      icon: 'dollar-sign',
-      path: '/apps/pagos/pagos-list-view',
-      pathName: 'pagos-list-view',
-      active: true
-    },
-    {
-      name: 'Caja',
-      icon: 'dollar-sign',
-      path: '/apps/project-management/caja-list-view',
-      pathName: 'caja-list-view',
-      active: true
-    },
-    /* ,
-    {
-      name: 'authentication',
-      icon: 'lock',
-      active: true,
+      icon: UilChartPie,
+      labelDisabled: true,
       pages: [
         {
-          name: 'simple',
+          name: 'procesos',
+          icon: 'list',
+          path: '/apps/project-management/procesos-list-view',
+          pathName: 'project-management-procesos-list-view',
           active: true,
-          pages: [
-            {
-              name: 'sign-in',
-              path: '/pages/authentication/simple/sign-in',
-              pathName: 'simple-signin',
-              active: true
-            }]
-        }]
-    } */
-  ]
- }
-];
+          nivel_acceso: ['usuario', 'supervisor', 'socio', 'pagos'] // Everyone
+        },
+        {
+          name: 'pendientes',
+          icon: 'list',
+          path: '/apps/project-management/pendientes-list-view',
+          pathName: 'project-management-pendientes-list-view',
+          active: true,
+          nivel_acceso: [ 'supervisor', 'socio', 'pagos'] // Everyone
+        },
+        {
+          name: 'Pagos',
+          icon: 'dollar-sign',
+          path: '/apps/pagos/pagos-list-view',
+          pathName: 'pagos-list-view',
+          active: true,
+          nivel_acceso: ['usuario', 'supervisor', 'socio', 'pagos'] // Everyone
+        },
+        {
+          name: 'Caja',
+          icon: 'dollar-sign',
+          path: '/apps/project-management/caja-list-view',
+          pathName: 'caja-list-view',
+          active: true,
+          nivel_acceso: ['usuario', 'supervisor', 'socio', 'pagos'] // Everyone
+        },
+        {
+          name: 'Miembros',
+          icon: 'users',
+          path: '/pages/members',
+          pathName: 'members-page',
+          active: true,
+          nivel_acceso: ['usuario', 'supervisor', 'socio', 'pagos'] // Everyone
+        }
+      ]
+    }
+  ];
+
+  // Filter routes based on role
+  return baseRoutes.map(route => ({
+    ...route,
+    pages: route.pages.filter(page =>
+      page.nivel_acceso?.includes(nivel_acceso || 'user') || !page.nivel_acceso
+    )
+  }));
+};
+
+export const RoutesComponent = () => {
+  const { user } = useAuth();
+  const routes = getRoutes(user?.nivel_acceso || null);
+  console.log('Filtered routes for role', user?.nivel_acceso, ':', routes);
+  // Use routes in your navigation bar here
+  return null; // Replace with your nav rendering logic
+};
+
+export default getRoutes;

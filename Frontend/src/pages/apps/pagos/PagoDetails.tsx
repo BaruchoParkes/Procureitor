@@ -19,12 +19,9 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import  axios  from 'axios'
 import { useParams } from 'react-router-dom';
 import {pagoInicial, Pago} from 'data/pagos/pago';
-import { Member } from 'data/miembros';
+import { Miembro } from 'data/miembros';
 import {NavLink} from 'react-router-dom';
 import Select, { SingleValue } from 'react-select';
-
-
-
 
 
 

@@ -194,3 +194,115 @@ CratePago tiene que crear row en caja cuando carga  un pago pagado.
 9:25 arranco.  9:36, listo.  
 
 la caja tiene que actualizar los valores de las cajas cuando hay un nuevo movimiento.
+
+
+La aplicación no funciona sin logueo. La aplicación controla que haya alguien logrado y si no hay nadie manda a la pantalla de login.
+
+La persona logueada puede ver su perfil arriba a la derecha (o sea, actualizar ProfileDropdownMenu, que traiga el nombre del usuario logueado y lo muestre)
+
+La vista caja y pagos es personalizada de cada usuario
+
+28/03/2025
+hoy debería implementar la lógica la caja.
+aca se plantea el tema de como mantener los saldos.  hasta ahora en procureitor tenía esa tabla con todas las cajas, pero en realidad
+creo que la que va es que cada caja tenga su tabla en la db. sino cada vez que alguien hace un movimiento tiene que actualizar todo.
+es un peligro.
+lastima que no voy a poder traer la tabla de appsheet así como está y pegarla en sql y listo.  pero bueno, es una vez que hay que cambiar.
+y de esa manera creo que queda todo más modular, menos engorroso.
+ok lets go.
+espero poder terminarlo hoy así ya la semana que viene puedo correr unos tests e implementar nomas.
+empiezo 9:16.
+entonces lo que tengo que hacer es:
+1. en sql generar una tabla caja por cada usuario.
+2. en el backend. quizas no hace falta implementar un modelo por cada caja. o si, creo que si.
+hay una tabla por cada usuario en sql.  hay un modelo por cada usuario.
+caja_cap 
+caja_geo
+tiene que haber un modelo por cada caja.  igual son todos iguales digamos, solo cambia el nombre.
+y controller? quizas uno solo
+route solo uno solo caja/usuario
+y la caja principal? como la populo.
+igual tiene que existir la tabla con todas las cajas para hacer el análisis global
+BUENO, listo.  13:20.  al final lo hice con una sola tabla.  ya aplica la logica para actualizar las columnas.
+me falta ahora pulir mucho.  
+
+29/03/2025
+vista miembros. hace falta? ahora hay una con lore ipsum.
+bueno, tarde 56 mins pero ahi hay una tabla basica.
+me parece que la tabla cobros no tiene sentido.  es lo mismo que filtrar mtos por tipo de mto con valores de todos los sale tranfe.
+
+01/04/2025
+quise hacer la tabla vista de caja para cada usuario y es complicado con el typescript que cada usuario llame su columna.
+al final voy a hacer una tabla para cada usuario, para modularidad.  es medio peligroso creo que por cada entrada estemos copiando
+y pegando todos los saldos.
+asi que una tabla en db por cada usuario.  todas iguales.  un modelo por cada caja.
+y una tabla general de caja que llama todos los saldos.
+
+también hay que sacar la tabla pagos, no tiene sentido.  
+
+8:49 empiezo.
+13:30 termino.
+listo. cada usuario tiene su caja, con vista en el FE.
+
+ahora tengo que adaptar toda la logica de los cobros y pagos a caja.
+y los pagos?
+cada uno que vea sus propios pagos.
+en este caso no hace falta que cada uno tenga su tabla creo.
+o si?
+no hace falta que cada usuario vea las opciones de pagar AYSA y todas las facturas, solo FAM.
+vista de pagos de sueldos: solo yo y geo.
+y cada uno puede cargar sus pagos.
+
+para tener un sitemap dinamico, hago estos cambios:
+
+ERROR in ./src/components/navbars/navbar-horizontal/NavbarTopNav.tsx 18:14-24
+export 'routes' (imported as 'routes') was not found in 'sitemap' (possible exports: RoutesComponent, default)
+
+ERROR in ./src/components/navbars/navbar-vertical/NavbarVertical.tsx 47:22-32
+export 'routes' (imported as 'routes') was not found in 'sitemap' (possible exports: RoutesComponent, default)
+
+webpack compiled with 2 errors and 1 warning
+ERROR in src/components/navbars/navbar-horizontal/NavbarTopNav.tsx:4:22
+TS2724: '"sitemap"' has no exported member named 'routes'. Did you mean 'Route'?
+    2 | import { useEffect, useState } from 'react';
+    3 | import { Dropdown, Nav } from 'react-bootstrap';
+  > 4 | import { RouteItems, routes } from 'sitemap';
+      |                      ^^^^^^
+    5 | import TopNavMegaMenu from './TopNavMegaMenu';
+    6 | import TopNavItem from './TopNavItem';
+    7 | import { useBreakpoints } from 'providers/BreakpointsProvider';
+
+ERROR in src/components/navbars/navbar-horizontal/NavbarTopNav.tsx:13:19
+TS7006: Parameter 'route' implicitly has an 'any' type.
+    11 |   return (
+    12 |     <Nav className="navbar-nav-top pb-4 pb-lg-0 scrollbar">   
+  > 13 |       {routes.map(route => (
+       |                   ^^^^^
+    14 |         <NavbarTopNavItem route={route} key={route.label} />  
+    15 |       ))}
+    16 |     </Nav>
+
+ERROR in src/components/navbars/navbar-vertical/NavbarVertical.tsx:2:10
+TS2724: '"sitemap"' has no exported member named 'routes'. Did you mean 'Route'?
+    1 | import { Nav, Navbar } from 'react-bootstrap';
+  > 2 | import { routes } from 'sitemap';
+      |          ^^^^^^
+    3 | import { capitalize } from 'helpers/utils';
+    4 | import NavbarVerticalMenu from './NavbarVerticalMenu';
+    5 | import {
+
+ERROR in src/components/navbars/navbar-vertical/NavbarVertical.tsx:41:27
+TS7006: Parameter 'route' implicitly has an 'any' type.
+    39 |           <div className="navbar-vertical-content">
+    40 |             <Nav className="flex-column" as="ul" id="navbarVerticalNav">
+  > 41 |               {routes.map(route => (
+       |                           ^^^^^
+    42 |                 <Nav.Item key={route.label}>
+    43 |                   {!route.labelDisabled && (
+    44 |                     <>
+
+porque la version de grok no hace:
+export const routes: RouteItems[]
+
+sino que hace:
+export default getRoutes;

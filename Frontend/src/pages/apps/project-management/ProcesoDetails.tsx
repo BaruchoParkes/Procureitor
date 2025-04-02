@@ -15,7 +15,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import  axios  from 'axios'
 import { useParams } from 'react-router-dom';
 import { Proceso, procesoInicial } from 'data/project-management/procesos';
-import { Member } from 'data/miembros';
+import { Miembro } from 'data/miembros';
 import {NavLink} from 'react-router-dom';
 import Select, { SingleValue } from 'react-select';
 

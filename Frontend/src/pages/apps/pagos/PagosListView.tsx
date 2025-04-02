@@ -12,15 +12,25 @@ import AdvanceTableProvider from 'providers/AdvanceTableProvider';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect} from 'react'
+import { useAuth } from 'providers/AuthProvider';
+
 
 
 
 const PagosListView = () => {
 
   const [pagos, setpagos] = useState([])
+  const { user, loading, logout } = useAuth();
+
 
   useEffect(() => {
     const fetchPagos = async () => {  
+
+
+      if(user?.nivel_acceso === 'socio')
+      {
+
+
       try{
         const response = await axios.get(`/pagos`)
         const data = await response.data
@@ -29,6 +39,20 @@ const PagosListView = () => {
       catch(error){
         console.error('ha habido un error: ', error)
       }
+    }     else if(user?.nivel_acceso === 'usuario')
+      {
+
+
+        try{
+          const response = await axios.get(`/pagos/usuario/${user.iniciales}`)
+          const data = await response.data
+          setpagos(data)
+        }
+        catch(error){
+          console.error('ha habido un error: ', error)
+        }
+      }
+
     };    
       fetchPagos()
     }, 

@@ -30,8 +30,8 @@ const MainLayout = () => {
 
       <div className={classNames(contentClass, 'content')}>
         <Outlet />
-        <ChatWidget />
-      </div>
+{/*         <ChatWidget />
+ */}      </div>
     </Container>
   );
 };

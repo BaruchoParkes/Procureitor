@@ -63,17 +63,14 @@ let procesosController = {
 
   index: function(req, res, next) {
     db.Proc.findAll()
-
     .then(function(data){
       // return res.send(data);
       let procList = data;
       //res.render('procesos', { title: 'PROCESOS', listaProcesos: procList});
     })
-
     .catch(function(e){
       console.log(e)
     })
-
     },
 
     show: function(req, res, next) {

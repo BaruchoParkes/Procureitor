@@ -1,4 +1,6 @@
 const { DataTypes } = require('sequelize');
+const bcrypt = require('bcryptjs');
+
 
 module.exports = function (sequelize) {
   let alias = 'Miembro';
@@ -34,16 +36,28 @@ module.exports = function (sequelize) {
     Condicion_Impositiva: { type: DataTypes.STRING },
     Sueldos: { type: DataTypes.STRING },
     miemID: { type: DataTypes.STRING, primaryKey: true },
-    contrasena: { type: DataTypes.STRING },
+    password: { type: DataTypes.STRING },
     usuario: { type: DataTypes.STRING },
-    lex_id: { type: DataTypes.STRING }
+    lex_id: { type: DataTypes.STRING },
+    avatar: { type: DataTypes.STRING },
+    nivel_acceso: { type: DataTypes.STRING }
 
   };
 
   let config = {
     tableName: 'MIEM',
     timestamps: false,
-    underscored: false
+    underscored: false,
+    hooks: {
+      beforeCreate: async (miembro) => {
+        miembro.password = await bcrypt.hash(miembro.password, 10);
+      },
+      beforeUpdate: async (miembro) => {
+        if (miembro.changed('password')) {
+          miembro.password = await bcrypt.hash(miembro.password, 10);
+        }
+      }
+    }
   };
 
   const Miembros = sequelize.define(alias, cols, config);
@@ -55,6 +69,10 @@ module.exports = function (sequelize) {
       sourceKey: 'miemID',       // Primary key in Miembro
       as: 'cobros'       // Alias for the relationship
     });
+  };
+
+  Miembros.prototype.validPassword = async function (password) {
+    return await bcrypt.compare(password, this.password);
   };
 
   return Miembros;

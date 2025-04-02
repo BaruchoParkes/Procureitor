@@ -7,20 +7,26 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { MovimientoDeCaja } from 'data/project-management/movimientoDeCaja';
 import { Link } from 'react-router-dom';
+import { useAuth } from 'providers/AuthProvider';
+
 
 const CajaListView = () => {
   const [caja, setCaja] = useState<MovimientoDeCaja[]>([]);
+  const { user, loading, logout } = useAuth();
 
   useEffect(() => {
-    const fetchCaja = async () => {
-      try {
-        const response = await axios.get('/caja/cajajson');
-        console.log('Fetched caja data:', response.data); // Debug log
-        setCaja(response.data);
-      } catch (error) {
-        console.error('Ha habido un error:', error);
+
+    let fetchCaja =  async () => {
+
+        try {
+          const response = await axios.get(`/caja/${user?.iniciales}`);
+          console.log('Fetched caja data:', response.data); // Debug log
+          setCaja(response.data);
+        } catch (error) {
+          console.error('Ha habido un error:', error);
+        }
       }
-    };
+
     fetchCaja();
   }, []);
 
@@ -31,6 +37,8 @@ const CajaListView = () => {
     pagination: true,
     sortable: true
   });
+
+  console.log(caja)
 
   return (
     <div>

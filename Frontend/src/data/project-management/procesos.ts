@@ -7,7 +7,6 @@ import bg56 from 'assets/img/generic/56.png';
 import bg57 from 'assets/img/generic/57.png';
 
 import { BadgeBg } from 'components/base/Badge';
-import { Member, members } from 'data/miembros';
 import axios from 'axios';
 
 

@@ -9,9 +9,11 @@ import { Cobro, cobroInicial } from 'data/project-management/Cobro';
 import axios, { AxiosError } from 'axios';
 import { TextEditor } from 'components/Cap/TextEditor';
 import { MovimientoDeCaja } from 'data/project-management/movimientoDeCaja';
+import { useAuth } from 'providers/AuthProvider';
+
 
 const MovimientoComponent = () => {
-
+  const { user, loading, logout } = useAuth();
   const navigate = useNavigate();
 
   const [mto, setMto] = useState<Movimiento>({
@@ -139,7 +141,9 @@ const MovimientoComponent = () => {
     setMto(prev => ({
       ...prev,
       tipoDeMovimiento: selectedTipo.tipoMtoID,
+      
       descripcion: selectedTipo.tituloEscrito || prev.descripcion // Use tmto.tituloEscrito, preserve user edits if present
+  
     }));
   };
 
@@ -152,7 +156,7 @@ const MovimientoComponent = () => {
   };
 
   const handleNotasChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCobro(prev => ({ ...prev, Notas: event.target.value }));
+    setCobro(prev => ({ ...prev, notas: event.target.value }));
   };
 
   const handleQuienCobraChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -179,7 +183,7 @@ const MovimientoComponent = () => {
         fechaDeRealizacion: fecha,
         cobros_fk: mtoToSave.cobros_fk,
         tipoDeMovimiento: mtoToSave.tipoDeMovimiento,
-        usuario: localStorage.getItem('iniciales')
+        usuario: user?.iniciales
       });
       navigate(-1);
     } catch (error) {
@@ -214,7 +218,7 @@ const MovimientoComponent = () => {
         const cajaData = {
           monto: cobro.monto || 0,
           categoria: 'Cobro', // Adjust as needed
-          usuario: localStorage.getItem('iniciales') || 'unknown',
+          usuario: user?.iniciales || 'unknown',
           cobros_fk: response.data,
           cobro_pago: 'c',
           notas: cobro.notas,

@@ -10,18 +10,19 @@ import { stringify } from 'querystring';
 
 const SignInForm = ({ layout }: { layout: 'simple' | 'card' | 'split' }) => {
 
-
 const navigate = useNavigate();
 
 const [usuario, setusuario] = useState <string> ('')
-const [contrasena, setcontrasena] = useState <string> ('')
+const [password, setPassword] = useState <string> ('')
+const [error, setError] = useState('');
+
 
 const handleUsuarioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   setusuario(event.target.value);
 };
 
-const handlecontrasenaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  setcontrasena(event.target.value);
+const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  setPassword(event.target.value);
 };
 
 const esLoginValido = (usuario: string, contrasena: string) => {
@@ -44,37 +45,26 @@ const esLoginValido = (usuario: string, contrasena: string) => {
 
 }
 const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-  e.preventDefault(); // Prevent default form submission
-  if (esLoginValido(usuario, contrasena))
-  {
-    localStorage.setItem('usuario', usuario)
-    let id: string = '';
-    switch(usuario) {
-      case'SilviaG':
-        id = '5yURv0uW0H'
-    }
+  e.preventDefault();
     try {
-      const response = await axios.get(`/miembros/id/${id}`)
-      const data = await response.data
-      localStorage.setItem('iniciales', data.Iniciales)
-      localStorage.setItem('miemID', data.miemID)
-      navigate('/apps/project-management/procesos-list-view')
-    } 
-    catch (error) {
-      console.error('Error updating:', error);
-    }
+      console.log(usuario)
+      console.log(password)
+
+      console.log('Frontend: Current time:', new Date().toISOString());
+
+
+      const response = await axios.post('/auth/login', { usuario, password });
+      localStorage.setItem('token', response.data.token);
+      navigate('/apps/project-management/procesos-list-view');
+    } catch (err) {
+      setError('Invalid credentials');
+    }  
   }
-  else {
-    setusuario('')
-    setcontrasena('')
-    alert('ingrese credenciales validas')
-  }
-};
 
 return (
   <>
     <div className="text-center mb-7">
-      <h3 className="text-body-highlight">Registrarse</h3>
+      <h3 className="text-body-highlight">Ingresar a Procureitor</h3>
     </div>
     <Form.Group className="mb-3 text-start">
       <Form.Label htmlFor="email">Usuario</Form.Label>
@@ -88,7 +78,7 @@ return (
           onChange={handleUsuarioChange}
 
         />
-        <FontAwesomeIcon icon={faUser} className="text-body fs-9 form-icon" />
+         <FontAwesomeIcon icon={faUser} className="text-body fs-9 form-icon" />
       </div>
     </Form.Group>
     <Form.Group className="mb-3 text-start">
@@ -99,8 +89,8 @@ return (
           type="password"
           className="form-icon-input"
           placeholder="Contraseña"
-          value={contrasena}
-          onChange={handlecontrasenaChange}
+          value={password}
+          onChange={handlePasswordChange}
         />
         <FontAwesomeIcon icon={faKey} className="text-body fs-9 form-icon" />
       </div>

@@ -19,7 +19,8 @@ const cols = {
     paga:{type:dataTypes.STRING},
     fechadepago:{type:dataTypes.STRING},
     created_at: {type:dataTypes.DATE},
-    usuario :{type:dataTypes.STRING}	
+    usuario :{type:dataTypes.STRING}, 
+    categoria:{type:dataTypes.STRING}
 }
 
 let config ={

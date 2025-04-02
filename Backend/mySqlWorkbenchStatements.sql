@@ -14,7 +14,7 @@ drop table promtos;
 select * from mtosadpview; 
 select * from miem;
 
-select miemID from miem where iniciales = 'CAP';
+select miemID from miem where Iniciales = 'CAP';
 
 
 UPDATE miem SET contrasena = 'contrasena', usuario = 'usuario' WHERE Iniciales = 'MVP';
@@ -2055,7 +2055,7 @@ SELECT
     PROC.dema,
     PROC.obse,
     PROC.exp1,
-    miem.iniciales,
+    miem.Iniciales,
     ADP.tipoDeProceso,
     ADP.estadoProcesal,
     mtos.responsable,

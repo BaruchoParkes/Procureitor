@@ -7,6 +7,10 @@ import ActionDropdownItems from 'components/common/ActionDropdownItems';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from 'providers/AuthProvider';
+
+
+
 
 // Define columns for MovimientoDeCaja
 export const cajaListTableColumns: ColumnDef<MovimientoDeCaja>[] = [
@@ -44,7 +48,7 @@ export const cajaListTableColumns: ColumnDef<MovimientoDeCaja>[] = [
         to={`/apps/pagos/${original.pagos_fk}`}
         className="text-decoration-none fw-bold fs-8"
       >
-        {original.cajaID}
+        {original.pagos_fk}
       </NavLink>
     ),
     meta: {
@@ -57,10 +61,10 @@ export const cajaListTableColumns: ColumnDef<MovimientoDeCaja>[] = [
     header: 'Cobro',
     cell: ({ row: { original } }) => (
       <NavLink
-        to={`/apps/cobros/movimiento-details/${original.cajaID}`}
+        to={`/apps/cobros/movimiento-details/${original.cobros_fk}`}
         className="text-decoration-none fw-bold fs-8"
       >
-        {original.cajaID}
+        {original.cobros_fk}
       </NavLink>
     ),
     meta: {
@@ -71,30 +75,21 @@ export const cajaListTableColumns: ColumnDef<MovimientoDeCaja>[] = [
 
 
   {
-    accessorKey: 'categoria',
-    header: 'Categoría',
+    accessorKey: 'usuario',
+    header: 'Usuario',
     meta: {
       cellProps: { className: 'white-space-nowrap py-4' },
       headerProps: { style: { width: '5%' } }
     }
   },
   {
-    accessorKey: 'usuario',
-    header: 'Usuario',
-    meta: {
-      cellProps: { className: 'white-space-nowrap py-4' },
-      headerProps: { style: { width: '15%' } }
-    }
-  },
-  {
-    accessorKey: 'nombre',
-    header: 'Nombre ',
+    accessorKey: 'movimiento',
+    header: 'Movimiento ',
     meta: {
       cellProps: { className: 'white-space-nowrap py-4' },
       headerProps: { style: { width: '20%' } }
     }
   },
-
   {
     accessorKey: 'Notas',
     header: 'Notas',
@@ -114,6 +109,20 @@ export const cajaListTableColumns: ColumnDef<MovimientoDeCaja>[] = [
     }
   },
   {
+    accessorKey: `Saldo`,
+    header: 'Saldo',
+    cell: ({ row: { original } }) =>
+
+
+      original.saldo,
+
+      
+    meta: {
+      cellProps: { className: 'white-space-nowrap py-4' },
+      headerProps: { style: { width: '10%' } }
+    }
+  }
+/*   {
     id: 'action',
     header: 'Acciones',
     cell: ({ row: { original } }) => (
@@ -129,7 +138,7 @@ export const cajaListTableColumns: ColumnDef<MovimientoDeCaja>[] = [
       cellProps: { className: 'text-end py-4' }
     }
   }
-];
+ */];
 
 const CajaListTable = () => {
   const [cajaData, setCajaData] = useState<MovimientoDeCaja[]>([]);

@@ -1,5 +1,6 @@
 import { Nav, Navbar } from 'react-bootstrap';
-import { routes } from 'sitemap';
+//import { routes } from 'sitemap';
+import getRoutes, { RouteItems } from 'sitemap'; // GROK: Import getRoutes
 import { capitalize } from 'helpers/utils';
 import NavbarVerticalMenu from './NavbarVerticalMenu';
 import {
@@ -11,8 +12,11 @@ import Button from 'components/base/Button';
 import NavbarTopNav from '../navbar-horizontal/NavbarTopNav';
 import { useBreakpoints } from 'providers/BreakpointsProvider';
 import NavbarVerticalCollapseProvider from './NavbarVerticalCollapseProvider';
+import { useAuth } from 'providers/AuthProvider';
 
 const NavbarVerical = () => {
+  const { user } = useAuth();
+  const routes = getRoutes(user?.nivel_acceso || null);
   const {
     config: {
       navbarPosition,
@@ -38,7 +42,7 @@ const NavbarVerical = () => {
         <Navbar.Collapse id="navbarVerticalCollapse" in={openNavbarVertical}>
           <div className="navbar-vertical-content">
             <Nav className="flex-column" as="ul" id="navbarVerticalNav">
-              {routes.map(route => (
+              {routes.map((route: RouteItems ) => (
                 <Nav.Item key={route.label}>
                   {!route.labelDisabled && (
                     <>

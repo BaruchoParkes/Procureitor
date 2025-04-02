@@ -20,5 +20,5 @@ export interface MovimientoDeCaja {
   caja_MVP : number,
   caja_ZCC : number,
   caja_Sucesion : number,
-  nombre: string   
+  movimiento: string   
 }

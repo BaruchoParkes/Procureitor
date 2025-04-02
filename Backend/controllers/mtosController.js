@@ -250,7 +250,7 @@ let mtosController = {
           include: [
             {
               model: db.Miembro, // Nested include for Miembro
-              attributes: ['Iniciales'], // Only fetch 'iniciales'
+              attributes: ['Iniciales'], // Only fetch 'Iniciales'
             },
           ]
         },

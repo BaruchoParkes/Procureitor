@@ -18,6 +18,8 @@ var procEstM2mRouter = require('./routes/procEstM2m');
 var gastosRouter = require('./routes/gastos');
 var pagosRouter = require('./routes/pagos');
 var cajaRouter = require('./routes/caja');
+const authRoutes = require('./routes/auth');
+
 
 const cors = require('cors');
 
@@ -46,7 +48,7 @@ app.use('/resumenes', resumenesRouter);
 app.use('/gastos', gastosRouter);
 app.use('/pagos', pagosRouter); 
 app.use('/caja', cajaRouter); 
-
+app.use('/auth', authRoutes);
 
 //Serve React Frontend
 app.use(express.static(path.join(__dirname, '../frontend/build')));

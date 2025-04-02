@@ -6,20 +6,21 @@ import SettingsPanelProvider from 'providers/SettingsPanelProvider';
 import { RouterProvider } from 'react-router-dom';
 import { router } from 'Routes';
 import ChatWidgetProvider from 'providers/ChatWidgetProvider';
+import { AuthProvider } from 'providers/AuthProvider'; // Add this
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <AppProvider>
-      <SettingsPanelProvider>
-        <ChatWidgetProvider>
-          <BreakpointsProvider>
-            <RouterProvider router={router} />
-          </BreakpointsProvider>
-        </ChatWidgetProvider>
-      </SettingsPanelProvider>
-    </AppProvider>
+      <AppProvider>
+        <SettingsPanelProvider>
+          <ChatWidgetProvider>
+            <BreakpointsProvider>
+              <RouterProvider router={router} />
+            </BreakpointsProvider>
+          </ChatWidgetProvider>
+        </SettingsPanelProvider>
+      </AppProvider>
   </React.StrictMode>
 );

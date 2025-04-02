@@ -24,7 +24,7 @@ const NavItems = () => {
       <Nav.Item>
         <ThemeToggler className="px-2" />
       </Nav.Item>
-      <Nav.Item
+{/*       <Nav.Item
         className={classNames({
           'd-lg-none':
             navbarPosition === 'vertical' || navbarPosition === 'dual'
@@ -33,8 +33,8 @@ const NavItems = () => {
         <Nav.Link onClick={() => setOpenSearchModal(!openSearchModal)}>
           <FeatherIcon icon="search" size={19} style={{ marginBottom: 2 }} />
         </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
+      </Nav.Item> */}
+{/*       <Nav.Item>
         <Dropdown autoClose="outside" className="h-100">
           <Dropdown.Toggle
             as={Link}
@@ -46,8 +46,8 @@ const NavItems = () => {
           </Dropdown.Toggle>
           <NotificationDropdownMenu />
         </Dropdown>
-      </Nav.Item>
-      <Nav.Item>
+      </Nav.Item> */}
+{/*       <Nav.Item>
         <Dropdown autoClose="outside" className="h-100">
           <Dropdown.Toggle
             as={Link}
@@ -73,9 +73,9 @@ const NavItems = () => {
               <circle cx="14" cy="2" r="2" fill="currentColor"></circle>
             </svg>
           </Dropdown.Toggle>
-          <NineDotMenu />
-        </Dropdown>
-      </Nav.Item>
+         <NineDotMenu />
+         </Dropdown>
+      </Nav.Item> */}
       <Nav.Item>
         <Dropdown autoClose="outside" className="h-100">
           <Dropdown.Toggle
@@ -90,7 +90,7 @@ const NavItems = () => {
         </Dropdown>
       </Nav.Item>
 
-      <Modal
+{/*       <Modal
         show={openSearchModal}
         onHide={() => setOpenSearchModal(false)}
         className="search-box-modal mt-15"
@@ -105,7 +105,7 @@ const NavItems = () => {
             <SearchResult />
           </DropdownSearchBox>
         </Modal.Body>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

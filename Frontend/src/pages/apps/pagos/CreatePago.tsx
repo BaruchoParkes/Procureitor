@@ -6,9 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
 import { pagoInicial, Pago } from 'data/pagos/pago';
 import { TipoDeGasto, tipoDeGastoInicial } from 'data/pagos/tipoDeGasto';
+import { useAuth } from 'providers/AuthProvider';
 
 const CreatePago = () => {
   const navigate = useNavigate();
+  const { user, loading, logout } = useAuth();
   const [pago, setPago] = useState<Pago>(pagoInicial);
   const [tiposDeGastos, setTiposDeGastos] = useState<TipoDeGasto[]>([]);
 
@@ -17,7 +19,6 @@ const CreatePago = () => {
     const fetchTGasto = async () => {
       try {
         const response = await axios.get('/gastos');
-        console.log('Fetched tipos de gastos:', response.data);
         setTiposDeGastos(response.data);
       } catch (error) {
         console.error('Error fetching tipos de gastos:', error);
@@ -34,6 +35,7 @@ const CreatePago = () => {
       ...prev,
       gastoIdFkEnPagos: selectedTipo.gastoId,
       concepto: selectedTipo.gasto,
+      categoria: selectedTipo.concepto,
       pagoLabel: `${selectedTipo.gasto} - ${prev.fechadepago || new Date().toISOString().split('T')[0]}`
     }));
   };
@@ -121,6 +123,7 @@ const CreatePago = () => {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       console.log('Pago created with ID:', response.data);
+      pago.pagoId = response.data;
       navigate('/apps/pagos/pagos-list-view'); // Adjust route as needed
     } catch (error) {
       console.error('Error creating pago:', (error as AxiosError).response?.data || (error as AxiosError).message);
@@ -128,9 +131,10 @@ const CreatePago = () => {
 
     if (pago.estado === 'Pagado') {
       const cajaData = {
-        monto: pago.importe || 0,
-        categoria: 'Pago', // Adjust as needed
-        usuario: localStorage.getItem('iniciales') || 'unknown',
+        monto: pago.importe * (-1)|| 0,
+        categoria: pago.categoria, // Adjust as needed
+        nombre: pago.pagoLabel,
+        usuario: user?.iniciales || 'unknown',
         pagos_fk: pago.pagoId,
         cobro_pago: 'p',
         notas: pago.aclaracion,
@@ -201,7 +205,7 @@ const CreatePago = () => {
               <option value="IS">IS</option>
               <option value="MVP">MVP</option>
               <option value="MSJ">MSJ</option>
-              <option value="SV">ISV</option>
+              <option value="ISV">ISV</option>
               <option value="ZCC">ZCC</option>
               <option value="EA">EA</option>
               <option value="SUCESION">SUCESION</option>

@@ -210,29 +210,40 @@ import TravelAgencyLayout from 'layouts/TravelAgencyLayout';
 import TravelLandingLayout from 'layouts/TravelLandingLayout';
 import MovimientoComponent from 'pages/apps/project-management/MovimientoComponent';
 import ResumenComponent from 'pages/apps/project-management/ResumenComponent';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ProtectedRoute from 'components/modules/auth/ProtectedRoute';
+import { AuthProvider } from 'providers/AuthProvider';
 
 const routes: RouteObject[] = [
+
+
   {
-    element: <App />,
+    element: 
+    <AuthProvider>
+      <App />
+    </AuthProvider>,
     children: [
       {
         path: '/',
         element: (
+          <AuthProvider>
           <MainLayoutProvider>
             <MainLayout />
           </MainLayoutProvider>
+          </AuthProvider>
+
         ),
         children: [
-          {
+          /* {
             index: true,
             element: <Ecommerce />
           },
-          {
+ */          {
             path: '/dashboard',
             children: [
               {
                 path: 'project-management',
-                element: <ProjectManagement />
+                element: <ProjectManagement /> 
               },
               {
                 path: 'crm',

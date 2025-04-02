@@ -82,6 +82,18 @@ show: function(req, res, next) {
       res.status(500).send('An error occurred while updating the record');
     })
   },
+
+  usuario: function(req, res, next) {
+    let usuario = req.params.usuario
+    db.Pagos.findAll({where: {paga : usuario}}
+    )
+      .then(function(data){
+        res.send(data);
+    })
+    .catch(function(e){
+      console.log(e)
+    })
+  }
   
 };
 

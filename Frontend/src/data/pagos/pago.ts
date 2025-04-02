@@ -7,7 +7,6 @@ import bg56 from 'assets/img/generic/56.png';
 import bg57 from 'assets/img/generic/57.png';
 
 import { BadgeBg } from 'components/base/Badge';
-import { Member, members } from 'data/miembros';
 
 
 
@@ -33,7 +32,8 @@ export interface Pago {
   estado: string,
   paga: string,
   fechadepago: Date | string | null,
-  usuario: string
+  usuario: string,
+  categoria: string,
 }
 
 
@@ -52,7 +52,8 @@ export const pagoInicial: Pago ={
   estado: "",
   paga: "",
   fechadepago: new Date,
-  usuario:""
+  usuario:"",
+  categoria: ""
 
 }
 

@@ -1,5 +1,5 @@
 export interface MovimientoDeCaja {
-  cajaID	: number,
+  id	: number,
   created_at :Date,
   pagos_fk :string,
   cobros_fk : number,

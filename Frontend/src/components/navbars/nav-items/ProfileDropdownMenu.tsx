@@ -5,7 +5,7 @@ import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 import Scrollbar from 'components/base/Scrollbar';
 import classNames from 'classnames';
-import defaultAvatar from 'assets/img/team/72x72/57.webp';
+import defaultAvatar from 'assets/img/team/72x72/avatar.webp';
 import { useAuth } from 'providers/AuthProvider';
 
 interface ProfileDropdownMenuProps {
@@ -20,8 +20,17 @@ const ProfileDropdownMenu: React.FC<ProfileDropdownMenuProps> = ({ className }) 
   ]);
 
   if (loading) {
-    return <div>Loading...</div>; // Optional loading state
+    return <div>Loading...</div>;
   }
+
+
+  // Base URL for backend assets (adjust as needed)
+  const baseURL = 'http://localhost:2000';
+  const avatarSrc = user?.avatar
+    ? typeof user.avatar === 'string' && !user.avatar.startsWith('http')
+      ? `${baseURL}/${user.avatar}` // Prepend baseURL if relative path
+      : user.avatar
+    : defaultAvatar; // Fallback to defaultAvatar
 
   return (
     <Dropdown.Menu
@@ -34,7 +43,7 @@ const ProfileDropdownMenu: React.FC<ProfileDropdownMenuProps> = ({ className }) 
       <Card className="position-relative border-0">
         <Card.Body className="p-0">
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 pt-4 pb-3">
-            <Avatar src={user?.avatar || defaultAvatar} size="xl" />
+            <Avatar src={avatarSrc} size="xl" />
             <h6 className="text-body-emphasis">
               {user ? `${user.nombre}` : 'Not Logged In'}
             </h6>

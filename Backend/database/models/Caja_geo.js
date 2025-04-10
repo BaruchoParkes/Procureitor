@@ -5,7 +5,7 @@ module.exports = function (sequelize, dataTypes){
 
 let alias = 'Caja_geo' // mismo  nomnre q el modelo, nombre con el cual sequelize identificara al modelo
 const cols = {
-    caja_geo_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     pagos_fk :{type:dataTypes.INTEGER},
     cobros_fk : {type: DataTypes.INTEGER},
     created_at	:{type:dataTypes.DATE},

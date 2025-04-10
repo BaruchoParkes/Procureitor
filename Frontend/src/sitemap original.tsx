@@ -53,12 +53,20 @@ export const routes: RouteItems[] = [
 
     },
     {
-      name: 'pendientes',
+      name: 'movimientos pendientes',
       icon: 'list',
       path: '/apps/project-management/pendientes-list-view',
       pathName: 'project-management-pendientes-list-view',
       active: true
     },
+    {
+      name: 'cobros pendientes',
+      icon: 'list',
+      path: '/apps/project-management/pendientes-list-view',
+      pathName: 'project-management-pendientes-list-view',
+      active: true
+    },
+
 /*     {
       name: 'calendar',
       icon: 'calendar',

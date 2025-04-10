@@ -6,6 +6,8 @@ let gastosController = require('../controllers/gastosController');
 /* GET home page. */
 router.get('/', gastosController.index);
 router.get('/id/:id', gastosController.show);
+router.get('/usuarios', gastosController.usuarios);
+
 
 
 module.exports = router;

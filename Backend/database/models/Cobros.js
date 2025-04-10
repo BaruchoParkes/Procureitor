@@ -6,8 +6,7 @@ module.exports = function (sequelize) {
   const cols = {
 
     cobro_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    createdAt: { type: DataTypes.DATE },
-    fecha: { type: DataTypes.DATE },
+    created_at: { type: DataTypes.DATE },
     usuario: { type: DataTypes.STRING },
     proc: { type: DataTypes.STRING },
     capital_honorarios: { type: DataTypes.STRING },
@@ -15,12 +14,12 @@ module.exports = function (sequelize) {
     PCL: { type: DataTypes.INTEGER },
     cuota: { type: DataTypes.STRING },
     quien_cobra: { type: DataTypes.STRING }, // Foreign key to Miembro.miemID
-    cobrado_sn: { type: DataTypes.BOOLEAN },
+    nombre: { type: DataTypes.STRING },
     notas: { type: DataTypes.STRING },
-    actor_moroso_sn: { type: DataTypes.STRING },
+    estado: { type: DataTypes.STRING },
     libranza_judicial_transferencia_directa: { type: DataTypes.STRING },
     confirmado_por_receptor: { type: DataTypes.STRING },
-  
+    mtos_fk: { type: DataTypes.INTEGER }
   };
 
   let config = {

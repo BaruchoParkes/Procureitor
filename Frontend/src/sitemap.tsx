@@ -51,23 +51,39 @@ const getRoutes = (nivel_acceso: string | null): RouteItems[] => {
           path: '/apps/project-management/procesos-list-view',
           pathName: 'project-management-procesos-list-view',
           active: true,
-          nivel_acceso: ['usuario', 'supervisor', 'socio', 'pagos'] // Everyone
+          nivel_acceso: ['usuario', 'supervisor', 'LA','socio', 'pagos'] // Everyone
         },
-        {
-          name: 'pendientes',
+/*         {
+          name: 'Movimientos Pendientes',
           icon: 'list',
           path: '/apps/project-management/pendientes-list-view',
           pathName: 'project-management-pendientes-list-view',
           active: true,
-          nivel_acceso: [ 'supervisor', 'socio', 'pagos'] // Everyone
+          nivel_acceso: [ 'supervisor', 'socio', 'pagos', 'usuario']
+        },
+ */        {
+          name: 'Cobros Pendientes', // cada usuario ve sus pagos pendientes
+          icon: 'dollar-sign',
+          path: '/apps/project-management/cobros-list-view',
+          pathName: 'project-management-cobros-list-view',
+          active: true,
+          nivel_acceso: [ 'supervisor', 'socio', 'LA','pagos', 'usuario']
         },
         {
-          name: 'Pagos',
+          name: 'Pagos', // para que cada usuario vea sus pagos
           icon: 'dollar-sign',
           path: '/apps/pagos/pagos-list-view',
           pathName: 'pagos-list-view',
           active: true,
-          nivel_acceso: ['usuario', 'supervisor', 'socio', 'pagos'] // Everyone
+          nivel_acceso: ['usuario','socio', 'pagos', 'LA','supervisor']
+        },
+        {
+          name: 'Pagos Generales', // solo paga FAM y Socios
+          icon: 'dollar-sign',
+          path: '/apps/pagos/pagos-list-view',
+          pathName: 'pagos-list-view',
+          active: true,
+          nivel_acceso: ['socio', 'pagos']
         },
         {
           name: 'Caja',
@@ -75,7 +91,31 @@ const getRoutes = (nivel_acceso: string | null): RouteItems[] => {
           path: '/apps/project-management/caja-list-view',
           pathName: 'caja-list-view',
           active: true,
-          nivel_acceso: ['usuario', 'supervisor', 'socio', 'pagos'] // Everyone
+          nivel_acceso: ['usuario', 'LA','supervisor', 'socio', 'pagos']
+        },
+        {
+          name: 'Caja Cash',
+          icon: 'dollar-sign',
+          path: '/apps/project-management/caja-cash-list-view',
+          pathName: 'caja-cash-list-view',
+          active: true,
+          nivel_acceso: ['supervisor', 'socio']
+        },
+        {
+          name: 'Caja Sucesion',
+          icon: 'dollar-sign',
+          path: '/apps/project-management/caja-sucesion-list-view',
+          pathName: 'caja-sucesion-list-view',
+          active: true,
+          nivel_acceso: ['LA', 'socio']
+        },
+        {
+          name: 'Caja General',
+          icon: 'dollar-sign',
+          path: '/apps/project-management/caja-general-list-view',
+          pathName: 'caja-list-view',
+          active: true,
+          nivel_acceso: ['socio']
         },
         {
           name: 'Miembros',
@@ -83,7 +123,7 @@ const getRoutes = (nivel_acceso: string | null): RouteItems[] => {
           path: '/pages/members',
           pathName: 'members-page',
           active: true,
-          nivel_acceso: ['usuario', 'supervisor', 'socio', 'pagos'] // Everyone
+          nivel_acceso: ['usuario', 'LA','supervisor', 'socio', 'pagos']
         }
       ]
     }

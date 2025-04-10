@@ -1,24 +1,24 @@
 export interface Cobro {
   cobro_id: number | null,
-  createdAt: Date,
+  created_at: Date,
   fecha:  Date,
-  usuario: string,
+  usuario: string | null | undefined,
   proc:string,
   capital_honorarios: string,
   monto: number,
   PCL: number,
   cuota:string,
   quien_cobra: string,
-  cobrado_sn: number,
+  nombre: string,
   notas:string,
-  actor_moroso_sn:string,
+  estado: string,
   libranza_judicial_transferencia_directa: string,
   confirmado_por_receptor: string,
+  mtos_fk: number
 }
 
 export const cobroInicial: Cobro = {
     cobro_id: 0,
-    quien_cobra:'',
     usuario:'',
     proc: '',
     PCL: 0,	
@@ -27,10 +27,13 @@ export const cobroInicial: Cobro = {
     libranza_judicial_transferencia_directa:'',
     fecha:new Date(),
     cuota:'',
-    createdAt: new Date(),
+    created_at: new Date(),
     confirmado_por_receptor:'',
-    cobrado_sn: 0,	
+    quien_cobra: '',	
+    nombre: '',
     capital_honorarios:'',
-    actor_moroso_sn: ''
+    estado: 'Pendiente',
+    mtos_fk: 1
+
   }
   

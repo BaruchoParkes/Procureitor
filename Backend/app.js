@@ -51,6 +51,10 @@ app.use('/caja', cajaRouter);
 app.use('/auth', authRoutes);
 
 //Serve React Frontend
+//app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.get('*', (req, res) => {
   console.log('Serving index.html for', req.url);
@@ -72,5 +76,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 
 module.exports = app;

@@ -306,3 +306,48 @@ export const routes: RouteItems[]
 
 sino que hace:
 export default getRoutes;
+
+nueva pagina: pagos del usuario
+sale de pagos, pero adaptada a un usuario
+nueva pagina: caja general
+
+03/04/2025.
+bueno, tengo vistas condicionadas al nivel de acceso del usuario, un gran avance.
+ya me estoy impacientando y aburriendo poniendo nervioso, quiero pasar a hacecr procesos, ya me aburrí de tanto tiempo desarrollando.
+en fin, a nadie le importa.
+cuestión que
+hoy debería hacer vista cobros pendientes.  los cobros los hice, estuve por dar de baja la tabla, pero ahora me doy cuenta que son importantes.
+cada usuario tiene que tener su vista de cobros pendientes.  y socios vista de todos los cobros.  ahí va a haber un lío con laborales de lomas, 
+porque silvia los carga, andrea los controla, quizas ivana los cobra.  no se como hacer, tendría que haber un "equipo".
+es decir, cada usuario ve sus cobros y los de su equipo.
+pero bueno, 1ero:
+tabla cobros: 
+1) el cobro tiene que tener un nombre.  hasta ahora se llama igual que el proceso.  pero en realidad debería llamarse:
+autos (resumidos)- c/h-fecha libranza y tener un estado: pendiente, cobrado, cancelado, moroso.
+cuando cobro se cobra, debería enviar un movimiento, para que quede registro en movimientos.
+
+04/04/2025.
+ya me aburrí de estar acá solo desarrollando así que le dije a IS que venga 13.30 a testear.
+son las 10:10.
+en estas 3 horas tengo que dejarla presentable.
+recién saqué la search bar de la top nav bar.  inclusive creo que hay que sacar después toda la top nav bar, no se para qué sirve.
+tengo que después hacer estos tests automatizados, pero bueno, ahora vamos manual.
+1) aplicación muestra los procesos
+2) carga giro correctamene.
+3) giro cardado en movimientos.
+4) giro cargado en cobros pendientes.
+5) desde cobros pendientes lo marco como cobrado y hace update en db
+6) no llega a caja.  
+voy a implementar la lógica: si cobro de marca como cobrado: crear row en caja.  esto ya no estaba hecho?
+voy a tardar media hora.  son las 10:16.
+
+08/04/2025
+hoy tengo poco tiempo son las 11:37. me tengo que ir 13:30. dos horas.
+me gustaría terminar:
+1) caja cash: vista -- listo 11:47
+2) logica de registrar en la(s) caja(s) los cobros y pagos.  por ahora tengo solo la logica cuando hace update de un cobro.
+update a la caja del usuario.
+me falta: caja cash
+logica para los pagos
+generar row en caja general
+vamos!

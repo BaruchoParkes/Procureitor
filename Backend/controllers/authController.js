@@ -19,8 +19,8 @@ const authController = {
       res.json({
         Iniciales: miembro.Iniciales,
         nombre: miembro.Name || 'Unnamed', // Fallback if nombre is missing
-        nivel_acceso: miembro.nivel_acceso
-       // avatar: miembro.avatar || null
+        nivel_acceso: miembro.nivel_acceso,
+        avatar: miembro.avatar || null
       });
     } catch (error) {
       console.error('Error in /auth/me:', error.message, error.stack);

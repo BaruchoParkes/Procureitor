@@ -9,6 +9,10 @@ router.get('/id/:id', cobrosController.show);
 router.get('/create', cobrosController.create);
 router.post('/store', cobrosController.store);
 router.get('/results', cobrosController.search);
-router.post('/update', cobrosController.update);
+router.put('/update/:id', cobrosController.update);
+router.get('/usuario/:usuario', cobrosController.usuario);
+router.get('/pendientes/usuario/:usuario', cobrosController.pendientesUsuario);
+
+
 
 module.exports = router;

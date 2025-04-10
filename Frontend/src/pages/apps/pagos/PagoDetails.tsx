@@ -1,79 +1,84 @@
-import Button from 'components/base/Button';
-import DatePicker from 'components/base/DatePicker';
-import ReactSelect from 'components/base/ReactSelect';
-import PageBreadcrumb from 'components/common/PageBreadcrumb';
-import { defaultBreadcrumbItems } from 'data/commonData';
-import { Col, FloatingLabel, Form, Row } from 'react-bootstrap';
-import Badge from 'components/base/Badge';
-import ProjectDetailsSummary from 'components/modules/project-management/project-details/ProjectDetailsSummary';
-import TaskCompleted from 'components/modules/project-management/project-details/TaskCompleted';
-import Estados from 'components/modules/project-management/project-details/Estados';
-import WorkLoads from 'components/modules/project-management/project-details/WorkLoads';
-import FileListItem from 'components/modules/project-management/todo-list/FileListItem';
-import MovimientosTimeline from 'components/timelines/MovimientosTimeline';
-import { activityTimelineData } from 'data/project-management/activityTimelineData';
-import { attachments } from 'data/project-management/todoListData';
-import { useMainLayoutContext } from 'providers/MainLayoutProvider';
-import { useState, useEffect } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import  axios  from 'axios'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import {pagoInicial, Pago} from 'data/pagos/pago';
-import { Miembro } from 'data/miembros';
-import {NavLink} from 'react-router-dom';
-import Select, { SingleValue } from 'react-select';
-
-
-
+import { pagoInicial, Pago } from 'data/pagos/pago';
 
 const PagoDetails = () => {
-
-  const [pago, setpago] = useState<Pago>(pagoInicial)
-  const { id } = useParams(); // Get the id from the URL
+  const [pago, setPago] = useState<Pago>(pagoInicial);
+  const { id } = useParams();
 
   useEffect(() => {
-    const fetchPago = async () => {  
-    try{
-      const response = await axios.get(`/pagos/id/${id}`)
-      const data = await response.data
-      setpago(data)}
-    catch(error){
-      console.error('ha habido un error: ', error)}
-    };    
+    const fetchPago = async () => {
+      try {
+        const response = await axios.get(`/pagos/id/${id}`);
+        const data = await response.data;
+        console.log('Fetched pago:', data);
+        setPago(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
     fetchPago();
-    }, )
+  }, [id]);
 
-    const [pagoLabel, setpagoLabel] = useState('')
-    const [gastoIdFkEnPagos, setgastoIdFkEnPagos] = useState('')
-    const [concepto, setconcepto] = useState('')
-    const [importe, setimporte] = useState('')
-    const [aclaracion, setaclaracion] = useState('')
-    const [estado, setestado] = useState('')
-    const [paga, setpaga] = useState('')
-    const [fechadepago, setfechadepago] = useState('')
-    const [factura, setfactura] = useState('')
-    const [documento, setdocumento] = useState('')
-    const [comprobante, setcomprobante] = useState('')
-        
+  const baseURL = 'http://localhost:2000';
 
-  return (<>
+  // Helper function to build URL safely
+  const getFileUrl = (file: string | File | null | undefined): string | null => {
+    if (typeof file === 'string') {
+      return `${baseURL}/${file.replace(/\\/g, '/')}`;
+    }
+    return null; // Skip File objects or null/undefined
+  };
 
-  <form>
-    <p>Pago:  {pago.pagoLabel} </p>
-    <p>Aclaración: {pago.aclaracion}</p>
-    <p>Fecha de Carga: {pago.fechaDeCarga}</p>
-    <p>id: {pago.pagoId} </p>
-    <p>Concepto: {pago.concepto} </p>
-    <p>Importe: $ {pago.importe} </p>
-    <p>Estado: {pago.estado}</p>
-    <p>Quien Paga : {pago.paga}</p>
-    <p>Fecha de Pago: {pago.fechadepago?.toString()}</p>
-  </form>
+  const facturaURL = getFileUrl(pago.factura);
+  const documentoURL = getFileUrl(pago.documento);
+  const comprobanteURL = getFileUrl(pago.comprobante);
 
+  console.log('facturaURL:', facturaURL);
 
-  </>)
-}
+  return (
+    <>
+      <form>
+        <p>Pago: {pago.pagoLabel}</p>
+        <p>Aclaración: {pago.aclaracion}</p>
+        <p>Fecha de Carga: {pago.fechaDeCarga}</p>
+        <p>id: {pago.pagoId}</p>
+        <p>Concepto: {pago.concepto}</p>
+        <p>Importe: $ {pago.importe}</p>
+        <p>Estado: {pago.estado}</p>
+        <p>Quien Paga: {pago.paga}</p>
+        <p>Fecha de Pago: {pago.fechadepago?.toString()}</p>
+      </form>
 
+      <div>
+        {facturaURL && (
+          <div>
+            <p>Factura:</p>
+            <img
+              src={facturaURL}
+              alt="Factura"
+              style={{ maxWidth: '100%', height: 'auto' }}
+              onError={(e) => console.error('Image load error:', e)}
+            />
+          </div>
+        )}
+        {documentoURL && (
+          <div>
+            <p>Documento:</p>
+            <img src={documentoURL} alt="Documento" style={{ maxWidth: '100%', height: 'auto' }} />
+          </div>
+        )}
+        {comprobanteURL && (
+          <div>
+            <p>Comprobante:</p>
+            <img src={comprobanteURL} alt="Comprobante" style={{ maxWidth: '100%', height: 'auto' }} />
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
 
 export default PagoDetails;
-

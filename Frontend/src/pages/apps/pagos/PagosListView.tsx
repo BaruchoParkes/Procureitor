@@ -26,33 +26,14 @@ const PagosListView = () => {
   useEffect(() => {
     const fetchPagos = async () => {  
 
-
-      if(user?.nivel_acceso === 'socio')
-      {
-
-
       try{
-        const response = await axios.get(`/pagos`)
+        const response = await axios.get(`/pagos/usuario/${user?.iniciales}`)
         const data = await response.data
         setpagos(data)
       }
       catch(error){
         console.error('ha habido un error: ', error)
       }
-    }     else if(user?.nivel_acceso === 'usuario')
-      {
-
-
-        try{
-          const response = await axios.get(`/pagos/usuario/${user.iniciales}`)
-          const data = await response.data
-          setpagos(data)
-        }
-        catch(error){
-          console.error('ha habido un error: ', error)
-        }
-      }
-
     };    
       fetchPagos()
     }, 
@@ -77,7 +58,7 @@ const PagosListView = () => {
             <span className="fw-normal text-body-tertiary">
             </span>
           </h2>
-          <Link className="btn btn-primary px-5" to="/apps/pagos/createpago">
+          <Link className="btn btn-primary px-5" to="/apps/pagos/createpagousuario">
             <FontAwesomeIcon icon={faPlus} className="me-2" />
             Agregar Nuevo
           </Link>

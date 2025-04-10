@@ -46,8 +46,8 @@ const AuthWrapper: React.FC<AuthProviderProps> = ({ children }) => {
         setUser({
           iniciales: response.data.Iniciales,
           nombre: response.data.nombre,
-          nivel_acceso: response.data.nivel_acceso
-//          avatar: response.data.avatar || null
+          nivel_acceso: response.data.nivel_acceso,
+         avatar: response.data.avatar || null
         });
       } catch (error) {
         console.error('Error fetching user:', error);

@@ -10,6 +10,7 @@ import axios, { AxiosError } from 'axios';
 import { TextEditor } from 'components/Cap/TextEditor';
 import { MovimientoDeCaja } from 'data/project-management/movimientoDeCaja';
 import { useAuth } from 'providers/AuthProvider';
+import BackgroundColorForm from 'components/modules/kanban/create-board/BackgroundColorForm';
 
 
 const MovimientoComponent = () => {
@@ -49,6 +50,9 @@ const MovimientoComponent = () => {
   const [tipos, setTipos] = useState<TipoDeMovimiento[]>([]);
   const [cobro, setCobro] = useState<Cobro>(cobroInicial)
 
+  const autos = `${mto.Proc.ACTO} C/ ${mto.Proc.DEMA}`;
+  const autos_cortos = `${mto.Proc.ACTO.split(" ")[0]} C/ ${mto.Proc.DEMA.split(" ")[0]}`;
+
   // Fetch Movimiento
   useEffect(() => {
     const fetchMto = async () => {
@@ -79,16 +83,18 @@ const MovimientoComponent = () => {
   useEffect(() => {
     if (mto.texto) setTexto(mto.texto);
     if (mto.fechaDeRealizacion) setFecha(mto.fechaDeRealizacion);
-    if (mto.tipoDeMovimiento && tipos.length > 0) {
+    if (mto.tipoDeMovimiento && tipos.length > 0) 
+      { try{
       const selectedTipo = tipos.find(tipo => tipo.tipoMtoID === mto.tipoDeMovimiento) || tipoDeMtoInicial;
-      console.log('Selected TipoDeMovimiento:', selectedTipo);
+    //  console.log('Selected TipoDeMovimiento:', selectedTipo);
       setTmto(selectedTipo);
      // setTipoDelTipo(selectedTipo.tipo);
       // Set initial descripcion from tmto.tituloEscrito if not already set
       /* if (!mto.descripcion) {
         setMto(prev => ({ ...prev, descripcion: selectedTipo.tituloEscrito || '' }));
       } */
-    }
+        }
+    catch{}}
   }, [mto]);
 
   // Fetch Cobro and update descripcion
@@ -109,11 +115,15 @@ const MovimientoComponent = () => {
 
   // Update descripcion dynamically when tranfe changes
   useEffect(() => {
-    const isSaleTranfeActive = ['01', '011', '012', '013', '014', '015', '016', '017', '018'].includes(tmto.tipoMtoID);
+    const isSaleTranfeActive = ['Transferencia'].includes(tmto.tipo);
     if (isSaleTranfeActive && (cobro.monto || cobro.quien_cobra)) {
-      const newDescripcion = `Cobro: $${cobro.monto || 0} - Cobra: ${cobro.quien_cobra || 'Cash'} - ${cobro.cobrado_sn ? 'Cobrado' : 'No Cobrado'}`;
-      console.log('Setting cobro descripcion:', newDescripcion);
+      const newDescripcion = `Cobro: $${cobro.monto || 0} - ${cobro.capital_honorarios} - Cobra: ${cobro.quien_cobra || 'Cash'} - ${cobro.estado}`;
+    //  console.log('Setting cobro descripcion:', newDescripcion);
+      const newNombreCobro = `${autos_cortos || ''} - ${cobro.capital_honorarios} - $ ${cobro.monto} - Cobra: ${cobro.quien_cobra || 'Cash'}`;
+
+      let mtoid = mto.mtoId
       setMto(prev => ({ ...prev, descripcion: newDescripcion }));
+      setCobro(prev => ({ ...prev, nombre: newNombreCobro, mtos_fk: mtoid }));
     }
   }, [cobro, tmto.tipoMtoID]);
 
@@ -141,14 +151,114 @@ const MovimientoComponent = () => {
     setMto(prev => ({
       ...prev,
       tipoDeMovimiento: selectedTipo.tipoMtoID,
-      
-      descripcion: selectedTipo.tituloEscrito || prev.descripcion // Use tmto.tituloEscrito, preserve user edits if present
-  
-    }));
+      descripcion: selectedTipo.tituloEscrito || prev.descripcion // Use tmto.tituloEscrito, preserve user edits if present  
+    }))
+
+    let cobra = ''
+    let ch = ''
+    let estado = ''
+
+    switch (tmto.tipoMtoID){
+      case '011':
+          cobra = "GEO";
+          ch = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+        case '012':
+          cobra = "CAP";
+          ch = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+        case '013':
+          cobra = "MVP";
+          ch = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+        case '014':
+          cobra = "SAG";
+          ch = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+        case '015':
+          cobra = "IS";
+          ch = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+        case '016':
+          cobra = "ISV";
+          ch = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+        case '017':
+          cobra = "ZCC";
+          ch = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+        case '018':
+          cobra = "LA";
+          ch = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+    };
+    setCobro(prev => ({ ...prev, quien_cobra: cobra, capital_honorarios: ch, estado: estado}));
   };
 
   const handleMontoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCobro(prev => ({ ...prev, monto: Number(event.target.value) || 0 }));
+
+    let cobra = ''
+    let concepto = ''
+    let estado = ''
+
+    switch (tmto.tipoMtoID){
+      case '011':
+          cobra = 'GEO';
+          concepto = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+        case '012':
+          cobra = 'CAP';
+          concepto = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+        case '013':
+          cobra = 'MVP';
+          concepto = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+        case '014':
+          cobra = 'SAG';
+          concepto = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+        case '015':
+          cobra = 'IS';
+          concepto = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+        case '016':
+          cobra = 'ISV';
+          concepto = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+        case '017':
+          cobra = 'ZCC';
+          concepto = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+        case '018':
+          cobra = 'LA';          
+          concepto = 'Honorarios';
+          estado = 'Cobrado';
+        break;
+    };
+    setCobro(prev => ({ ...prev, quien_cobra: cobra, capital_honorarios: concepto, estado : estado}));
+    setCobro(prev => ({ ...prev, monto: Number(event.target.value) || 0, usuario: user?.iniciales }));
+  };
+  
+  const handleCHchange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setCobro(prev => ({ ...prev, capital_honorarios: event.target.value}));
+    const newNombreCobro = `${autos_cortos || ''} - ${cobro.capital_honorarios} - $ ${cobro.monto} - Cobra: ${cobro.quien_cobra || 'Cash'}`;
+    setCobro(prev => ({ ...prev, nombre: newNombreCobro }));
   };
 
   const handlePCLChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -168,7 +278,7 @@ const MovimientoComponent = () => {
   };
 
   const handleSelectChangeCobrado = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCobro(prev => ({ ...prev, cobrado_sn: Number(event.target.value) }));
+    setCobro(prev => ({ ...prev, estado: event.target.value }));
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>, updatedMto?: Movimiento) => {
@@ -193,7 +303,7 @@ const MovimientoComponent = () => {
 
   const handleSubmitCobro = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setCobro(prev => ({ ...prev, proc: mto.proc, usuario: mto.usuario }));
+    setCobro(prev => ({ ...prev, proc: mto.proc, usuario: user?.iniciales }));
     const confirmSave = window.confirm(
       `Estas guardando un cobro por un monto de $${cobro.monto || 0} 
       ${ (cobro.PCL>0) ? `PCL por una suma de $${cobro.PCL}`  : ''}
@@ -214,8 +324,8 @@ const MovimientoComponent = () => {
       const newCobroId = response.data; // Assuming response.data is the ID (adjust if it's tranfeId)
       console.log('Cobro created with ID:', response.data);
 
-      if (cobro.cobrado_sn === 1) {
-        const cajaData = {
+       if (cobro.estado === 'Cobrado') {
+          const cajaData = {
           monto: cobro.monto || 0,
           categoria: 'Cobro', // Adjust as needed
           usuario: user?.iniciales || 'unknown',
@@ -223,7 +333,7 @@ const MovimientoComponent = () => {
           cobro_pago: 'c',
           notas: cobro.notas,
           caja: cobro.quien_cobra,
-          created_at: new Date()
+          created_at: new Date(),
         };
 
         console.log('cajaData: ',cajaData)
@@ -235,7 +345,7 @@ const MovimientoComponent = () => {
         }
         catch(error){console.log(error)}
       }
-
+ 
       // Update mto with the new cobro ID
       setMto(prev => {
         const updatedMto = { ...prev, cobros_fk: response.data };
@@ -247,8 +357,6 @@ const MovimientoComponent = () => {
       console.error('Error updating cobro:', (error as AxiosError).response?.data || (error as AxiosError).message);
     }
   };
-
-  const autos = `${mto.Proc.ACTO} C/ ${mto.Proc.DEMA}`;
 
   return (
     
@@ -280,11 +388,11 @@ const MovimientoComponent = () => {
         </Col>
       </Row>
 
-      {(tmto.tipoMtoID === '01' || tmto.tipoMtoID === '011' || tmto.tipoMtoID === '012' ||
-        tmto.tipoMtoID === '013' || tmto.tipoMtoID === '014' || tmto.tipoMtoID === '015' ||
-        tmto.tipoMtoID === '016' || tmto.tipoMtoID === '017' || tmto.tipoMtoID === '018') && (
-        <div id="saleTranfe" className="mb-4 p-3 bg-light border rounded">
+      {(tmto.tipo === 'Transferencia') && (
+          <div id="saleTranfe" className="mb-4 p-3 bg-light border rounded" >
           <Row className="g-3">
+            {/* Column for Monto and Capital/Honorarios */}
+
             <Col xs={12} md={6}>
               <FloatingLabel controlId="monto" label="Monto">
                 <Form.Control
@@ -295,7 +403,19 @@ const MovimientoComponent = () => {
                 />
               </FloatingLabel>
             </Col>
-            <Col xs={12} md={6}>
+            <Col xs={6} md={3}>
+              <FloatingLabel controlId="c/h" label="Capital/Honorarios">
+                <Form.Select
+                  size="lg"
+                  value={cobro.capital_honorarios || ''}
+                  onChange={handleCHchange}
+                >
+                  <option value="Capital">Capital</option>
+                  <option value="Honorarios">Honorarios</option>
+                </Form.Select>
+              </FloatingLabel>
+            </Col>
+            <Col xs={6} md={3}>
               <FloatingLabel controlId="pcl" label="PCL">
                 <Form.Control
                   size="lg"
@@ -304,7 +424,9 @@ const MovimientoComponent = () => {
                   onChange={handlePCLChange}
                 />
               </FloatingLabel>
-            </Col>
+              </Col>
+            
+            {/* Column for Notas */}
             <Col xs={12}>
               <FloatingLabel controlId="notas" label="Notas">
                 <Form.Control
@@ -315,44 +437,65 @@ const MovimientoComponent = () => {
                 />
               </FloatingLabel>
             </Col>
+        
+            {/* Column for Quien Cobra */}
             <Col xs={12} md={6}>
-
-            <Form.Select size="lg" onChange={handleQuienCobraChange} value={cobro.quien_cobra || ''}>
-                <option value="">Select</option>
-                <option value="">Actor</option>
-                <option value="GEO">GEO</option>
-                <option value="SAG">SAG</option>
-                <option value="CAP">CAP</option>
-                <option value="LA	">LA</option>
-                <option value="IS	">IS</option>
-                <option value="MVP">MVP</option>
-                <option value="MSJ">MSJ</option>
-                <option value="SV ">ISV</option>
-                <option value="ZCC">ZCC</option>
-                <option value="EA	">EA</option>
-                <option value="SUCESION">SUCESION</option>              
-            </Form.Select>
-
+              <FloatingLabel controlId="quien_cobra" label="Quien Cobra">
+                <Form.Select
+                  size="lg"
+                  onChange={handleQuienCobraChange}
+                  value={cobro.quien_cobra || ''}
+                >
+                  <option value="">Select</option>
+                  <option value="Actor">Actor</option>
+                  <option value="GEO">GEO</option>
+                  <option value="SAG">SAG</option>
+                  <option value="CAP">CAP</option>
+                  <option value="LA">LA</option>
+                  <option value="IS">IS</option>
+                  <option value="MVP">MVP</option>
+                  <option value="MSJ">MSJ</option>
+                  <option value="ISV">ISV</option>
+                  <option value="ZCC">ZCC</option>
+                  <option value="EA">EA</option>
+                  <option value="SUCESION">SUCESION</option>
+                </Form.Select>
+              </FloatingLabel>
             </Col>
+        
+            {/* Columns for Transferencia/Libranza and Estado */}
             <Col xs={12} md={3}>
-              <Form.Select size="lg" onChange={handleSelectChangeTranfeOLJ} value={cobro.libranza_judicial_transferencia_directa || ''}>
-                {/* <option value="">Select</option> */}
+              <Form.Select
+                size="lg"
+                onChange={handleSelectChangeTranfeOLJ}
+                value={cobro.libranza_judicial_transferencia_directa || ''}
+              >
                 <option value="Transferencia Directa">Transferencia Directa</option>
                 <option value="Libranza Judicial">Libranza Judicial</option>
               </Form.Select>
             </Col>
-            
             <Col xs={12} md={3}>
-              <Form.Select size="lg" onChange={handleSelectChangeCobrado} value={cobro.cobrado_sn || 0 }>
-                <option value = {Number(0)} >No Cobrado</option>
-                <option value = {Number(1)} >Cobrado</option>
-              </Form.Select>
+              <FloatingLabel controlId="estado" label="Estado">
+                <Form.Select
+                  size="lg"
+                  onChange={handleSelectChangeCobrado}
+                  value={cobro.estado || ''}
+                >
+                  <option value="Pendiente">Pendiente</option>
+                  <option value="Cobrado">Cobrado</option>
+                  <option value="Cancelado">Cancelado</option>
+                  <option value="Actor Moroso">Actor Moroso</option>
+                </Form.Select>
+              </FloatingLabel>
             </Col>
           </Row>
+        
+          {/* Submit Button */}
           <div className="mt-3">
             <Button variant="primary" className="px-5" onClick={handleSubmitCobro}>
               Guardar Cobro
             </Button>
+            <span style={{ color: 'black' }}>             {cobro.nombre}</span>
           </div>
         </div>
       )}

@@ -15,16 +15,8 @@ import { useAuth } from 'providers/AuthProvider';
 // Define columns for MovimientoDeCaja
 export const cajaListTableColumns: ColumnDef<MovimientoDeCaja>[] = [
   {
-    accessorKey: 'cajaID',
+    accessorKey: 'id',
     header: 'Caja ID',
-    cell: ({ row: { original } }) => (
-      <NavLink
-        to={`/apps/caja/movimiento-details/${original.cajaID}`}
-        className="text-decoration-none fw-bold fs-8"
-      >
-        {original.cajaID}
-      </NavLink>
-    ),
     meta: {
       cellProps: { className: 'white-space-nowrap py-4' },
       headerProps: { style: { width: '5%' } }
@@ -72,8 +64,6 @@ export const cajaListTableColumns: ColumnDef<MovimientoDeCaja>[] = [
       headerProps: { style: { width: '5%' } }
     }
   },
-
-
   {
     accessorKey: 'usuario',
     header: 'Usuario',

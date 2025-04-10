@@ -12,8 +12,19 @@ import { useState } from 'react';
 import DropdownSearchBox from 'components/common/DropdownSearchBox';
 import SearchResult from 'components/common/SearchResult';
 import classNames from 'classnames';
+import { useAuth } from 'providers/AuthProvider';
+import defaultAvatar from 'assets/img/team/72x72/avatar.webp';
+
 
 const NavItems = () => {
+  const { user, loading, logout } = useAuth();
+  const baseURL = 'http://localhost:2000';
+  const avatarSrc = user?.avatar
+    ? typeof user.avatar === 'string' && !user.avatar.startsWith('http')
+      ? `${baseURL}/${user.avatar}` // Prepend baseURL if relative path
+      : user.avatar
+    : defaultAvatar; // Fallback to defaultAvatar
+
   const {
     config: { navbarPosition }
   } = useAppContext();
@@ -84,7 +95,7 @@ const NavItems = () => {
             className="dropdown-caret-none nav-link pe-0 py-0 lh-1 h-100 d-flex align-items-center"
             variant=""
           >
-            <Avatar src={avatar57} size="l" />
+            <Avatar src={avatarSrc} size="l" />
           </Dropdown.Toggle>
           <ProfileDropdownMenu />
         </Dropdown>

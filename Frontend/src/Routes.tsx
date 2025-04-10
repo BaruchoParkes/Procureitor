@@ -82,14 +82,20 @@ import CreateNewMovimiento from 'pages/apps/project-management/MovimientoCompone
 import PendientesListView from 'pages/apps/project-management/Pendientes';
 import ProcesosListView from 'pages/apps/project-management/ProcesosListView';
 import CajaListView from 'pages/apps/project-management/CajaListView';
+import CajaSucesionListView from 'pages/apps/project-management/CajaSucesionListView';
 
+import CajaCashListView from 'pages/apps/project-management/CajaCashListView';
+import CajaGeneralListView from 'pages/apps/project-management/CajaGeneralListView';
 import ProjectDetails from 'pages/apps/project-management/ProjectDetails';
 import ProcesoDetails from 'pages/apps/project-management/ProcesoDetails';
 import GastosListView from 'pages/apps/pagos/GastosListView';
 import GastoDetails from 'pages/apps/pagos/GastoDetails';
 import PagosListView from 'pages/apps/pagos/PagosListView';
+import CobrosListView from 'pages/apps/project-management/CobrosListView';
 import PagoDetails from 'pages/apps/pagos/PagoDetails';
 import CreatePago from 'pages/apps/pagos/CreatePago';
+import CreatePagoUsuario from 'pages/apps/pagos/CreatePagoUsuario';
+
 import MainLayoutProvider from 'providers/MainLayoutProvider';
 import ProjectTodoList from 'pages/apps/project-management/ProjectTodoList';
 import ProjectBoardView from 'pages/apps/project-management/ProjectBoardView';
@@ -343,7 +349,22 @@ const routes: RouteObject[] = [
                     path: 'caja-list-view',
                     element: <CajaListView />
                   },
-
+                  {
+                    path: 'caja-sucesion-list-view',
+                    element: <CajaSucesionListView />
+                  },
+                  {
+                    path: 'caja-cash-list-view',
+                    element: <CajaCashListView />
+                  },
+                  {
+                    path: 'caja-general-list-view',
+                    element: <CajaGeneralListView />
+                  },
+                  {
+                    path: 'cobros-list-view',
+                    element: <CobrosListView />
+                  },
                   {
                     path: 'pendientes-list-view',
                     element: <PendientesListView />
@@ -376,13 +397,15 @@ const routes: RouteObject[] = [
                   {
                     path: 'pagos-list-view',
                     element: <PagosListView />
-                  }
-                  ,
+                  },
                   {
                     path: 'createpago',
                     element: <CreatePago />
-                  }
-                  ,
+                  },
+                  {
+                    path: 'createpagousuario',
+                    element: <CreatePagoUsuario />
+                  },
                   {
                     path: 'pago-details/:id',
                     element: <PagoDetails />

@@ -13,6 +13,18 @@ index: function(req, res, next) {
   })
 },
 
+usuarios: function(req, res, next) {
+  db.Gastos.findAll(
+    {where : {usuario : 1}}
+  )
+  .then(function(data){
+    res.send(data);
+  })
+  .catch(function(e){
+    console.log(e)
+  })
+},
+
 show: function(req, res, next) {
   let id = req.params.id
   db.Gastos.findByPk( id

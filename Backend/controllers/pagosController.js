@@ -21,26 +21,26 @@ const upload = multer({ storage }).fields([
 
 const pagosController = {
 
-index: function(req, res, next) {
-  db.Pagos.findAll()
-  .then(function(data){
-      return res.send(data); 
-  })
-  .catch(function(e){
-    console.log(e)
-  })
-},
-
-show: function(req, res, next) {
-  let id = req.params.id
-  db.Pagos.findByPk( id)
+  index: function(req, res, next) {
+    db.Pagos.findAll()
     .then(function(data){
-      res.send(data);
-  })
-  .catch(function(e){
-    console.log(e)
-  })
-},
+        return res.send(data); 
+    })
+    .catch(function(e){
+      console.log(e)
+    })
+  },
+
+  show: function(req, res, next) {
+    let id = req.params.id
+    db.Pagos.findByPk(id)
+      .then(function(data){
+        res.send(data);
+    })
+    .catch(function(e){
+      console.log(e)
+    })
+  },
 
   store: async (req, res) => {
     upload(req, res, async (err) => {
@@ -85,10 +85,11 @@ show: function(req, res, next) {
 
   usuario: function(req, res, next) {
     let usuario = req.params.usuario
-    db.Pagos.findAll({where: {paga : usuario}}
+    db.Pagos.findAll(
+      {where: {paga : usuario}}
     )
-      .then(function(data){
-        res.send(data);
+    .then(function(data){
+      res.send(data);
     })
     .catch(function(e){
       console.log(e)

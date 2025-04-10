@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+const { usuario } = require('../../controllers/pagosController');
 
 
 module.exports = function (sequelize, dataTypes){
@@ -7,7 +8,8 @@ let alias = 'Gastos' // mismo  nomnre q el modelo, nombre con el cual sequelize 
 const cols = {
 gastoId:{type:dataTypes.STRING,primaryKey:true},
 gasto:{type:dataTypes.STRING},
-concepto:{type:dataTypes.STRING}
+concepto:{type:dataTypes.STRING},
+usuario:{type:dataTypes.INTEGER}
 }
 
 let config ={

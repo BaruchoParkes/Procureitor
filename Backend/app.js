@@ -7,7 +7,6 @@ let session = require('express-session')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var procesosRouter = require('./routes/procesos');
-var MaViewRouter = require('./routes/MaView');
 var tMtosRouter = require('./routes/tiposDeMtos');
 var tEstadosRouter = require('./routes/tiposDeEstados');
 var mtosRouter = require('./routes/mtos');
@@ -37,7 +36,6 @@ app.use(cors());
 //app.use('/', procesosRouter);
 app.use('/users', usersRouter);
 app.use('/procesos', procesosRouter);
-app.use('/MaView', MaViewRouter);
 app.use('/tMtos', tMtosRouter);
 app.use('/tEstado', tEstadosRouter);
 app.use('/procEstM2m', procEstM2mRouter);

@@ -68,7 +68,7 @@ export const FinancialActivities = () => {
         >
           <Form.Select
             size="sm"
-            className="pe-9 w-auto mt-3 mt-sm-0 mt-xl-3 mt-xxl-0"
+            className="pe-9 w-auto mt-xl-3 mt-xxl-0"
             value={selectedOption}
             onChange={e => setSelectedOption(parseInt(e.target.value))}
           >
@@ -90,7 +90,7 @@ export const FinancialActivities = () => {
           md="auto"
           lg={12}
           xxl="auto"
-          className="mx-auto"
+          className="mx-auto mb-4"
         >
           <div className="d-flex justify-content-center gap-6 gap-xxl-4">
             <Button

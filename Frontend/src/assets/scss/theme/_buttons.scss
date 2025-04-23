@@ -340,3 +340,13 @@ button,
 .btn-link{
   --#{$prefix}btn-font-weight: #{$font-weight-bold};
 }
+
+.circle-btn {
+  height: 2rem;
+  width: 2rem;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--#{$prefix}border-radius-pill);
+}

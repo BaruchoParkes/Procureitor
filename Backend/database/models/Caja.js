@@ -37,7 +37,6 @@ let config ={
 }
 
 const Caja = sequelize.define(alias, cols, config);
-Caja.associate = function (models){
-}
+
 return Caja
 }

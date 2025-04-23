@@ -3,7 +3,7 @@ import FsLightbox, { FsLightboxProps } from 'fslightbox-react';
 interface LightBoxProps extends FsLightboxProps {
   toggler: boolean;
   slide?: number;
-  sources: string[];
+  sources: Array<string | JSX.Element>;
 }
 
 const Lightbox = ({ toggler, slide = 1, sources, ...rest }: LightBoxProps) => {

@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import ChatWidget from 'components/common/chat-widget/ChatWidget';
 import Footer from 'components/footers/Footer';
 import NavbarDual from 'components/navbars/navbar-dual/NavbarDual';
 import NavbarTopHorizontal from 'components/navbars/navbar-horizontal/NavbarTopHorizontal';
@@ -30,8 +29,8 @@ const MainLayout = () => {
 
       <div className={classNames(contentClass, 'content')}>
         <Outlet />
-{/*         <ChatWidget />
- */}      </div>
+        <Footer className={classNames(footerClass, 'position-absolute')} />
+      </div>
     </Container>
   );
 };

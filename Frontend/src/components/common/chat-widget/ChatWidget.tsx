@@ -1,4 +1,8 @@
-import { faChevronDown, faCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronDown,
+  faCircle,
+  faHeadset
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import RevealDropdown, {
   RevealDropdownTrigger
@@ -65,7 +69,14 @@ const ChatWidget = () => {
         <span className="fs-8 btn-text text-primary text-nowrap">
           Chat demo
         </span>
-        <FontAwesomeIcon icon={faCircle} className="text-success fs-9 ms-2" />
+        <span className="ping-icon-wrapper mt-n4 ms-n6 mt-sm-0 ms-sm-2 position-absolute position-sm-relative">
+          <span className="ping-icon-bg" />
+          <FontAwesomeIcon icon={faCircle} className="ping-icon" />
+        </span>
+        <FontAwesomeIcon
+          icon={faHeadset}
+          className="text-primary fs-8 d-sm-none"
+        />
         <FontAwesomeIcon icon={faChevronDown} className="text-primary fs-7" />
       </Button>
     </div>

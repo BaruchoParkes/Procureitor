@@ -243,6 +243,13 @@ const FlightMap = ({ options, ...rest }: MapboxProps) => {
     }
   }, []);
 
+  const handleFullScreen = () => {
+    map.current?.getContainer().requestFullscreen();
+    setTimeout(() => {
+      map.current?.resize();
+    }, 100);
+  };
+
   useEffect(() => {
     map.current?.setStyle(styles[theme]);
   }, [theme]);
@@ -271,8 +278,8 @@ const FlightMap = ({ options, ...rest }: MapboxProps) => {
               <FontAwesomeIcon icon={faMinus} />
             </Button>
             <Button
-              onClick={() => map.current?.getContainer().requestFullscreen()}
-              className="zoomOut mt-md-3"
+              onClick={handleFullScreen}
+              className="zoomOut rounded mt-md-3"
             >
               <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} />
             </Button>

@@ -1,5 +1,5 @@
 export interface Deal {
-  id: string;
+  id: number;
   title: string;
   revenue: number;
   category: string;
@@ -25,7 +25,7 @@ export interface Deal {
 }
 
 export interface DealColumn {
-  id: string;
+  id: number;
   title: string;
   revenue: number;
   deals: Deal[];
@@ -33,12 +33,12 @@ export interface DealColumn {
 
 export const dealColumnsData: DealColumn[] = [
   {
-    id: '1',
+    id: 1,
     title: 'New',
     revenue: 37000,
     deals: [
       {
-        id: '1',
+        id: 101,
         title: 'Jo_Td01',
         revenue: 14000,
         category: 'Financial',
@@ -62,7 +62,7 @@ export const dealColumnsData: DealColumn[] = [
         }
       },
       {
-        id: '2',
+        id: 102,
         title: 'Dimensions for Printing',
         revenue: 23000,
         category: 'Marketplace',
@@ -88,12 +88,12 @@ export const dealColumnsData: DealColumn[] = [
     ]
   },
   {
-    id: '2',
+    id: 2,
     title: 'In Progress',
     revenue: 101300,
     deals: [
       {
-        id: '3',
+        id: 201,
         title: 'True and True Attorneys',
         revenue: 33000,
         category: 'Financial',
@@ -117,7 +117,7 @@ export const dealColumnsData: DealColumn[] = [
         }
       },
       {
-        id: '4',
+        id: 202,
         title: 'The Morlong Corporation',
         revenue: 45300,
         category: 'Marketplace',
@@ -141,7 +141,7 @@ export const dealColumnsData: DealColumn[] = [
         }
       },
       {
-        id: '5',
+        id: 203,
         title: 'Product List',
         revenue: 23000,
         category: 'Marketplace',
@@ -167,12 +167,12 @@ export const dealColumnsData: DealColumn[] = [
     ]
   },
   {
-    id: '3',
+    id: 3,
     title: 'Pending',
     revenue: 23400,
     deals: [
       {
-        id: '6',
+        id: 301,
         title: 'Printing Services by Feltz',
         revenue: 23400,
         category: 'Marketplace',
@@ -198,12 +198,12 @@ export const dealColumnsData: DealColumn[] = [
     ]
   },
   {
-    id: '4',
+    id: 4,
     title: 'Canceled',
     revenue: 260,
     deals: [
       {
-        id: '7',
+        id: 401,
         title: 'SP Flat Plate',
         revenue: 14000,
         category: 'Financial',
@@ -227,7 +227,7 @@ export const dealColumnsData: DealColumn[] = [
         }
       },
       {
-        id: '8',
+        id: 402,
         title: 'Ventilated Pipe',
         revenue: 14000,
         category: 'Marketplace',
@@ -253,12 +253,12 @@ export const dealColumnsData: DealColumn[] = [
     ]
   },
   {
-    id: '5',
+    id: 5,
     title: 'Completed',
     revenue: 1650,
     deals: [
       {
-        id: '9',
+        id: 501,
         title: 'Product Shipping',
         revenue: 15000,
         category: 'Financial',
@@ -282,7 +282,7 @@ export const dealColumnsData: DealColumn[] = [
         }
       },
       {
-        id: '10',
+        id: 502,
         title: 'Product List',
         revenue: 3300,
         category: 'Financial',
@@ -306,7 +306,7 @@ export const dealColumnsData: DealColumn[] = [
         }
       },
       {
-        id: '11',
+        id: 503,
         title: 'Dimensions for Printing',
         revenue: 23400,
         category: 'Marketplace',

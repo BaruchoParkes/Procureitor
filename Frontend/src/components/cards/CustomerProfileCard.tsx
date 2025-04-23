@@ -7,6 +7,7 @@ import {
   faLinkedinIn,
   faTwitter
 } from '@fortawesome/free-brands-svg-icons';
+import { Link } from 'react-router-dom';
 
 const CustomerProfileCard = () => {
   return (
@@ -20,24 +21,24 @@ const CustomerProfileCard = () => {
             <h3>Ansolo Lazinatov</h3>
             <p className="text-body-secondary">Joined 3 months ago</p>
             <div className="d-inline-flex gap-2">
-              <a href="#!">
+              <Link to="#!">
                 <FontAwesomeIcon
                   icon={faLinkedinIn}
-                  className="text-body-quaternary text-opacity-75 text-primary-hover"
+                  className="text-body-quaternary text-opacity-75 hover-primary"
                 />
-              </a>
-              <a href="#!">
+              </Link>
+              <Link to="#!">
                 <FontAwesomeIcon
                   icon={faFacebook}
-                  className="text-body-quaternary text-opacity-75 text-primary-hover"
+                  className="text-body-quaternary text-opacity-75 hover-primary"
                 />
-              </a>
-              <a href="#!">
+              </Link>
+              <Link to="#!">
                 <FontAwesomeIcon
                   icon={faTwitter}
-                  className="text-body-quaternary text-opacity-75 text-primary-hover"
+                  className="text-body-quaternary text-opacity-75 hover-primary"
                 />
-              </a>
+              </Link>
             </div>
           </Col>
         </Row>

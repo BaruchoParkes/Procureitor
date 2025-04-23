@@ -87,3 +87,7 @@
     margin-bottom: $card-spacer-x;
   }
 }
+
+.leaflet-container {
+  background: var(--#{$prefix}emphasis-bg) !important;
+}

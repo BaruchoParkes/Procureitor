@@ -25,9 +25,9 @@ const HelpCenter = () => {
             />
           </div>
           <div className="flex-1 ms-3">
-            <Link to="tel:+871406-7509" className="link-900">
+            <a href="tel:+8714067509" className="link-900">
               (871) 406-7509
-            </Link>
+            </a>
           </div>
         </div>
         <div className="d-flex flex-column flex-md-row gap-2 align-items-center">

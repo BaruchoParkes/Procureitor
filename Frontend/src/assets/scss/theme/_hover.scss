@@ -37,6 +37,12 @@ a[href] {
   }
 }
 
+.hover-body-highlight {
+  @include hover-focus {
+    color: var(--#{$prefix}body-highlight-color) !important;
+  }
+}
+
 .hover-shadow {
   @include hover-focus {
     box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.1);
@@ -152,5 +158,52 @@ a[href] {
   }
   100% {
     opacity: 1;
+  }
+}
+
+.hoverbox {
+  position: relative;
+  overflow: hidden;
+  .hoverbox-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    margin: 0 !important;
+    display: flex;
+    background: rgba($black, 0.6) !important;
+  }
+  .hoverbox-primary-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+  }
+  .backdrop-faded {
+    padding-top: 0;
+    padding-bottom: 0;
+    background: linear-gradient(
+      180deg, 
+      rgba(var(--#{$prefix}dark-rgb), 0) 0%,
+      var(--#{$prefix}dark) 70%
+    );
+  }
+  @include hover-focus {
+    .hover-box-content-initial {
+      opacity: 0;
+    }
+    .hoverbox-content {
+      opacity: 1;
+    }
+    .as-hoverbox-content {
+      z-index: 1;
+    }
+    .text-underline {
+      text-decoration: underline;
+    }
   }
 }

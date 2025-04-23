@@ -211,7 +211,7 @@ html:not(.navbar-vertical-collapsed) {
     border-top: 1px solid $navbar-footer-border-color;
     border-right: 1px solid $navbar-footer-border-color;
     background: $navbar-vertical-bg-color;
-    // border-color: $navbar-footer-border-color !important;
+    border-color: $navbar-footer-border-color !important;
     transition: width 0.2s ease;
 
     .btn {
@@ -358,6 +358,7 @@ html:not(.navbar-vertical-collapsed) {
             bottom: 0;
             width: calc(4rem - 1px);
             background-color: var(--#{$prefix}navbar-vertical-bg-color);
+            border-right: 0;
             padding-left: 0rem !important;
             padding-right: 0rem !important;
             transition: width 0.2s ease;

@@ -78,28 +78,7 @@ import OrderDetails from 'pages/apps/e-commerce/admin/OrderDetails';
 import Refund from 'pages/apps/e-commerce/admin/Refund';
 import CustomerDetails from 'pages/apps/e-commerce/admin/CustomerDetails';
 import ProjectManagement from 'pages/dashboard/ProjectManagement';
-import CreateNewMovimiento from 'pages/apps/project-management/MovimientoComponent';
-import PendientesListView from 'pages/apps/project-management/Pendientes';
-import ProcesosListView from 'pages/apps/project-management/ProcesosListView';
-import CajaListView from 'pages/apps/project-management/CajaListView';
-import CajaSucesionListView from 'pages/apps/project-management/CajaSucesionListView';
-
-import CajaCashListView from 'pages/apps/project-management/CajaCashListView';
-import CajaGeneralListView from 'pages/apps/project-management/CajaGeneralListView';
-import ProjectDetails from 'pages/apps/project-management/ProjectDetails';
-import ProcesoDetails from 'pages/apps/project-management/ProcesoDetails';
-import GastosListView from 'pages/apps/pagos/GastosListView';
-import GastoDetails from 'pages/apps/pagos/GastoDetails';
-import PagosListView from 'pages/apps/pagos/PagosListView';
-import CobrosListView from 'pages/apps/project-management/CobrosListView';
-import PagoDetails from 'pages/apps/pagos/PagoDetails';
-import CreatePago from 'pages/apps/pagos/CreatePago';
-import CreatePagoUsuario from 'pages/apps/pagos/CreatePagoUsuario';
-
 import MainLayoutProvider from 'providers/MainLayoutProvider';
-import ProjectTodoList from 'pages/apps/project-management/ProjectTodoList';
-import ProjectBoardView from 'pages/apps/project-management/ProjectBoardView';
-import ProjectCardView from 'pages/apps/project-management/ProjectCardView';
 import Default from 'pages/pages/landing/Default';
 import CreateAnEvent from 'pages/apps/events/CreateAnEvent';
 import EventDetail from 'pages/apps/events/EventDetail';
@@ -191,6 +170,28 @@ import CalendarExample from 'pages/modules/components/CalendarExample';
 import DraggableExample from 'pages/modules/components/DraggableExample';
 import Widgets from 'pages/modules/Widgets';
 import ComingSoon from 'pages/ComingSoon';
+import { AuthProvider } from 'providers/AuthProvider';
+
+import CreateNewMovimiento from 'pages/apps/project-management/MovimientoComponent';
+import PendientesListView from 'pages/apps/project-management/Pendientes';
+import ProcesosListView from 'pages/apps/project-management/ProcesosListView';
+import CajaListView from 'pages/apps/project-management/CajaListView';
+import CajaSucesionListView from 'pages/apps/project-management/CajaSucesionListView';
+
+import CajaCashListView from 'pages/apps/project-management/CajaCashListView';
+import CajaGeneralListView from 'pages/apps/project-management/CajaGeneralListView';
+import ProjectDetails from 'pages/apps/project-management/ProjectDetails';
+import ProcesoDetails from 'pages/apps/project-management/ProcesoDetails';
+import GastosListView from 'pages/apps/pagos/GastosListView';
+import GastoDetails from 'pages/apps/pagos/GastoDetails';
+import PagosListView from 'pages/apps/pagos/PagosListView';
+import CobrosListView from 'pages/apps/project-management/CobrosListView';
+import PagoDetails from 'pages/apps/pagos/PagoDetails';
+import CreatePago from 'pages/apps/pagos/CreatePago';
+import CreatePagoUsuario from 'pages/apps/pagos/CreatePagoUsuario';
+import MovimientoComponent from 'pages/apps/project-management/MovimientoComponent';
+import ResumenComponent from 'pages/apps/project-management/ResumenComponent';
+
 
 const FontAwesomeExample = lazy(
   () => import('pages/modules/components/FontAwesomeExample')
@@ -209,24 +210,33 @@ import TravelLanding from 'pages/apps/travel-agency/landing/Landing';
 import RoomListing from 'pages/apps/travel-agency/hotel/admin/RoomListing';
 import HotelHomepage from 'pages/apps/travel-agency/hotel/customer/homepage/Homepage';
 import HotelGallery from 'pages/apps/travel-agency/hotel/customer/HotelGallery';
+import HotelCompare from 'pages/apps/travel-agency/hotel/customer/HotelCompare';
+import HotelDetails from 'pages/apps/travel-agency/hotel/customer/HotelDetails';
 import AddProperty from 'pages/apps/travel-agency/hotel/admin/AddProperty';
 import AddRoom from 'pages/apps/travel-agency/hotel/admin/AddRoom';
 import SearchRoom from 'pages/apps/travel-agency/hotel/admin/SearchRoom';
 import TravelAgencyLayout from 'layouts/TravelAgencyLayout';
 import TravelLandingLayout from 'layouts/TravelLandingLayout';
-import MovimientoComponent from 'pages/apps/project-management/MovimientoComponent';
-import ResumenComponent from 'pages/apps/project-management/ResumenComponent';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ProtectedRoute from 'components/modules/auth/ProtectedRoute';
-import { AuthProvider } from 'providers/AuthProvider';
+import HotelCheckout from 'pages/apps/travel-agency/hotel/customer/HotelCheckout';
+import HotelPayment from 'pages/apps/travel-agency/hotel/customer/HotelPayment';
+import FlightHomepage from 'pages/apps/travel-agency/flight/Homepage';
+import FlightBooking from 'pages/apps/travel-agency/flight/Booking';
+import FlightPayment from 'pages/apps/travel-agency/flight/Payment';
+import FlightAlternateLayout from 'layouts/FlightAlternateLayout';
+
+import TripHomepage from 'pages/apps/travel-agency/trip/Homepage';
+import TripDetails from 'pages/apps/travel-agency/trip/TripDetails';
+import TripCheckout from 'pages/apps/travel-agency/trip/Checkout';
+import TripLayout from 'layouts/TripLayout';
+import GridView from 'pages/apps/file-manager/GridView';
+import ListView from 'pages/apps/file-manager/ListView';
+import FileManagerProvider from 'providers/FileManagerProvider';
 
 const routes: RouteObject[] = [
-
-
   {
     element: 
     <AuthProvider>
-      <App />
+    <App />
     </AuthProvider>,
     children: [
       {
@@ -240,16 +250,16 @@ const routes: RouteObject[] = [
 
         ),
         children: [
-          /* {
+          {
             index: true,
             element: <Ecommerce />
           },
- */          {
+          {
             path: '/dashboard',
             children: [
               {
                 path: 'project-management',
-                element: <ProjectManagement /> 
+                element: <ProjectManagement />
               },
               {
                 path: 'crm',
@@ -381,7 +391,7 @@ const routes: RouteObject[] = [
                     path: 'resumenes/:id',
                     element: <ResumenComponent />
                   }
-                ]
+                ]              
               },
               {
                 path: 'pagos',
@@ -495,33 +505,44 @@ const routes: RouteObject[] = [
                 ]
               },
               {
-                path: 'travel-agency',
+                path: 'travel-agency/hotel/admin',
                 children: [
                   {
-                    path: 'hotel/admin/add-property',
+                    path: 'add-property',
                     element: <AddProperty />
-                  }
-                ]
-              },
-              {
-                path: 'travel-agency',
-                children: [
+                  },
                   {
-                    path: 'hotel/admin/add-room',
+                    path: 'add-room',
                     element: <AddRoom />
                   },
                   {
-                    path: 'hotel/admin/search-room',
+                    path: 'room-listing',
+                    element: <RoomListing />
+                  },
+                  {
+                    path: 'search-room',
                     element: <SearchRoom />
                   }
                 ]
               },
               {
-                path: 'travel-agency',
+                path: 'file-manager',
                 children: [
                   {
-                    path: 'hotel/admin/room-listing',
-                    element: <RoomListing />
+                    path: 'grid-view',
+                    element: (
+                      <FileManagerProvider>
+                        <GridView />
+                      </FileManagerProvider>
+                    )
+                  },
+                  {
+                    path: 'list-view',
+                    element: (
+                      <FileManagerProvider>
+                        <ListView />
+                      </FileManagerProvider>
+                    )
                   }
                 ]
               }
@@ -1064,7 +1085,7 @@ const routes: RouteObject[] = [
       },
       {
         element: <TravelLandingLayout />,
-        path: 'apps/travel-agency',
+        path: '/apps/travel-agency',
         children: [
           {
             path: 'landing',
@@ -1074,23 +1095,92 @@ const routes: RouteObject[] = [
       },
       {
         element: <TravelAgencyLayout />,
-        path: 'apps/travel-agency',
+        path: '/apps/travel-agency/hotel/customer',
         children: [
           {
             children: [
               {
-                path: 'hotel/customer/homepage',
+                path: 'homepage',
                 element: <HotelHomepage />
               },
               {
-                path: 'hotel/customer/gallery',
+                path: 'hotel-details',
+                element: <HotelDetails />
+              },
+              {
+                path: 'hotel-compare',
+                element: <HotelCompare />
+              },
+              {
+                path: 'checkout',
+                element: <HotelCheckout />
+              },
+              {
+                path: 'payment',
+                element: <HotelPayment />
+              },
+              {
+                path: 'gallery',
                 element: <HotelGallery />
               }
             ]
           }
         ]
       },
-
+      {
+        element: <TravelAgencyLayout />,
+        path: 'apps/travel-agency/flight',
+        children: [
+          {
+            children: [
+              {
+                path: 'homepage',
+                element: <FlightHomepage />
+              }
+            ]
+          }
+        ]
+      },
+      {
+        element: <FlightAlternateLayout />,
+        path: 'apps/travel-agency/flight',
+        children: [
+          {
+            children: [
+              {
+                path: 'booking',
+                element: <FlightBooking />
+              },
+              {
+                path: 'payment',
+                element: <FlightPayment />
+              }
+            ]
+          }
+        ]
+      },
+      {
+        element: <TripLayout />,
+        path: 'apps/travel-agency/trip',
+        children: [
+          {
+            children: [
+              {
+                path: 'homepage',
+                element: <TripHomepage />
+              },
+              {
+                path: 'trip-details',
+                element: <TripDetails />
+              },
+              {
+                path: 'checkout',
+                element: <TripCheckout />
+              }
+            ]
+          }
+        ]
+      },
       {
         path: '/pages/errors/',
         children: [

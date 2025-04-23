@@ -46,10 +46,10 @@ const TravelAgency = () => {
         </Col>
         <Col xxl={5}>
           <Row className="g-3">
-            <Col xs={12} md={6} xxl={12}>
+            <Col xs={12} lg={6} xxl={12}>
               <VisitorsCard />
             </Col>
-            <Col xs={12} md={6} xxl={12}>
+            <Col xs={12} lg={6} xxl={12}>
               <HolidaysCard />
             </Col>
             <Col xs={12}>

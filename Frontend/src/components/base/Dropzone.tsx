@@ -9,7 +9,14 @@ import {
 import Button from './Button';
 import imageIcon from 'assets/img/icons/image-icon.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PropsWithChildren, useEffect, useMemo, useState } from 'react';
+import {
+  Dispatch,
+  PropsWithChildren,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import AttachmentPreview, {
   FileAttachment
 } from 'components/common/AttachmentPreview';
@@ -24,6 +31,8 @@ interface DropzoneProps {
   accept?: Accept;
   noPreview?: boolean;
   defaultFiles?: File[];
+  multiple?: boolean;
+  setPhotos?: Dispatch<SetStateAction<File[]>>;
   onDrop?: <T extends File>(
     acceptedFiles: T[],
     fileRejections: FileRejection[],
@@ -39,6 +48,8 @@ const Dropzone = ({
   defaultFiles = [],
   noPreview,
   reactDropZoneProps,
+  multiple = true,
+  setPhotos,
   children
 }: PropsWithChildren<DropzoneProps>) => {
   const [files, setFiles] = useState<File[]>([]);
@@ -58,6 +69,7 @@ const Dropzone = ({
         onDrop(...args);
       }
     },
+    multiple: multiple,
     accept,
     ...reactDropZoneProps
   });
@@ -72,19 +84,14 @@ const Dropzone = ({
     }
   }, [defaultFiles]);
 
+  useEffect(() => {
+    if (files.length > 0) {
+      setPhotos && setPhotos(files);
+    }
+  }, [files]);
+
   return (
     <>
-      {imageOnly && !noPreview && files.length > 0 && (
-        <div className="d-flex flex-wrap gap-2 mb-2">
-          {files.map((file, index) => (
-            <ImageAttachmentPreview
-              key={file.name}
-              image={URL.createObjectURL(file)}
-              handleClose={() => handleRemoveFile(index)}
-            />
-          ))}
-        </div>
-      )}
       <div
         {...getRootProps()}
         className={classNames(className, 'dropzone', {
@@ -122,10 +129,22 @@ const Dropzone = ({
             <AttachmentPreview attachment={file} />
 
             <button className="btn p-0" onClick={() => handleRemoveFile(index)}>
-              <FontAwesomeIcon icon={faTrashAlt} className="fs-0 text-danger" />
+              <FontAwesomeIcon icon={faTrashAlt} className="fs-0" />
             </button>
           </div>
         ))}
+
+      {imageOnly && !noPreview && files.length > 0 && (
+        <div className="d-flex flex-wrap gap-2 mt-3">
+          {files.map((file, index) => (
+            <ImageAttachmentPreview
+              key={file.name}
+              image={URL.createObjectURL(file)}
+              handleClose={() => handleRemoveFile(index)}
+            />
+          ))}
+        </div>
+      )}
     </>
   );
 };

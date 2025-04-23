@@ -213,7 +213,17 @@
         }
       }
     }
-  }
+    @include media-breakpoint-down(xl){
+      .nav-item:first-child{
+        .nav-link {
+          & > div {
+            min-width: 80px;
+            margin-left: -20px;
+          }
+        }
+      }
+    }
+    }
 
   .nav-wizard-success {
     --#{$prefix}theme-wizard-complete-color: var(--#{$prefix}success);

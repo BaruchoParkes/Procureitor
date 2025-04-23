@@ -17,7 +17,7 @@ let config ={
 
 const ProcEstM2m = sequelize.define(alias, cols, config);
 
-ProcEstM2m.associate = function (models){
+/* ProcEstM2m.associate = function (models){
 
     ProcEstM2m.belongsTo(models.Proc, {
         as: '',
@@ -27,6 +27,7 @@ ProcEstM2m.associate = function (models){
     ProcEstM2m.belongsTo(models.tEstado, {
         foreignKey: 'tipoEstadoIdFk'
     } )
-}
+} */
+
 return ProcEstM2m
 }

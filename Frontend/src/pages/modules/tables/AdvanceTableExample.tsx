@@ -382,6 +382,28 @@ const PaginationExample = () => {
 };
 `;
 
+const serversidePaginationCode = `
+
+const PaginationExample = () => {
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10
+  });
+
+   const table = useAdvanceTable({
+    data: tableData, // Your fetched data
+    columns,
+    sortable: true,
+    manualPagination: true, // turn off client-side pagination
+    rowCount: tableData.length,
+    onPaginationChange: setPagination,
+    state: {
+      pagination
+    }
+  });
+};
+`;
+
 const searchExampleCode = `
 ${basicImportString}
 import { ChangeEvent } from 'react';
@@ -879,6 +901,50 @@ const AdvanceTableExample = () => {
         </PhoenixDocCard.Body>
       </PhoenixDocCard>
 
+      <div>
+        <PhoenixDocCard className="mb-4">
+          <PhoenixDocCard.Header title="Serverside Pagination" noPreview />
+          <PhoenixDocCard.Body>
+            <p>
+              Add pagination state to your table component and all pass the
+              following options to enable serverside pagination. For more
+              information check trastake table documentation. Hare is some
+              important links may help you to configure serverside table{' '}
+              <a
+                rel="noreferrer"
+                target="_blank"
+                href="https://tanstack.com/table/latest/docs/guide/pagination#manual-server-side-pagination"
+              >
+                serverside-pagination
+              </a>{' '}
+              <a
+                rel="noreferrer"
+                target="_blank"
+                href="https://tanstack.com/table/latest/docs/framework/react/examples/pagination-controlled"
+              >
+                pagination-controlled
+              </a>{' '}
+              <a
+                rel="noreferrer"
+                target="_blank"
+                href="https://tanstack.com/table/latest/docs/guide/column-filtering#manual-server-side-filtering"
+              >
+                filtering
+              </a>{' '}
+              <a
+                rel="noreferrer"
+                target="_blank"
+                href="https://tanstack.com/table/latest/docs/guide/sorting#manual-server-side-sorting"
+              >
+                sorting
+              </a>
+              .
+            </p>
+            <PhoenixLiveEditor code={serversidePaginationCode} />
+          </PhoenixDocCard.Body>
+        </PhoenixDocCard>
+      </div>
+
       <PhoenixDocCard className="mb-4">
         <PhoenixDocCard.Header title="Search Example" />
         <PhoenixDocCard.Body code={searchExampleCode} hidePreview>
@@ -897,9 +963,13 @@ const AdvanceTableExample = () => {
 };
 
 type Data = {
-  name: string;
-  email: string;
-  age: number;
+  name?: string;
+  email?: string;
+  age?: number;
+  // userId?: number;
+  // id?: number;
+  // title?: string;
+  // body?: string;
 };
 
 const data: Data[] = [

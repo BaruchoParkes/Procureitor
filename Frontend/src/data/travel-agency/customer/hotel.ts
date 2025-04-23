@@ -1,10 +1,3 @@
-export interface hotelInterFace {
-  name: string;
-  location: string;
-  price: string;
-  rating: string;
-  img: string;
-}
 import hotel1 from 'assets/img/hotels/1.png';
 import hotel2 from 'assets/img/hotels/2.png';
 import hotel3 from 'assets/img/hotels/3.png';
@@ -25,6 +18,31 @@ import hotel70 from 'assets/img/hotels/70.png';
 import hotel71 from 'assets/img/hotels/71.png';
 import hotel72 from 'assets/img/hotels/72.png';
 import hotel73 from 'assets/img/hotels/73.png';
+
+export interface hotelInterFace {
+  name: string;
+  location: string;
+  price: string;
+  rating: string;
+  img: string;
+}
+
+interface SearchRoomCollapsibleItem {
+  title: string;
+  key: string;
+}
+
+interface AmenitiesCheckboxItem {
+  id: string;
+  label: string;
+  className?: string;
+}
+interface HomepageOffcanvasAmenitiesItem {
+  id: number;
+  title: string;
+  className?: string;
+  checkboxItems: AmenitiesCheckboxItem[];
+}
 
 export const hotels: hotelInterFace[] = [
   {
@@ -538,3 +556,79 @@ export const roomsSearchData: roomSearchInterface[] = [
     ]
   }
 ];
+
+export const searchRoomCollapsibleItems: SearchRoomCollapsibleItem[] = [
+  {
+    title: 'Adult',
+    key: 'adult'
+  },
+  {
+    title: 'Child',
+    key: 'child'
+  },
+  {
+    title: 'Bedroom',
+    key: 'bedroom'
+  },
+  {
+    title: 'Number of Bed',
+    key: 'numberOfBed'
+  },
+  {
+    title: 'Bathroom',
+    key: 'bathroom'
+  }
+];
+
+export const homepageOffcanvasAmenitiesItems: HomepageOffcanvasAmenitiesItem[] =
+  [
+    {
+      id: 1,
+      title: 'Essentials',
+      checkboxItems: [
+        {
+          id: 'wifi',
+          label: 'Wifi'
+        },
+        {
+          id: 'kitchen',
+          label: 'Kitchen'
+        },
+        {
+          id: 'airConditioning',
+          label: 'Air conditioning'
+        },
+        {
+          id: 'washer',
+          label: 'Washer'
+        },
+        {
+          id: 'dryer',
+          label: 'Dryer'
+        },
+        {
+          id: 'heating',
+          label: 'Heating'
+        }
+      ]
+    },
+    {
+      id: 2,
+      title: 'Location',
+      className: 'mt-3',
+      checkboxItems: [
+        {
+          id: 'beachFront',
+          label: 'Beach-front'
+        },
+        {
+          id: 'nearMarkets',
+          label: 'Near markets'
+        },
+        {
+          id: 'waterFront',
+          label: 'Water-front'
+        }
+      ]
+    }
+  ];

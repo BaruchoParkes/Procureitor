@@ -19,9 +19,9 @@ const Ecommerce = () => {
         <Row className="g-4">
           <Col xs={12} xxl={6}>
             <div className="mb-8">
-              <h2 className="mb-2">Tablero  </h2>
+              <h2 className="mb-2">Ecommerce Dashboard</h2>
               <h5 className="text-body-tertiary fw-semibold">
-                Estudio Parkes
+                Here’s what’s going on at your business right now
               </h5>
             </div>
             <EcomStats />

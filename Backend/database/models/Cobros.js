@@ -30,7 +30,7 @@ module.exports = function (sequelize) {
 
   const Cobros = sequelize.define(alias, cols, config);
 
-  Cobros.associate = function (models) {
+/*   Cobros.associate = function (models) {
     // Existing association with Proc
     Cobros.belongsTo(models.Proc, {
       foreignKey: 'proc',
@@ -43,7 +43,7 @@ module.exports = function (sequelize) {
       targetKey: 'miemID',       // Primary key in Miembro
       as: 'receptor'             // Alias for the relationship
     });
-  };
+  }; */
 
   return Cobros;
 };

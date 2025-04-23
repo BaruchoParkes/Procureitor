@@ -26,13 +26,13 @@ export const BreakpointContext = createContext(
   {} as BreakpointContextInterface
 );
 
-const gridBreakpoints: Breakpoints = {
+export const gridBreakpoints: Breakpoints = {
   xs: 0,
   sm: 576,
   md: 768,
   lg: 992,
   xl: 1200,
-  xxl: 1440
+  xxl: 1540
 };
 
 const BreakpointsProvider = ({ children }: PropsWithChildren) => {

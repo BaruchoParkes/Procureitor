@@ -28,6 +28,7 @@ export interface Notification {
   time: string;
   date: string;
   read: boolean;
+  notificationPosition?: string;
   // avatarPlaceholder?: boolean;
 }
 
@@ -107,7 +108,8 @@ export const notifications: Notification[] = [
     icon: 'fas fa-clock',
     time: '10:18 AM ',
     date: 'August 7,2021',
-    read: true
+    read: true,
+    notificationPosition: 'top-0 end-100'
   },
   {
     id: '7',

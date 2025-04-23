@@ -11,20 +11,20 @@ const SignOutForm = ({ layout }: { layout: 'simple' | 'card' | 'split' }) => {
       <img className="mb-7 d-dark-none" src={lightImg} alt="phoenix" />
       <img className="mb-7 d-light-none" src={darkImg} alt="phoenix" />
       <div className="mb-6">
-        <h4 className="text-body-highlight">Esperamos volverte a ver pronto!</h4>
+        <h4 className="text-body-highlight">Come back soon!</h4>
         <p className="text-body-tertiary">
-          Gracias por usar Procureitor. <br className="d-lg-none" />
-          Estas deslogueado.
+          Thanks for using Phoenix. <br className="d-lg-none" />
+          You are now successfully signed out.
         </p>
       </div>
       <div className="d-grid">
         <Button
           variant="primary"
           as={Link}
-          to={'/pages/authentication/simple/sign-in'}
+          to={`/pages/authentication/${layout}/sign-in`}
           startIcon={<FontAwesomeIcon icon={faAngleLeft} className="me-2" />}
         >
-         Volver a Loguearse
+          Go to sign in page
         </Button>
       </div>
     </div>

@@ -50,7 +50,7 @@ const ProductReview = ({ review }: { review: ProductReviewType }) => {
                 src={image}
                 key={image}
                 alt=""
-                className="fit-cover"
+                className="fit-cover w-100"
                 height={164}
                 onClick={() => openLightbox(index + 1)}
               />

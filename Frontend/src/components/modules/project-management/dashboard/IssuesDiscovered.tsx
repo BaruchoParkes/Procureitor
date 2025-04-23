@@ -41,10 +41,7 @@ const IssuesDiscovered = () => {
         ))}
         <Button variant="outline-primary" className="mt-5">
           See Details
-          <FontAwesomeIcon
-            icon={faAngleRight}
-            className="text-primary ms-2 fs-10"
-          />
+          <FontAwesomeIcon icon={faAngleRight} className="ms-2 fs-10" />
         </Button>
       </Col>
       <Col xs={12} md={6}>

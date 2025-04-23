@@ -12,13 +12,14 @@ import { dealColumnsData } from 'data/crm/deals';
 import { useEffect } from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import { useMainLayoutContext } from 'providers/MainLayoutProvider';
-import { DragDropContext } from 'react-beautiful-dnd';
 import DealColumn from 'components/modules/crm/deals/DealColumn';
 import AddDealModal from 'components/modules/crm/deals/AddDealModal';
 import FilterDealsModal from 'components/modals/FilterDealsModal';
-import PhoenixDroppable from 'components/base/PhoenixDroppable';
 import DealsAddStageModal from 'components/modals/DealsAddStageModal';
 import DealsProvider, { useDealsContext } from 'providers/CrmDealsProvider';
+import { DndContext, closestCorners, DragOverlay } from '@dnd-kit/core';
+import DealCard from 'components/cards/DealCard';
+import { useGetDndSensor } from 'hooks/useGetDndSensor';
 
 const index = () => {
   return (
@@ -38,9 +39,13 @@ const Deals = () => {
     setOpenFilterDealModal,
     openAddStageModal,
     setOpenAddStageModal,
+    activeDeal,
+    activeColumnId,
+    handleDragStart,
+    handleDragOver,
     handleDragEnd
   } = useDealsContext();
-
+  const sensors = useGetDndSensor();
   useEffect(() => {
     setContentClass('vh-100');
 
@@ -95,21 +100,20 @@ const Deals = () => {
           </Col>
         </Row>
       </div>
-      <DragDropContext onDragEnd={handleDragEnd}>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCorners}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+      >
         <div className="mx-n4 px-4 mx-lg-n6 px-lg-6 flex-1 d-flex gap-4 scrollbar">
           {dealColumns.map(col => (
-            <PhoenixDroppable key={col.id} droppableId={col.id}>
-              {provided => (
-                <div ref={provided.innerRef} {...provided.droppableProps}>
-                  <DealColumn
-                    column={col}
-                    handleOpenAddModal={() => setOpenAddDealModal(true)}
-                    key={col.id}
-                  />
-                  {provided.placeholder}
-                </div>
-              )}
-            </PhoenixDroppable>
+            <DealColumn
+              column={col}
+              handleOpenAddModal={() => setOpenAddDealModal(true)}
+              key={col.id}
+            />
           ))}
           <div className="deals-column flex-center flex-shrink-0">
             <h3 className="mb-4">Add new stage</h3>
@@ -123,7 +127,16 @@ const Deals = () => {
             </Button>
           </div>
         </div>
-      </DragDropContext>
+        <DragOverlay>
+          {activeColumnId && activeDeal && (
+            <DealCard
+              deal={activeDeal}
+              columnId={activeColumnId}
+              cursor={true}
+            />
+          )}
+        </DragOverlay>
+      </DndContext>
 
       <AddDealModal
         show={openAddDealModal}

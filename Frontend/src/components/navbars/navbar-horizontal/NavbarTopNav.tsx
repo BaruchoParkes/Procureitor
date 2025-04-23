@@ -1,22 +1,20 @@
 import { capitalize } from 'helpers/utils';
 import { useEffect, useState } from 'react';
 import { Dropdown, Nav } from 'react-bootstrap';
-import getRoutes, { RouteItems } from 'sitemap'; // Import getRoutes
+import { RouteItems, Route } from 'sitemap';
 import TopNavMegaMenu from './TopNavMegaMenu';
 import TopNavItem from './TopNavItem';
 import { useBreakpoints } from 'providers/BreakpointsProvider';
 import { useLocation } from 'react-router-dom';
-import { useAuth } from 'providers/AuthProvider';
-
 
 const NavbarTopNav = () => {
-  const { user } = useAuth();
-  const routes = getRoutes(user?.nivel_acceso || null); 
   return (
-    <Nav className="navbar-nav-top pb-4 pb-lg-0 scrollbar">
-      {routes.map(route => (
+    <Nav className="navbar-nav-top pb-4 pb-lg-0">
+
+{/*       {routes.map(route => (
         <NavbarTopNavItem route={route} key={route.label} />
       ))}
+ */}
     </Nav>
   );
 };

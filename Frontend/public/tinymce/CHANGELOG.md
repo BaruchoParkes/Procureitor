@@ -2376,7 +2376,7 @@ Initial list of features and changes is available at https://www.tiny.cloud/docs
 - Fixed a bug with the Table Plugin where the caret would sometimes be lost when keyboard navigating up through a table.
 - Fixed a bug where FontInfo.getFontFamily would throw an error when called on a removed editor.
 - Fixed a bug in Firefox where undo levels were not being added correctly for some specific operations.
-- Fixed a bug where initializing an inline editor inside of a table would make the whole table resizeable.
+- Fixed a bug where initializing an inline editor inside of a table would make the whole table resizable.
 - Fixed a bug where the fake cursor that appears next to tables on Firefox was positioned incorrectly when switching to fullscreen.
 - Fixed a bug where zwsp's weren't trimmed from the output from `editor.getContent({ format: 'text' })`.
 - Fixed a bug where the fontsizeselect/fontselect toolbar items showed the body info rather than the first possible caret position info on init.

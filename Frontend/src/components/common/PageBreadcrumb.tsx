@@ -14,7 +14,7 @@ interface PageBreadcrumbProps {
 
 const PageBreadcrumb = ({ items, className }: PageBreadcrumbProps) => {
   return (
-    <Breadcrumb className={classNames(className, 'mb-2')}>
+    <Breadcrumb className={classNames('mb-2', className)}>
       {items.map(item => (
         <Breadcrumb.Item href={item.url} active={item.active} key={item.label}>
           {item.label}

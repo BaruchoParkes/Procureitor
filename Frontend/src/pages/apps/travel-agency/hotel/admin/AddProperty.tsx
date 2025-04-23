@@ -7,11 +7,11 @@ import classNames from 'classnames';
 import PageBreadcrumb from 'components/common/PageBreadcrumb';
 import { defaultBreadcrumbItems } from 'data/commonData';
 // import BasicInformationForm from 'components/modules/travel-agency/dashboard/hotel/add-proterty/BasicInformationForm';
-import LocationForm from 'components/modules/travel-agency/dashboard/hotel/add-proterty/LocationForm';
-import GeneralAmenitiesForm from 'components/modules/travel-agency/dashboard/hotel/add-proterty/GeneralAmenitiesForm';
-import AddPhotos from 'components/modules/travel-agency/dashboard/hotel/add-proterty/AddPhotos';
-import FinanceForm from 'components/modules/travel-agency/dashboard/hotel/add-proterty/FinanceForm';
-import Preview from 'components/modules/travel-agency/dashboard/hotel/add-proterty/Preview';
+import LocationForm from 'components/modules/travel-agency/hotel/add-proterty/LocationForm';
+import GeneralAmenitiesForm from 'components/modules/travel-agency/hotel/add-proterty/GeneralAmenitiesForm';
+import AddPhotos from 'components/modules/travel-agency/hotel/add-proterty/AddPhotos';
+import FinanceForm from 'components/modules/travel-agency/hotel/add-proterty/FinanceForm';
+import Preview from 'components/modules/travel-agency/hotel/add-proterty/Preview';
 import { addPropertyWizardNav } from 'data/wizard/wizard';
 import WizardSideNav from 'components/wizard/WizardSideNav';
 import { useEffect, useState } from 'react';
@@ -20,8 +20,8 @@ import {
   addPropertyDefaultFormData,
   pictures
 } from 'data/travel-agency/addProperty';
-import PoliciesForm from 'components/modules/travel-agency/dashboard/hotel/add-proterty/PoliciesForm';
-import BasicInformationForm from 'components/modules/travel-agency/dashboard/hotel/add-proterty/BasicInformationForm';
+import PoliciesForm from 'components/modules/travel-agency/hotel/add-proterty/PoliciesForm';
+import BasicInformationForm from 'components/modules/travel-agency/hotel/add-proterty/BasicInformationForm';
 
 const AddProperty = () => {
   const [images, setImages] = useState<File[]>([]);

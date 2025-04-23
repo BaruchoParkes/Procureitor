@@ -114,7 +114,7 @@ let mtosController = {
       {
         include: [{
           model: db.Proc,
-          attributes: ['ACTO', 'DEMA', ], 
+          attributes: ['ACTO', 'DEMA', 'TPRO'], 
         },
         {
           model: db.Miembro,

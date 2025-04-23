@@ -1,5 +1,4 @@
 import { Nav, Navbar } from 'react-bootstrap';
-//import { routes } from 'sitemap';
 import getRoutes, { RouteItems } from 'sitemap'; // GROK: Import getRoutes
 import { capitalize } from 'helpers/utils';
 import NavbarVerticalMenu from './NavbarVerticalMenu';
@@ -16,6 +15,8 @@ import { useAuth } from 'providers/AuthProvider';
 
 const NavbarVerical = () => {
   const { user } = useAuth();
+
+
   const routes = getRoutes(user?.nivel_acceso || null);
   const {
     config: {

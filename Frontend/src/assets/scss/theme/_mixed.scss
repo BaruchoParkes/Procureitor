@@ -238,6 +238,35 @@
   align-items: center;
 }
 
+
+.card-form-check-input {
+  &:checked {
+    + {
+      div {
+        .card {
+          border: 1px solid var(--#{$prefix}primary-light);
+          box-shadow: 0px 0px 0px 4px rgba(56, 116, 255, 0.2);
+          .radio-circle {
+            border: 5px solid var(--#{$prefix}primary);
+          }
+        }
+      }
+    }
+  }
+  &.pricing-plan-recommended {
+    &:checked {
+      + {
+        div {
+          .card {
+            border: 1px solid var(--#{$prefix}warning-light);
+            box-shadow: 0px 0px 0px 4px rgba(229, 120, 11, 0.2);
+          }
+        }
+      }
+    }
+  }
+}
+
 [data-bs-theme='dark'] {
   .footer-bg {
     opacity: 0.6;
@@ -594,6 +623,15 @@
   justify-content: center;
   color: var(--#{$prefix}primary);
 }
+.circle-icon-item-md {
+  width: 2.375rem;
+  height: 2.375rem;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .btn-wish {
   width: 2rem;
@@ -677,6 +715,35 @@
   }
 }
 
+.btn-wish {
+  width: 2rem;
+  height: 2rem;
+  color: var(--#{$prefix}white);
+  border: 1px solid var(--#{$prefix}white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  padding: 0;
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    background-color: var(--#{$prefix}white) !important;
+    color: var(--#{$prefix}black) !important;
+  }
+  &.btn-wish-primary {
+    color: var(--#{$prefix}primary);
+    border: 1px solid var(--#{$prefix}primary);
+    &:hover,
+    &:focus,
+    &.active {
+      background-color: var(--#{$prefix}primary) !important;
+      color: var(--#{$prefix}white) !important;
+    }
+  }
+}
+
 // active icon
 .active-icon {
   position: relative;
@@ -726,5 +793,93 @@
     .video-icon {
       display: none;
     }
+  }
+}
+
+.radio-circle {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--#{$prefix}border-color);
+  border-radius: 50%;
+  transition: border 0.2s ease;
+}
+
+// Trip details Tab Details
+
+.tour-direction-bg {
+  background-position: top 35% center !important;
+  background-size: auto 80% !important;
+  [dir='rtl'] & {
+    transform: scaleY(-1);
+    background-position: top 62% center !important;
+  }
+}
+
+// ping icon
+.ping-icon-wrapper {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  display: flex;
+  .ping-icon-bg {
+    position: absolute;
+    background-color: var(--#{$prefix}success);
+    display: inline-flex;
+    border-radius: 50%;
+    height: 100%;
+    width: 100%;
+    opacity: 0.75;
+    animation: animatePing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  .ping-icon {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-flex;
+    color: var(--#{$prefix}success);
+  }
+}
+
+@keyframes animatePing {
+  75%,
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.btn-square-sm {
+  height: 1.875rem;
+  width: 1.875rem;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn-square {
+  height: 2.375rem;
+  width: 2.375rem;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.square-icon-box {
+  width: 2rem;
+  height: 2rem;
+  border-radius: $border-radius;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-check-input-transparent {
+  background-color: transparent;
+  &:checked {
+    background-color: var(--#{$prefix}primary);
   }
 }

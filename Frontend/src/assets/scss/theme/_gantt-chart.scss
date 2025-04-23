@@ -13,6 +13,11 @@
         border-color: var(--#{$prefix}body-bg) transparent;
       }
     }
+    .btn-check:checked{
+     + .btn:hover{
+        border-color: var(--#{$prefix}btn-active-border-color);
+      }
+    }
   }
   .gantt_container {
     position: relative;
@@ -130,6 +135,7 @@
   .gantt_layout_cell {
     &.gantt_ver_scroll,
     &.gantt_hor_scroll {
+      border: 1px solid transparent;
       @include chrome-scrollbar;
       // height: 0;
     }

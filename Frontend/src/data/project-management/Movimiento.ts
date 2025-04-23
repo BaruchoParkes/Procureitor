@@ -36,9 +36,35 @@ export interface Movimiento {
   Proc: {
     ACTO: string;
     DEMA: string;
+    TPRO: string;
   };
   Miembro: string,
   cobros_fk: number,
   whatsapp: string,
   grok: string
+}
+
+export const mtoInicial: Movimiento = {
+mtoId: 1437,
+proc: "5yURv&mC0q",
+createdAt: new Date(),
+fechaDeRealizacion: new Date(),
+tipoDeMovimiento: "",
+usuario: "",
+descripcion: "",
+Realizado: "",
+texto: "",
+archivo: "",
+actor: "",
+pteDemandada: "",
+tpoProceso: "",
+Proc: {
+  ACTO: "ZERRIZUELA SERGIO DANIEL",
+  DEMA: "GALENO ASEGURADORA DE RIESGOS DEL TRABAJO S.A.",
+  TPRO: 'ENFERMEDAD'
+},
+Miembro: "",
+cobros_fk: 0,
+whatsapp: '',
+grok: ''
 }

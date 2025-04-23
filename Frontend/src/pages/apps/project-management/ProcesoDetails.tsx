@@ -241,7 +241,7 @@ return (
           >
             Agregar Movimiento </Button>
           <Button variant='primary'
-          onClick={handleButtonClick}
+          onClick={handleButtonClickNewMto}
           // {isSelectVisible ? 'Hide Select' : 'Show Select'}
           >
           Agregar Estado 

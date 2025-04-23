@@ -30,4 +30,4 @@ To run the production build locally, run the following commands:
 ### Design File
 
 Get the figma design file here:
-[https://www.figma.com/design/hSrnmiIDdIbGweIwvKdCpM/Phoenix-React-Distributed-(v1.5.0)---(Preview_-Duplicate-to-Edit)?node-id=1248-35561](<https://www.figma.com/design/hSrnmiIDdIbGweIwvKdCpM/Phoenix-React-Distributed-(v1.5.0)---(Preview_-Duplicate-to-Edit)?node-id=1248-35561
+[https://www.figma.com/design/TJuEihHsodgODoOW2Hp6Vh/Phoenix-React-Distributed-(v1.6.0)](<https://www.figma.com/design/TJuEihHsodgODoOW2Hp6Vh/Phoenix-React-Distributed-(v1.6.0)

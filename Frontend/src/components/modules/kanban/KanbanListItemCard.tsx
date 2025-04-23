@@ -13,6 +13,15 @@ import { Card, Dropdown } from 'react-bootstrap';
 import KanbanTaskDetailsModal from './KanbanTaskDetailsModal';
 import { Fragment, useState } from 'react';
 import classNames from 'classnames';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
+interface KanbanListItemCardProps {
+  task: KanbanBoardTask;
+  list: KanbanBoardItem;
+  className?: string;
+  columnId?: number;
+}
 
 const actions = [
   {
@@ -64,18 +73,42 @@ const actions = [
 const KanbanListItemCard = ({
   task,
   list,
-  className
-}: {
-  task: KanbanBoardTask;
-  list: KanbanBoardItem;
-  className?: string;
-}) => {
+  className,
+  columnId
+}: KanbanListItemCardProps) => {
   const [openModal, setOpenModal] = useState(false);
 
+  const {
+    setNodeRef,
+    listeners,
+    attributes,
+    isDragging,
+    transform,
+    transition
+  } = useSortable({
+    id: task.id,
+    data: {
+      type: 'task',
+      item: task,
+      columnId
+    }
+  });
+
+  const styles = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0 : 1,
+    cursor: isDragging ? 'grabbing' : 'pointer'
+  };
+
   return (
-    <>
+    <div ref={setNodeRef} style={styles} {...attributes} {...listeners}>
       <Card
-        className={classNames(className, 'sortable-item hover-actions-trigger')}
+        className={classNames(
+          className,
+          'sortable-item hover-actions-trigger',
+          { 'bg-body-emphasis': isDragging }
+        )}
       >
         <Card.Body className="p-3">
           {task.coverImage && (
@@ -197,7 +230,7 @@ const KanbanListItemCard = ({
         task={task}
         list={list}
       />
-    </>
+    </div>
   );
 };
 

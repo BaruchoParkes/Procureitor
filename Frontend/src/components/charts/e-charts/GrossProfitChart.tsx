@@ -7,13 +7,17 @@ import { BarChart } from 'echarts/charts';
 import { SunburstChart } from 'echarts/charts';
 
 import { rgbaColor } from 'helpers/utils';
+import { CallbackDataParams } from 'echarts/types/dist/shared';
+import { rtlTooltipFormatter } from 'helpers/echart-utils';
 
 echarts.use([TooltipComponent, BarChart, SunburstChart]);
 const getDefaultOptions = (
   getThemeColor: (name: string) => string,
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   data: any,
-  colors: string[]
+  colors: string[],
+  isRTL: boolean,
+  isDark: boolean
 ) => ({
   color: colors,
   tooltip: {
@@ -24,7 +28,9 @@ const getDefaultOptions = (
     textStyle: { color: getThemeColor('light-text-emphasis') },
     borderWidth: 1,
     transitionDuration: 0,
-    extraCssText: 'z-index: 1000'
+    extraCssText: 'z-index: 1000',
+    formatter: (params: CallbackDataParams) =>
+      rtlTooltipFormatter(params, isRTL, isDark)
   },
   series: [
     {
@@ -89,7 +95,7 @@ const getDefaultOptions = (
 const GrossProfitChart = ({ style }: { style: CSSProperties }) => {
   const {
     getThemeColor,
-    config: { isDark }
+    config: { isDark, isRTL }
   } = useAppContext();
   const data = [
     {
@@ -446,7 +452,7 @@ const GrossProfitChart = ({ style }: { style: CSSProperties }) => {
   return (
     <ReactEChartsCore
       echarts={echarts}
-      option={getDefaultOptions(getThemeColor, data, colors)}
+      option={getDefaultOptions(getThemeColor, data, colors, isRTL, isDark)}
       style={style}
       className="mx-auto mt-3 mt-md-0 mt-xl-3 mt-xxl-0"
     />

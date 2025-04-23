@@ -18,8 +18,8 @@
 }
 
 .image-attachment-preview {
-  height: 80px;
-  width: 80px;
+  height: 120px;
+  width: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,5 +49,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  @include media-breakpoint-up(sm){
+    height: 140px;
+    width: 200px;
   }
 }

@@ -443,3 +443,11 @@
     }
   }
 }
+
+.drag-overlay {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+}
+

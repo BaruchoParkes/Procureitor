@@ -2,8 +2,6 @@ import { DealDetailsInfoType } from 'data/crm/dealDetailsInfo';
 import { Col, Row, Table } from 'react-bootstrap';
 import FeatherIcon from 'feather-icons-react';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
-
 interface DealDetailsInfoProps {
   data: DealDetailsInfoType[][];
   className?: string;
@@ -84,13 +82,13 @@ const InfoItem = ({
       <td className="py-2 d-none d-sm-block pe-sm-2">:</td>
       <td className="py-2">
         {data.title === 'Email' ? (
-          <Link to={`mailto:${data.value}`} className="fw-semibold">
+          <a href={`mailto:${data.value}`} className="fw-semibold">
             {data.value}
-          </Link>
+          </a>
         ) : data.title === 'Phone' ? (
-          <Link to={`tel:${data.value}`} className="fw-semibold">
+          <a href={`tel:${data.value}`} className="fw-semibold">
             {data.value}
-          </Link>
+          </a>
         ) : (
           <p
             className={classNames('ps-6 ps-sm-0 fw-semibold mb-0 py-0 pe-0', {

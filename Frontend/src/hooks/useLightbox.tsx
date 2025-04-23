@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useLightbox = (sources: string[]) => {
+const useLightbox = (sources: Array<string | JSX.Element>) => {
   const [open, setOpen] = useState(false);
   const [slide, setSlide] = useState(1);
 

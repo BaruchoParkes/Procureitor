@@ -22,8 +22,16 @@ import section23 from 'assets/img/sections/23.webp';
 import section24 from 'assets/img/sections/24.webp';
 import section26 from 'assets/img/sections/26.webp';
 import section27 from 'assets/img/sections/27.webp';
-
 import kanban from 'assets/img/sections/kanban.webp';
+
+interface ImportantApplications {
+  title: string;
+  link: string;
+  thumb: string;
+  details: string;
+  btnLabel: string;
+  disable?: boolean;
+}
 
 export const demos = [
   {
@@ -76,7 +84,7 @@ export const demos = [
   }
 ];
 
-export const importantApplications = [
+export const importantApplications: ImportantApplications[] = [
   {
     title: 'Email',
     link: '/apps/email/inbox',
@@ -95,21 +103,19 @@ export const importantApplications = [
   },
   {
     title: 'Calender',
-    link: '#!',
+    link: '/apps/calendar',
     thumb: section65,
     details:
       'Our calendar app will help you painlessly track all your trades. You can add, edit and revise the previous reminders and stay updated according to your schedule.',
-    btnLabel: 'View calender',
-    disable: true
+    btnLabel: 'View calender'
   },
   {
     title: 'Kanban',
-    link: '#!',
+    link: '/apps/kanban/kanban',
     thumb: kanban,
     details:
       'Our pre-built web app will help you have steady communication with your customers and grow your business rigorously. Hopefully, you’ll enjoy using this web app in Phoenix!',
-    btnLabel: 'View kanban',
-    disable: true
+    btnLabel: 'View kanban'
   }
 ];
 

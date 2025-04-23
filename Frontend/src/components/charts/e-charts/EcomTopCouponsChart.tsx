@@ -3,9 +3,13 @@ import * as echarts from 'echarts/core';
 import { useAppContext } from 'providers/AppProvider';
 import { TooltipComponent } from 'echarts/components';
 import { PieChart } from 'echarts/charts';
-import { CallbackDataParams } from 'echarts/types/dist/shared';
-echarts.use([TooltipComponent, PieChart]);
+import {
+  CallbackDataParams,
+  TooltipPositionCallbackParams
+} from 'echarts/types/dist/shared';
+import { type Size, TopCouponChartTooltip } from 'helpers/echart-utils';
 
+echarts.use([TooltipComponent, PieChart]);
 const getDefaultOptions = (getThemeColor: (name: string) => string) => ({
   color: [
     getThemeColor('primary'),
@@ -21,6 +25,13 @@ const getDefaultOptions = (getThemeColor: (name: string) => string) => ({
     textStyle: { color: getThemeColor('light-text-emphasis') },
     borderWidth: 1,
     transitionDuration: 0,
+    position: (
+      point: number[],
+      params: TooltipPositionCallbackParams,
+      el: HTMLDivElement,
+      rect: null,
+      size: Size
+    ) => TopCouponChartTooltip(point, params, el, rect, size),
     formatter: (params: CallbackDataParams) =>
       `<strong>${params.name}:</strong> ${params.percent}%`
   },

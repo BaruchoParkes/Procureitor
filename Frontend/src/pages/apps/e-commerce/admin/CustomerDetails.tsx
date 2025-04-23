@@ -8,7 +8,6 @@ import CustomerOrdersTable from 'components/tables/CustomerOrdersTable';
 import CustomerRatingsTable from 'components/tables/CustomerRatingsTable';
 import CustomerWishlistTable from 'components/tables/CustomerWishlistTable';
 import { defaultBreadcrumbItems } from 'data/commonData';
-import React from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
 
 const CustomerDetails = () => {
@@ -68,9 +67,7 @@ const CustomerDetails = () => {
                       </a>
                     </div>
                     <h5 className="text-body-secondary">Phone</h5>
-                    <a className="text-body-secondary" href="tel:+1234567890">
-                      +1234567890
-                    </a>
+                    <a href="tel:+1234567890">+1234567890</a>
                   </Card.Body>
                 </Card>
               </Col>

@@ -33,7 +33,7 @@ const BasicTimeline = ({ data }: { data: TimelineItem[] }) => {
                     <h6
                       className="lh-sm mb-0 me-2 text-body-secondary timeline-item-title"
                       dangerouslySetInnerHTML={{ __html: item.title }}
-                    ></h6>
+                    />
                     {item.file && (
                       <h6 className="mb-0 fs-9">
                         <FontAwesomeIcon

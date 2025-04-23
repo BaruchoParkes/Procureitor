@@ -87,7 +87,7 @@ const KanbanBoardOffcanvas = () => {
         </div>
 
         <h4 className="text-body-highlight fw-semibold mb-3">Members</h4>
-        <div className="d-flex align-items-center gap-2 mb-3">
+        <div className="d-flex align-items-center gap-2 mb-4">
           {kanbanBoardMembers.members.map(member => (
             <AvatarDropdown user={member} size="m" key={member.id} />
           ))}
@@ -131,7 +131,7 @@ const KanbanBoardOffcanvas = () => {
             <Link
               to="#!"
               className={classNames(
-                'text-body-highlight fw-semibold text-decoration-none d-flex flex-between-center text-danger pt-3'
+                'fw-semibold text-decoration-none d-flex flex-between-center text-danger pt-3'
               )}
             >
               Leave Board

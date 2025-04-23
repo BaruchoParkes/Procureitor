@@ -33,7 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
-//app.use('/', procesosRouter);
+app.use('/', procesosRouter);
 app.use('/users', usersRouter);
 app.use('/procesos', procesosRouter);
 app.use('/tMtos', tMtosRouter);

@@ -19,6 +19,11 @@ interface UseAdvanceTableProps<T> {
   pageSize?: number;
   selectionColumnWidth?: number | string;
   initialState?: InitialTableState;
+  state?: object;
+  onPaginationChange?: any;
+  manualPagination?: boolean;
+  rowCount?: number;
+  pageCount?: number;
 }
 
 const selectionColumn = {
@@ -57,7 +62,8 @@ const useAdvanceTable = <T,>({
   sortable,
   pagination,
   pageSize,
-  initialState
+  initialState,
+  ...rest
 }: PropsWithChildren<UseAdvanceTableProps<T>>) => {
   const state = {
     pagination: pagination
@@ -73,7 +79,8 @@ const useAdvanceTable = <T,>({
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    initialState: state
+    initialState: state,
+    ...rest
   });
 
   return table;

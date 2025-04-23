@@ -18,7 +18,10 @@ const HotelCard = ({ hotelInfo }: { hotelInfo: hotelInterFace }) => {
         </button>
       </div>
       <div className="backdrop-faded backdrop-secondary-dark h-100 d-flex flex-column justify-content-end">
-        <Link className="stretched-link fs-7 text-white fw-bold" to="#!">
+        <Link
+          className="stretched-link fs-7 text-white fw-bold"
+          to="/apps/travel-agency/hotel/customer/hotel-details"
+        >
           {name}
         </Link>
         <p className="mb-2 text-secondary-lighter">

@@ -158,11 +158,12 @@ const SearchResult = ({ searchValue = '' }: { searchValue?: string }) => {
           <div className="py-2">
             {members.map(item => (
               <Dropdown.Item as={Link} to={item.url} key={item.label}>
-                <div className="d-flex align-items-center fw-normal gap-1 text-body-highlight">
+                <div className="d-flex align-items-center fw-normal text-body-highlight">
                   <Avatar
                     src={item.avatar}
                     size="l"
                     status={item.status as Status}
+                    className="me-2"
                   />
                   <div className="flex-1">
                     <h6 className="mb-0 text-body-highlight title">

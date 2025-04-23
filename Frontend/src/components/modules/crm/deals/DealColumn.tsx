@@ -5,7 +5,11 @@ import { DealColumn as Column } from 'data/crm/deals';
 import { currencyFormat } from 'helpers/utils';
 import { Dropdown } from 'react-bootstrap';
 import DealCard from 'components/cards/DealCard';
-import { Draggable } from 'react-beautiful-dnd';
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy
+} from '@dnd-kit/sortable';
 
 const DealColumn = ({
   column,
@@ -14,6 +18,12 @@ const DealColumn = ({
   column: Column;
   handleOpenAddModal: () => void;
 }) => {
+  const { setNodeRef, listeners, attributes } = useSortable({
+    id: column.id,
+    data: {
+      type: 'column'
+    }
+  });
   return (
     <div className="deals-column">
       <div className="d-flex align-items-center justify-content-between position-sticky top-0 z-1 bg-body">
@@ -49,22 +59,21 @@ const DealColumn = ({
           </Dropdown>
         </div>
       </div>
-      <div className="scrollbar flex-1 d-flex flex-column">
-        {column.deals.map((item, index) => (
-          <Draggable key={item.id} draggableId={item.id} index={index}>
-            {provided => (
-              <>
-                <div
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                >
-                  <DealCard deal={item} key={item.id} columnId={column.id} />
-                </div>
-              </>
-            )}
-          </Draggable>
-        ))}
+      <div
+        ref={setNodeRef}
+        {...attributes}
+        {...listeners}
+        className="scrollbar flex-1 d-flex flex-column"
+        onClick={e => e.stopPropagation()}
+      >
+        <SortableContext
+          items={column.deals.map(item => item.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          {column.deals.map(item => (
+            <DealCard deal={item} key={item.id} columnId={column.id} />
+          ))}
+        </SortableContext>
       </div>
     </div>
   );

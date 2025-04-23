@@ -2,12 +2,75 @@ import changelogListElips from './changelogList';
 
 export default [
   {
-    version: '1.5.0',
-    title: 'Auxo',
-    publishDate: '23 Septembor, 2024',
+    version: '1.8.0',
+    title: 'Dionysus',
+    publishDate: '24 March, 2025',
     logs: {
       new: [
-        '<b>Vite Starter Versiton</b> (Contact <a href="mailto:support@themewagon.com">support</a> with the purchase id)',
+        'PAGE: <code>apps/file-manager/grid-view</code>',
+        'PAGE: <code>apps/file-manager/list-view</code>'
+      ],
+      fix: ['Minor Bugs']
+    }
+  },
+  {
+    version: '1.7.0',
+    title: 'Prometheus',
+    publishDate: '14 January, 2025',
+    logs: {
+      new: [
+        'PAGE: <code>travel-agency/trip/homepage</code>',
+        'PAGE: <code>travel-agency/trip/trip-details</code>',
+        'PAGE: <code>travel-agency/trip/checkout</code>',
+        'PACKAGE: <code>@dnd-kit/core</code>',
+        'PACKAGE: <code>@dnd-kit/sortable</code>',
+        'PACKAGE: <code>@dnd-kit/utilities</code>',
+        'PACKAGE: <code>uuid</code>'
+      ],
+      update: [
+        'DOC : <code>Draggable Documentation</code>',
+        'PAGE: <code>apps/kanban/kanban</code>',
+        'PAGE: <code>apps/kanban/create-board</code>',
+        'PAGE: <code>apps/crm/deals</code>',
+        'PACKAGE : <code>swiper 11.0.3 to 11.1.15</code>',
+        'PACKAGE : Removed <code>react-beautiful-dnd</code>'
+      ],
+      fix: ['Minor Bugs']
+    }
+  },
+  {
+    version: '1.6.0',
+    title: 'Aether',
+    publishDate: '12 November, 2024',
+    logs: {
+      new: [
+        'PAGE : <code>travel-agency/hotel/customer/hotel-details</code>',
+        'PAGE : <code>travel-agency/hotel/customer/hotel-compare</code>',
+        'PAGE : <code>travel-agency/hotel/customer/checkout</code>',
+        'PAGE : <code>travel-agency/hotel/customer/payment</code>',
+        'PAGE : <code>travel-agency/flight/homepage</code>',
+        'PAGE : <code>travel-agency/flight/booking</code>',
+        'PAGE : <code>travel-agency/flight/payment</code>'
+      ],
+      update: [
+        'DOC : <code>React Table Documentation</code>',
+        'Header and footer style in flight module'
+      ],
+      fix: [
+        'Horizontal nav scrollbar issue in firefox',
+        'Multiple file select issue',
+        'Mapbox full screen issue',
+        'Minor Bugs'
+      ]
+    }
+  },
+  {
+    version: '1.5.0',
+    title: 'Auxo',
+    publishDate: '23 September, 2024',
+    logs: {
+      new: [
+        '<b>Vite Starter version</b> (Contact <a href="mailto:support@themewagon.com">support</a> with the purchase id)',
         'PAGE : <code>travel-agency/hotel/admin/add-property</code>',
         'PAGE : <code>travel-agency/hotel/admin/add-room</code>',
         'PAGE : <code>travel-agency/hotel/admin/room-listing</code>',

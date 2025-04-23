@@ -30,6 +30,7 @@
   z-index: 1045;
   transform: translateX(-100%);
   max-width: 100%;
+  background-color: var(--#{$prefix}body-highlight-bg);
   &.phoenix-offcanvas-fixed {
     position: fixed;
     transform: translateX(-100%);

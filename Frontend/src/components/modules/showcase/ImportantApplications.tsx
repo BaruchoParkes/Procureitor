@@ -78,9 +78,6 @@ const ImportantApplications = () => {
                           alt=""
                           className={classNames('shadow rounded mw-100')}
                         />
-                        {application.disable && (
-                          <div className="coming-soon-badge">Coming soon</div>
-                        )}
                       </div>
                     </div>
                     <h4 className="text-body-highlight mb-3">
@@ -93,11 +90,7 @@ const ImportantApplications = () => {
                       as={Link}
                       target="_blank"
                       to={application.link}
-                      disabled={application.disable}
                       variant="primary"
-                      className={classNames({
-                        disabled: application.disable
-                      })}
                     >
                       {application.btnLabel}
                     </Button>

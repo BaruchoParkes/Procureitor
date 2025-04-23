@@ -43,7 +43,7 @@ const KanbanAddListModal = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const list = {
-      id: String(getRandomNumber(20, 100)),
+      id: getRandomNumber(20, 100),
       title: formData.name,
       borderColor: formData.color,
       tasks: []

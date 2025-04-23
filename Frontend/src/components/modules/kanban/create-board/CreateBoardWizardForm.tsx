@@ -9,6 +9,7 @@ import ColumnForm from './ColumnForm';
 import BackgroundColorForm from './BackgroundColorForm';
 import TagsForm from './TagsForm';
 import AccessForm from './AccessForm';
+import type { UniqueIdentifier } from '@dnd-kit/core';
 
 export interface CreateBoardTag {
   label: string;
@@ -20,6 +21,7 @@ export interface CreateBoardFormData {
   type: string;
   description?: string;
   columns: {
+    id: UniqueIdentifier;
     name: string;
     color: string;
   }[];
@@ -30,14 +32,17 @@ export interface CreateBoardFormData {
 
 const defaultColumns = [
   {
+    id: 1,
     name: 'Unassigned',
     color: '#6e7891'
   },
   {
+    id: 2,
     name: 'To Do',
     color: '#25b003'
   },
   {
+    id: 3,
     name: 'Doing',
     color: '#ec1f00'
   }

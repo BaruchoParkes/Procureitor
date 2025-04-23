@@ -5,10 +5,12 @@ import Button from 'components/base/Button';
 import { notifications as notificationData } from 'data/notifications';
 import NotificationItem from 'components/common/NotificationItem';
 import classNames from 'classnames';
-import { useState } from 'react';
+import { useMemo } from 'react';
 
 const NotificationDropdownMenu = ({ className }: { className?: string }) => {
-  const [notifications] = useState(notificationData.slice(0, 6));
+  const notifications = useMemo(() => {
+    return notificationData.slice(0, 6);
+  }, [notificationData]);
   return (
     <Dropdown.Menu
       align="end"

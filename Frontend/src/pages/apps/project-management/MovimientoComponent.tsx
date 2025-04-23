@@ -3,44 +3,21 @@ import DatePicker from 'components/base/DatePicker';
 import { Col, FloatingLabel, Form, Row } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Movimiento } from 'data/project-management/Movimiento';
+import { Movimiento, mtoInicial } from 'data/project-management/Movimiento';
 import { TipoDeMovimiento, tipoDeMtoInicial } from 'data/project-management/tipoDeMovimiento';
 import { Cobro, cobroInicial } from 'data/project-management/Cobro';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
+import  { AxiosError } from 'axios';
 import { TextEditor } from 'components/Cap/TextEditor';
 import { MovimientoDeCaja } from 'data/project-management/movimientoDeCaja';
 import { useAuth } from 'providers/AuthProvider';
-import BackgroundColorForm from 'components/modules/kanban/create-board/BackgroundColorForm';
 
 
 const MovimientoComponent = () => {
+
   const { user, loading, logout } = useAuth();
   const navigate = useNavigate();
-
-  const [mto, setMto] = useState<Movimiento>({
-    mtoId: 1437,
-    proc: "5yURv&mC0q",
-    createdAt: new Date(),
-    fechaDeRealizacion: new Date(),
-    tipoDeMovimiento: "",
-    usuario: "",
-    descripcion: "",
-    Realizado: "",
-    texto: "",
-    archivo: "",
-    actor: "",
-    pteDemandada: "",
-    tpoProceso: "",
-    Proc: {
-      ACTO: "ZERRIZUELA SERGIO DANIEL",
-      DEMA: "GALENO ASEGURADORA DE RIESGOS DEL TRABAJO S.A."
-    },
-    Miembro: "",
-    cobros_fk: 0,
-    whatsapp: '',
-    grok: ''
-  });
-
+  const [mto, setMto] = useState<Movimiento>(mtoInicial);
   const { id } = useParams();
   const [texto, setTexto] = useState('Sr Juez: PARKES CRISTIAN ANDRES');
   const [tipoDelTipo, setTipoDelTipo] = useState('');
@@ -50,8 +27,8 @@ const MovimientoComponent = () => {
   const [tipos, setTipos] = useState<TipoDeMovimiento[]>([]);
   const [cobro, setCobro] = useState<Cobro>(cobroInicial)
 
-  const autos = `${mto.Proc.ACTO} C/ ${mto.Proc.DEMA}`;
-  const autos_cortos = `${mto.Proc.ACTO.split(" ")[0]} C/ ${mto.Proc.DEMA.split(" ")[0]}`;
+  const autos = `${mto.Proc.ACTO} C/ ${mto.Proc.DEMA} S/ ${mto.Proc.TPRO}`;
+  const autos_cortos = `${mto.Proc.ACTO.split(" ")[0]} C/ ${mto.Proc.DEMA.split(" ")[0]} S/ ${mto.Proc.TPRO.split(" ")[0]}`;
 
   // Fetch Movimiento
   useEffect(() => {
@@ -87,7 +64,7 @@ const MovimientoComponent = () => {
       { try{
       const selectedTipo = tipos.find(tipo => tipo.tipoMtoID === mto.tipoDeMovimiento) || tipoDeMtoInicial;
     //  console.log('Selected TipoDeMovimiento:', selectedTipo);
-      setTmto(selectedTipo);
+     // setTmto(selectedTipo);
      // setTipoDelTipo(selectedTipo.tipo);
       // Set initial descripcion from tmto.tituloEscrito if not already set
       /* if (!mto.descripcion) {
@@ -118,12 +95,12 @@ const MovimientoComponent = () => {
     const isSaleTranfeActive = ['Transferencia'].includes(tmto.tipo);
     if (isSaleTranfeActive && (cobro.monto || cobro.quien_cobra)) {
       const newDescripcion = `Cobro: $${cobro.monto || 0} - ${cobro.capital_honorarios} - Cobra: ${cobro.quien_cobra || 'Cash'} - ${cobro.estado}`;
-    //  console.log('Setting cobro descripcion:', newDescripcion);
+      console.log('Setting cobro descripcion:', newDescripcion);
       const newNombreCobro = `${autos_cortos || ''} - ${cobro.capital_honorarios} - $ ${cobro.monto} - Cobra: ${cobro.quien_cobra || 'Cash'}`;
 
       let mtoid = mto.mtoId
-      setMto(prev => ({ ...prev, descripcion: newDescripcion }));
-      setCobro(prev => ({ ...prev, nombre: newNombreCobro, mtos_fk: mtoid }));
+      mto.descripcion= newDescripcion ;
+      cobro.nombre = newNombreCobro;
     }
   }, [cobro, tmto.tipoMtoID]);
 
@@ -279,7 +256,12 @@ const MovimientoComponent = () => {
 
   const handleSelectChangeCobrado = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCobro(prev => ({ ...prev, estado: event.target.value }));
+    console.log(cobro);
   };
+
+  /* useEffect(() => {
+    //console.log(cobro); // This will log the updated value of cobro whenever it changes
+  }, [cobro]); */
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>, updatedMto?: Movimiento) => {
     e.preventDefault();
@@ -324,30 +306,7 @@ const MovimientoComponent = () => {
       const newCobroId = response.data; // Assuming response.data is the ID (adjust if it's tranfeId)
       console.log('Cobro created with ID:', response.data);
 
-       if (cobro.estado === 'Cobrado') {
-          const cajaData = {
-          monto: cobro.monto || 0,
-          categoria: 'Cobro', // Adjust as needed
-          usuario: user?.iniciales || 'unknown',
-          cobros_fk: response.data,
-          cobro_pago: 'c',
-          notas: cobro.notas,
-          caja: cobro.quien_cobra,
-          created_at: new Date(),
-        };
-
-        console.log('cajaData: ',cajaData)
-
-        let cajaResponse: any;
-        try{
-        cajaResponse = await axios.post('/caja/store', cajaData);
-        console.log('Caja row created:', cajaResponse.data);
-        }
-        catch(error){console.log(error)}
-      }
- 
-      // Update mto with the new cobro ID
-      setMto(prev => {
+        setMto(prev => {
         const updatedMto = { ...prev, cobros_fk: response.data };
         console.log('Updated mto:', updatedMto);
         handleSubmit(e, updatedMto);
@@ -362,7 +321,6 @@ const MovimientoComponent = () => {
     
     <div className="p-4">
       <h2 className="mb-4">Movimiento en {autos}</h2>
-
       <Row className="g-3 mb-4">
         <Col xs={12} md={6}>
           <DatePicker

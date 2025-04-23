@@ -1,5 +1,4 @@
-import useSettingsMountEffect from 'hooks/useSettingsMountEffect';
-import React from 'react';
+import React, { useState } from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import Button from 'components/base/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,18 +6,18 @@ import { faFilter, faMap } from '@fortawesome/free-solid-svg-icons';
 import HotelCard from 'components/cards/HotelCard';
 import { hotels } from 'data/travel-agency/customer/hotel';
 import NavbarHome from 'components/navbars/travel-agency/NavbarHome';
-import HotelActions from 'components/modules/travel-agency/dashboard/hotel/HotelActions';
+import HotelActions from 'components/modules/travel-agency/hotel/HotelActions';
+import TravelFooter from 'components/footers/TravelFooter';
+import ResizableNavbar from 'components/navbars/travel-agency/ResizableNavbar';
+import { hotelNavItems } from 'data/travel-agency/resizableNav';
+import HomepageFilterOffcanvas from 'components/modules/travel-agency/hotel/HomepageFilterOffcanvas';
 
 const HotelHomepage = () => {
-  useSettingsMountEffect({
-    disableNavigationType: true,
-    disableHorizontalNavbarAppearance: true,
-    disableVerticalNavbarAppearance: true,
-    disableHorizontalNavbarShape: true
-  });
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
+      <ResizableNavbar navItems={hotelNavItems} />
       <section className="container-small py-0">
         <NavbarHome currentPage="Hotel" />
       </section>
@@ -39,7 +38,11 @@ const HotelHomepage = () => {
               <FontAwesomeIcon icon={faMap} className="me-md-2" />
               <span className="d-none d-md-inline-block">Show in map</span>
             </Button>
-            <Button variant="phoenix-secondary" className="text-nowrap px-3">
+            <Button
+              variant="phoenix-secondary"
+              className="text-nowrap px-3"
+              onClick={() => setIsOpen(true)}
+            >
               <FontAwesomeIcon icon={faFilter} className="me-md-2" />
               <span className="d-none d-md-inline-block">Filters</span>
             </Button>
@@ -53,6 +56,8 @@ const HotelHomepage = () => {
           ))}
         </Row>
       </section>
+      <TravelFooter />
+      <HomepageFilterOffcanvas isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };

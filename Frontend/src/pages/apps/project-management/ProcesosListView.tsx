@@ -39,7 +39,6 @@ const ProjectListView = () => {
     sortable: true
   });
 
-
   return (
     <div>
       <AdvanceTableProvider {...table}>

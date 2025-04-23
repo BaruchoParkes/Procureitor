@@ -25,7 +25,7 @@ const OrderDetails = () => {
         <h2 className="mb-1">
           Order <span>#349</span>
         </h2>
-        <div className="d-flex flex-wrap flex-between-center mb-4 gap-2">
+        <div className="d-flex flex-wrap flex-between-center mb-3 gap-2">
           <p className="text-body-secondary lh-sm mb-0">
             Customer ID :{' '}
             <Link className="fw-bold" to="#!">
@@ -33,17 +33,17 @@ const OrderDetails = () => {
               2364847
             </Link>
           </p>
-          <div className="d-flex gap-5">
+          <div className="d-flex">
             <Button
               variant="link"
-              className="p-0 text-body text-decoration-none"
+              className="ps-0 pe-3 text-body text-decoration-none"
               startIcon={<FontAwesomeIcon icon={faPrint} className="me-2" />}
             >
               Print
             </Button>
             <Button
               variant="link"
-              className="p-0 text-body text-decoration-none"
+              className="px-3 text-body text-decoration-none"
               startIcon={<FontAwesomeIcon icon={faUndo} className="me-2" />}
             >
               Refund
@@ -51,7 +51,7 @@ const OrderDetails = () => {
             <Dropdown>
               <Dropdown.Toggle
                 variant=""
-                className="p-0 dropdown-caret-none text-decoration-none"
+                className="ps-3 pe-0 dropdown-caret-none text-decoration-none"
               >
                 More action
                 <FontAwesomeIcon icon={faChevronDown} className="ms-2" />

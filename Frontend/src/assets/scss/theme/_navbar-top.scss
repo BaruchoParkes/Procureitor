@@ -674,3 +674,71 @@
     }
   }
 }
+
+.dropdown-hoverable {
+  .dropdown-menu {
+    &::before {
+      content: '';
+      position: absolute;
+      height: 1.5rem;
+      background: transparent;
+      top: -1.5rem;
+      width: calc(100% - 5px);
+      z-index: -1;
+    }
+    &::after{
+      box-shadow: none !important;
+      height: 1.2rem !important;
+      width: 1.2rem !important;
+      // top: -10px
+    }
+  } 
+}
+
+.navbar-landing{
+  .dropdown-hoverable{
+    .navbar-dropdown-caret{
+      &::after{
+        display: none;
+      }
+    }
+  }
+
+  .travel-nav-top{
+    .nav-link{
+      padding-left: 0 !important;
+    }
+  }
+
+  @each $item, $value in $navbar-vertical-breakpoints {
+    @include media-breakpoint-up($item) {
+      &.navbar-expand-#{$item} {
+        .travel-nav-top{
+          .dropdown-toggle{
+            &::after{
+              display: none;
+            }
+          }
+          .nav-link {
+            padding-left:  map-get($spacers, 3) !important;
+            &:hover,
+            &.active {
+              background: var(--#{$prefix}secondary-bg);
+            }
+          }
+        }   
+        .dropdown-hoverable{
+          .navbar-dropdown-caret{
+            &::after{
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+  .active {
+    color: var(--#{$prefix}primary);
+    background: transparent !important;
+  }
+}

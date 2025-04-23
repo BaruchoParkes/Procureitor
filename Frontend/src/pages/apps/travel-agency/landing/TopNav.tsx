@@ -1,13 +1,10 @@
-import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import {
-  IconDefinition,
   faArrowRightToBracket,
-  faEllipsisH
+  faEllipsisH,
+  IconDefinition
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from 'components/base/Button';
-import React from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -20,28 +17,16 @@ const TopNav = () => {
   }
   const navItems: navItems[] = [
     {
-      title: 'Become a Host',
+      title: 'Homepage',
       link: '#!'
     },
     {
-      title: 'Blog',
+      title: 'Booking',
       link: '#!'
     },
     {
-      title: 'Career',
+      title: 'Payment',
       link: '#!'
-    },
-
-    {
-      title: 'Support',
-      link: 'mailto:example@gmail.com',
-      icon: faEnvelope,
-      transform: 'down-1'
-    },
-    {
-      title: '+01 123 581321',
-      link: 'tel:+01123581321',
-      icon: faWhatsapp
     }
   ];
 
@@ -57,7 +42,6 @@ const TopNav = () => {
           Agent Login
         </Button>
         <Dropdown>
-          {/* <Button size="sm" className="p-0 d-md-none fs-8"></Button> */}
           <Dropdown.Toggle
             size="sm"
             variant=""
@@ -76,7 +60,10 @@ const TopNav = () => {
         <ul className="d-none d-md-flex gap-5 list-unstyled mb-0">
           {navItems.map((item, index) => (
             <li key={index}>
-              <Link to="" className="lh-1 text-body-tertiary fw-semibold fs-9">
+              <Link
+                to={item.link}
+                className="lh-1 text-body-tertiary fw-semibold fs-9"
+              >
                 {item.icon && (
                   <FontAwesomeIcon
                     icon={item.icon}

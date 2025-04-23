@@ -14,15 +14,6 @@ import {
 
 export type CalendarView = 'dayGridMonth' | 'timeGridWeek';
 
-export interface CalendarEvent {
-  id?: string;
-  title: string;
-  start: Date | string;
-  end?: Date | string;
-  url?: string;
-  key: string;
-}
-
 export interface CalendarState {
   calendarApi: CalendarApi | null;
   title: string;
@@ -31,8 +22,6 @@ export interface CalendarState {
   openNewEventModal: boolean;
   selectedStartDate: Date | string;
   selectedEndDate: Date | string;
-  selectedDate?: string; // Add this
-  dayEvents?: CalendarEvent[]; // Add this for the day's events
 }
 
 interface CalendarContextInterface extends CalendarState {

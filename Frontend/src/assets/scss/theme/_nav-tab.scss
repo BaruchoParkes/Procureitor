@@ -28,6 +28,17 @@
   }
 }
 
+.nav-pills {
+  .nav-link {
+    font-weight: $font-weight-bold;
+    color: var(--#{$prefix}body-secondary-color);
+    border: 1px solid transparent;
+    &.active {
+      border: 1px solid var(--#{$prefix}primary);
+    }
+  }
+}
+
 .nav-phoenix-pills {
   background: var(--#{$prefix}body-highlight-bg);
   border: 1px solid var(--#{$prefix}border-color);
@@ -71,6 +82,14 @@
     color: var(--#{$prefix}body-color);
     font-weight: $font-weight-bold;
     font-size: map-get($font-sizes, 9);
+  }
+  &.file-details-tab {
+    .nav-link {
+      border-color: var(--#{$prefix}border-color-translucent);
+      &.active {
+        border-color: var(--#{$prefix}primary);
+      }
+    }
   }
 }
 
@@ -134,4 +153,3 @@
   background-color: var(--#{$prefix}body-bg);
   z-index: 1;
 }
-

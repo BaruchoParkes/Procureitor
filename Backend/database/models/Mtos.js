@@ -1,7 +1,5 @@
 const { DataTypes } = require('sequelize');
 
-
-
 module.exports = function (sequelize, dataTypes){
 
 let alias = 'Mtos' // mismo  nomnre q el modelo, nombre con el cual sequelize identificara al modelo
@@ -36,31 +34,22 @@ let config ={
 
 const Mtos = sequelize.define(alias, cols, config)
 
-Mtos.associate = function (models){
+Mtos.associate = function (db){
 
-    Mtos.belongsTo(models.Proc, {
+    Mtos.belongsTo(db.Proc, {
         foreignKey: 'proc',
         targetKey: 'PROC'
       });
 
 
-    Mtos.belongsTo(models.Miembro, {
+    Mtos.belongsTo(db.Miembro, {
         foreignKey: 'usuario',
         targetKey: 'miemID'
     })
 
-/*     Mtos.belongsToMany(models.Proc, {
-        as: 'mtos',
-        through: "PROC_MTOS",
-        foreignKey: 'mto_id',
-        otherKey: 'proc_id'
-    } )
-
- */
-
 // When creating or updating mtos record
     Mtos.beforeCreate(async (mtos, options) => {
-    const relatedProc = await models.Proc.findByPk(mtos.proc);
+    const relatedProc = await db.Proc.findByPk(mtos.proc);
   
     if (relatedProc) {
       mtos.actor = relatedProc.ACTO;
@@ -69,16 +58,16 @@ Mtos.associate = function (models){
   });
   
   Mtos.beforeUpdate(async (mtos, options) => {
-    const relatedProc = await models.Proc.findByPk(mtos.proc);
+    const relatedProc = await db.Proc.findByPk(mtos.proc);
   
     if (relatedProc) {
       mtos.actor = relatedProc.ACTO;
       mtos.pteDemandada = relatedProc.DEMA;
     }
   });
-
-
-  
+ 
 }
+
+
 return Mtos
 }

@@ -158,6 +158,9 @@
     background-color: $black !important;
     opacity: 0.5;
   }
+  .tox-edit-area::before {
+    border: none !important;
+  }
 }
 
 .tox .tox-tbtn {
@@ -190,7 +193,11 @@
 
 .tox .tox-edit-area__iframe {
   background-color: var(--#{$prefix}tinymce-bg) !important;
+  &:before {
+    border: 2px solid red !important;
+  }
 }
+
 .editor-focused {
   .tox-sidebar-wrap {
     box-shadow: $input-focus-box-shadow !important;

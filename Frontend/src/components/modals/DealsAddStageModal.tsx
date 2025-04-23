@@ -2,12 +2,12 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from 'components/base/Button';
 import { DealColumn } from 'data/crm/deals';
-import { getRandomNumber } from 'helpers/utils';
 import usePhoenixForm from 'hooks/usePhoenixForm';
 import { useDealsContext } from 'providers/CrmDealsProvider';
 import { FormEvent, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
+import { v4 as uuid } from 'uuid';
 
 interface DealsAddStageModalProps {
   show: boolean;
@@ -15,7 +15,7 @@ interface DealsAddStageModalProps {
 }
 
 const initFormData = {
-  id: String(getRandomNumber(50, 100)),
+  id: parseInt(uuid().replace(/-/g, '').slice(0, 12), 16),
   title: '',
   revenue: 0,
   deals: []

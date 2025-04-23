@@ -5,5 +5,8 @@ module.exports = {
 
       return webpackConfig;
     }
+  },
+  jest: {
+    '^providers/AuthProvider$': '<rootDir>/src/__mocks__/providers/AuthProvider.tsx',
   }
 };

@@ -8,7 +8,7 @@ import Button from 'components/base/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Project, Status, projects } from 'data/project-management/projects';
 import Avatar from 'components/base/Avatar';
-import { ProgressBar } from 'react-bootstrap';
+import { OverlayTrigger, ProgressBar, Tooltip } from 'react-bootstrap';
 import classNames from 'classnames';
 import RevealDropdown, {
   RevealDropdownTrigger
@@ -136,16 +136,28 @@ const columns: ColumnDef<Project>[] = [
       return (
         <ProgressBar style={{ height: 3 }} className="progress-stack">
           {Object.keys(statusProgress).map(item => (
-            <ProgressBar
-              variant={classNames({
-                success: item === 'completed',
-                info: item === 'ongoing',
-                danger: item === 'inactive',
-                warning: item === 'critical'
-              })}
-              now={statusProgress[item as keyof Status]}
+            <OverlayTrigger
               key={item}
-            />
+              overlay={
+                <Tooltip id={`tooltip-${item}`}>
+                  {item === 'ongoing' && 'Active'}
+                  {item === 'inactive' && 'Damage'}
+                  {item === 'critical' && 'Pending'}
+                  {item === 'completed' && 'Done'}
+                </Tooltip>
+              }
+            >
+              <ProgressBar
+                variant={classNames({
+                  success: item === 'completed',
+                  info: item === 'ongoing',
+                  danger: item === 'inactive',
+                  warning: item === 'critical'
+                })}
+                now={statusProgress[item as keyof Status]}
+                isChild
+              />
+            </OverlayTrigger>
           ))}
         </ProgressBar>
       );

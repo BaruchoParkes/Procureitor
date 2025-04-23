@@ -5,10 +5,10 @@ import SubCategoryTab from './SubCategoryTab';
 import { Row } from 'react-bootstrap';
 
 const CategoryOffcanvas = () => {
-  const { isOpenOfcanvas } = useFaqTabContext();
+  const { isOpenOffcanvas } = useFaqTabContext();
   return (
     <PhoenixOffcanvas
-      open={isOpenOfcanvas}
+      open={isOpenOffcanvas}
       placement="start"
       noBackdrop
       className="faq-offcanvas w-100"

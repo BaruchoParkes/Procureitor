@@ -1,4 +1,4 @@
-import { faClock, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import Badge from 'components/base/Badge';
@@ -17,7 +17,12 @@ const ProductCard = ({ product }: { product: ProductType }) => {
           <div className="border border-translucent rounded-3 position-relative mb-3">
             <Button
               variant={product.wishListed ? 'primary' : 'outline-primary'}
-              className="rounded-circle p-0 d-flex flex-center btn-wish z-2 d-toggle-container"
+              className={classNames(
+                'rounded-circle p-0 d-flex flex-center btn-wish btn-wish-primary  z-2 d-toggle-container',
+                {
+                  active: product.wishListed
+                }
+              )}
             >
               {product.wishListed ? (
                 <FontAwesomeIcon icon={faHeart} />
@@ -32,7 +37,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
             {product.verified && (
               <Badge bg="success" className="fs-10 product-verified-badge">
                 Verified
-                <FontAwesomeIcon icon={faClock} className="ms-1" />
+                <FontAwesomeIcon icon={faCheck} className="ms-1" />
               </Badge>
             )}
           </div>

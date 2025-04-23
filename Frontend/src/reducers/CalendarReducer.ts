@@ -29,8 +29,7 @@ export type CALENDAR_ACTION_TYPE =
   | {
       type: typeof ADD_NEW_EVENT;
       payload: CalendarEvent;
-    }
-;
+    };
 
 // Reducer function
 export const calendarReducer = (

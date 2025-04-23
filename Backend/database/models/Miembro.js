@@ -62,15 +62,15 @@ module.exports = function (sequelize) {
 
   const Miembros = sequelize.define(alias, cols, config);
 
-  Miembros.associate = function (models) {
+/*   Miembros.associate = function (db) {
     // New association with cobros
-    Miembros.hasMany(models.Cobros, {
+    Miembros.hasMany(db.Cobros, {
       foreignKey: 'quien_cobra', // Foreign key in Cobros
       sourceKey: 'miemID',       // Primary key in Miembro
       as: 'cobros'       // Alias for the relationship
     });
   };
-
+ */
   Miembros.prototype.validPassword = async function (password) {
     return await bcrypt.compare(password, this.password);
   };

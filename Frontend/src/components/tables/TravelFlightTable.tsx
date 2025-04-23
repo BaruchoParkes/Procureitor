@@ -21,6 +21,7 @@ import RevealDropdown from 'components/base/RevealDropdown';
 import ActionDropdownItems from 'components/common/ActionDropdownItems';
 import FlightsTableHeader from 'components/modules/travel-agency/dashboard/FlightsHeader';
 import { FlightInterface, flightsData } from 'data/travel-agency/travelAgency';
+import classNames from 'classnames';
 
 const columns: ColumnDef<FlightInterface>[] = [
   {
@@ -115,7 +116,7 @@ const columns: ColumnDef<FlightInterface>[] = [
     },
     meta: {
       headerProps: {
-        className: 'align-middle text-body-tertiary',
+        className: 'align-middle text-body-tertiary px-0 py-1',
         style: { width: '180px' }
       },
       cellProps: { className: 'align-middle pe-5' }
@@ -139,7 +140,9 @@ const columns: ColumnDef<FlightInterface>[] = [
               variant="info-light"
             />
             <FontAwesomeIcon
-              className="text-info ms-0"
+              className={classNames('text-info ms-0 plane-icon', {
+                'd-none': status.label.toLowerCase() === 'cancelled'
+              })}
               icon={faPlane}
               transform={'up-7'}
             />
@@ -262,25 +265,28 @@ const TravelFlightTable = () => {
   return (
     <AdvanceTableProvider {...table}>
       <Row className="gx-0 gy-3 align-items-center py-4">
-        <Col xl="auto">
-          <h3 className="mb-0">Flights</h3>
+        <Col xl="auto" className="d-sm-flex flex-between-center">
+          <div className="mb-3 mb-sm-0">
+            <h3 className="mb-0">Flights</h3>
+            <p className="mb-0">Recent flights booked by us</p>
+          </div>
+          <div className="d-flex align-items-center">
+            <SearchBox
+              placeholder="Search by Flight no."
+              className="ms-xl-6 w-100"
+              onChange={handleSearchInputChange}
+            />
+            <Button variant="phoenix-secondary" className="px-3 ms-2 me-3">
+              <FontAwesomeIcon
+                icon={faFilter}
+                transform="down-2"
+                className="text-body-secondary"
+              />
+            </Button>
+          </div>
         </Col>
         <Col xs="auto" className="flex-1">
-          <div className="d-flex flex-between-center">
-            <div className="d-flex align-items-center">
-              <SearchBox
-                placeholder="Search by Flight no."
-                className="ms-xl-6 w-auto"
-                onChange={handleSearchInputChange}
-              />
-              <Button variant="phoenix-secondary" className="px-3 ms-2 me-3">
-                <FontAwesomeIcon
-                  icon={faFilter}
-                  transform="down-2"
-                  className="text-body-secondary"
-                />
-              </Button>
-            </div>
+          <div className="d-flex flex-between-center justify-content-xl-end">
             <div className="d-flex align-items-center">
               <FlightsTableHeader viewAllBtnClass="ms-auto" navBtn />
             </div>

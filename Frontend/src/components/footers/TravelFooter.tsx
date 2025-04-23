@@ -15,7 +15,7 @@ const footerList1: string[] = [
 const footerList2: string[] = ['Refund policy', 'EMI Policy', 'Privacy Policy'];
 const TravelFooter = () => {
   return (
-    <section className="py-0 mb-9">
+    <section className="py-0 mb-5 mb-md-7 mb-lg-9">
       <div className="container-medium-md px-0 px-md-3">
         <div className="p-5 p-sm-7 py-xl-12 px-xl-15 rounded-md-2 overflow-hidden position-relative">
           <div
@@ -58,9 +58,12 @@ const TravelFooter = () => {
               <h5 className="text-white mb-3">Contact</h5>
               <Link
                 to="mailto:info@phoenixtravels.com"
-                className="d-block text-secondary-lighter mb-1"
+                className="d-block text-secondary-lighter mb-1 text-nowrap"
               >
-                <FontAwesomeIcon icon={faEnvelope} className="me-2" />
+                <FontAwesomeIcon
+                  icon={faEnvelope}
+                  className="me-2 me-lg-1 me-xl-2"
+                />
                 info@phoenixtravels.com
               </Link>
               <Link
@@ -93,7 +96,7 @@ const TravelFooter = () => {
                     transform="up-2"
                   />
                 </div>
-                <Button variant="primary" className="rounded">
+                <Button variant="primary" className="rounded px-md-7">
                   Sign up
                 </Button>
               </div>

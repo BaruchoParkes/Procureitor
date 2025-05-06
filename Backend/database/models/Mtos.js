@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { dataTypes } = require('sequelize');
 
 module.exports = function (sequelize, dataTypes){
 
@@ -67,7 +67,5 @@ Mtos.associate = function (db){
   });
  
 }
-
-
 return Mtos
 }

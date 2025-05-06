@@ -2,10 +2,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageBreadcrumb from 'components/common/PageBreadcrumb';
 import ProcesosTopSection from 'components/modules/project-management/ProcesosTopSection';
-import ProcesosListTable, {
-  procesosListTableColumns
-} from 'components/tables/ProcesosListTable';
-import PagosListTable, {pagosListTableColumns} from 'components/tables/PagosListTable';
+import PagosUserListTable, {pagosUserListTableColumns} from 'components/tables/PagosUserListTable';
 import { defaultBreadcrumbItems } from 'data/commonData';
 import useAdvanceTable from 'hooks/useAdvanceTable';
 import AdvanceTableProvider from 'providers/AdvanceTableProvider';
@@ -14,14 +11,10 @@ import axios from 'axios';
 import { useState, useEffect} from 'react'
 import { useAuth } from 'providers/AuthProvider';
 
-
-
-
 const PagosListView = () => {
 
   const [pagos, setpagos] = useState([])
   const { user, loading, logout } = useAuth();
-
 
   useEffect(() => {
     const fetchPagos = async () => {  
@@ -41,14 +34,12 @@ const PagosListView = () => {
 
     const table = useAdvanceTable({
       data: pagos,
-      columns: pagosListTableColumns,
+      columns: pagosUserListTableColumns,
       pageSize: 2400,
       pagination: true,
       sortable: true
     });
   
-
-
   return (
     <div>
 <AdvanceTableProvider {...table}>
@@ -64,7 +55,7 @@ const PagosListView = () => {
           </Link>
         </div>
         <ProcesosTopSection activeView="list" />
-        <PagosListTable />
+        <PagosUserListTable />
       </AdvanceTableProvider>
     </div>
   );

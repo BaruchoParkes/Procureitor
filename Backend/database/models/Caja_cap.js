@@ -26,10 +26,8 @@ let config ={
 
 const Caja_cap = sequelize.define(alias, cols, config);
 
-  // Adding the afterCreate Hook
+  // Hook para crear row en caja gral cada vez que se crea row en caja user
   Caja_cap.afterCreate(async (newRecord, options) => {
-
-    console.log('this: ', this)
     try {
       // Example: Insert a related record in another table
       const db = require('.');
@@ -38,18 +36,21 @@ const Caja_cap = sequelize.define(alias, cols, config);
             order: [['cajaID', 'DESC']] // Replace 'id' with the relevant column for ordering.
           });
 
+        let cual_caja = alias.substring(5).toUpperCase();
+
       await db.Caja.create({
         created_at: Date.now(),
-
         cobros_fk: newRecord.cobros_fk,
+        pagos_fk: newRecord.pagos_fk,
+        caja_fk: newRecord.id,
         monto: newRecord.monto,
-        cobro_pago :'c',	
+        cobro_pago : newRecord.cobro_pago,	
         categoria: newRecord.categoria,
         usuario: newRecord.usuario,
         notas: newRecord.notas,
         monto: newRecord.monto,
         saldo: lastRow.saldo + newRecord.monto,
-        caja: alias,
+        caja: cual_caja,
         nombre: newRecord.movimiento
       });
     } catch (error) {

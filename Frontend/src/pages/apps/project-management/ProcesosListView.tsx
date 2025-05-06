@@ -45,15 +45,15 @@ const ProjectListView = () => {
         <div className="d-flex flex-wrap mb-4 gap-3 gap-sm-6 align-items-center">
           <h2 className="mb-0">
             <span className="me-3">Procesos</span>{' '}
-            
           </h2>
-          {/* <Link className="btn btn-primary px-5" to="/">
-            <FontAwesomeIcon icon={faPlus} className="me-2" />
-            Agregar Nuevo
-          </Link> */}
         </div>
-       {/*  <ProcesosTopSection activeView="list" /> */}
-        <ProcesosListTable />
+        <ProcesosTopSection activeView="list" />
+        <div
+          className="table-responsive"
+          style={{ overflowX: 'auto', width: '100%' }}
+        >
+          <ProcesosListTable />
+        </div>
       </AdvanceTableProvider>
     </div>
   );

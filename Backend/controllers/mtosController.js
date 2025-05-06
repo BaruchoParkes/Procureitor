@@ -13,7 +13,6 @@ let mtosController = {
   indexo: function(req, res, next) {
     db.Mtos.findAll(
       {
-
         include: [{
           model: db.Proc,
           attributes: ['ACTO', 'DEMA'], 
@@ -100,8 +99,7 @@ let mtosController = {
   index: function(req, res, next) {
     db.Mtos.findAll()
     .then(function(data){
-      let mtosList = data;
-      res.render('mtos', {title: "Movimientos", listaMtos: data});
+      res.send(data);
     })
     .catch(function(e){
       console.log(e)
@@ -115,6 +113,15 @@ let mtosController = {
         include: [{
           model: db.Proc,
           attributes: ['ACTO', 'DEMA', 'TPRO'], 
+
+          include: [
+            {
+                model: db.Ojuds,
+                as: 'Ojud',
+                attributes: ['nombre_corto'] // Only fetch 'nombre_corto' from Ojuds
+            }
+        ]
+
         },
         {
           model: db.Miembro,

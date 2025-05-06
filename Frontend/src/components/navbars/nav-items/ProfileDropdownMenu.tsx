@@ -1,39 +1,37 @@
 import Avatar from 'components/base/Avatar';
 import { useState } from 'react';
-import { Card, Dropdown, Form, Nav } from 'react-bootstrap';
-import avatar from 'assets/img/team/72x72/57.webp';
+import { Card, Dropdown, Nav } from 'react-bootstrap';
 import FeatherIcon from 'feather-icons-react';
 import { Link } from 'react-router-dom';
 import Scrollbar from 'components/base/Scrollbar';
 import classNames from 'classnames';
+import defaultAvatar from 'assets/img/team/72x72/avatar.webp';
+import { useAuth } from 'providers/AuthProvider';
 
-const ProfileDropdownMenu = ({ className }: { className?: string }) => {
+interface ProfileDropdownMenuProps {
+  className?: string;
+}
+
+const ProfileDropdownMenu: React.FC<ProfileDropdownMenuProps> = ({ className }) => {
+  const { user, loading, logout } = useAuth();
   const [navItems] = useState([
-    {
-      label: 'Profile',
-      icon: 'user'
-    },
-    {
-      label: 'Dashboard',
-      icon: 'pie-chart'
-    },
-    {
-      label: 'Posts & Activity',
-      icon: 'lock'
-    },
-    {
-      label: 'Settings & Privacy ',
-      icon: 'settings'
-    },
-    {
-      label: 'Help Center',
-      icon: 'help-circle'
-    },
-    {
-      label: 'Language',
-      icon: 'globe'
-    }
+    { label: 'Perfil', icon: 'user' },
+    // Add more as needed
   ]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+
+  // Base URL for backend assets (adjust as needed)
+  const baseURL = 'http://localhost:2000';
+  const avatarSrc = user?.avatar
+    ? typeof user.avatar === 'string' && !user.avatar.startsWith('http')
+      ? `${baseURL}/${user.avatar}` // Prepend baseURL if relative path
+      : user.avatar
+    : defaultAvatar; // Fallback to defaultAvatar
+
   return (
     <Dropdown.Menu
       align="end"
@@ -45,17 +43,12 @@ const ProfileDropdownMenu = ({ className }: { className?: string }) => {
       <Card className="position-relative border-0">
         <Card.Body className="p-0">
           <div className="d-flex flex-column align-items-center justify-content-center gap-2 pt-4 pb-3">
-            <Avatar src={avatar} size="xl" />
-            <h6 className="text-body-emphasis">Jerry Seinfield</h6>
+            <Avatar src={avatarSrc} size="xl" />
+            <h6 className="text-body-emphasis">
+              {user ? `${user.nombre}` : 'Not Logged In'}
+            </h6>
           </div>
-          <div className="mb-3 mx-3">
-            <Form.Control
-              type="text"
-              placeholder="Update your status"
-              size="sm"
-            />
-          </div>
-          <div style={{ height: '10rem' }}>
+          <div style={{ height: '2rem' }}>
             <Scrollbar>
               <Nav className="nav flex-column mb-2 pb-1">
                 {navItems.map(item => (
@@ -75,23 +68,12 @@ const ProfileDropdownMenu = ({ className }: { className?: string }) => {
           </div>
         </Card.Body>
         <Card.Footer className="p-0 border-top border-translucent">
-          <Nav className="nav flex-column my-3">
-            <Nav.Item>
-              <Nav.Link href="#!" className="px-3">
-                <FeatherIcon
-                  icon="user-plus"
-                  size={16}
-                  className="me-2 text-body"
-                />
-                <span>Add another account</span>
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
           <hr />
           <div className="px-3">
             <Link
-              to="#!"
+              to="/pages/authentication/simple/sign-out"
               className="btn btn-phoenix-secondary d-flex flex-center w-100"
+              onClick={logout}
             >
               <FeatherIcon icon="log-out" className="me-2" size={16} />
               Sign out

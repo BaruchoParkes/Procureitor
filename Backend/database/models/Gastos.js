@@ -1,5 +1,5 @@
+
 const { DataTypes } = require('sequelize');
-const { usuario } = require('../../controllers/pagosController');
 
 
 module.exports = function (sequelize, dataTypes){

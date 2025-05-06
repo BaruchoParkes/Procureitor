@@ -2,11 +2,10 @@ const { DataTypes } = require('sequelize');
 
 module.exports = function (sequelize) {
   let alias = 'Cobros';
-
   const cols = {
-
     cobro_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     created_at: { type: DataTypes.DATE },
+    fecha_de_pago: { type: DataTypes.DATE },
     usuario: { type: DataTypes.STRING },
     proc: { type: DataTypes.STRING },
     capital_honorarios: { type: DataTypes.STRING },

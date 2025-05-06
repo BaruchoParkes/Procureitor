@@ -20,9 +20,7 @@ indexo: function(req, res, next) {
 index: function(req, res, next) {
   db.Miembro.findAll()
   .then(function(data){
-    // return res.send(data);
-    let procList = data;
-    res.render('miembros', { title: 'miembros  2', listamiembros: procList});
+   res.send(data);
   })
   .catch(function(e){
     console.log(e)

@@ -6,68 +6,77 @@ import ToggleViewButton from 'components/common/ToggleViewbutton';
 import FourGrid from 'components/icons/FourGrid';
 import NineGrid from 'components/icons/NineGrid';
 import { Project } from 'data/project-management/projects';
+import { Proceso } from 'data/project-management/procesos';
+
 import { useAdvanceTableContext } from 'providers/AdvanceTableProvider';
 import { ChangeEvent, useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { T } from '@fullcalendar/core/internal-common';
 
-interface ProjectsTopSectionInterface {
+interface ProcesosTopSectionInterface {
   activeView: 'list' | 'board' | 'card';
 }
 
-const ProjectsTopSection = ({ activeView }: ProjectsTopSectionInterface) => {
+const ProcesosTopSection = ({ activeView }: ProcesosTopSectionInterface) => {
   const navigate = useNavigate();
   const { setGlobalFilter, getPrePaginationRowModel, getColumn } =
-    useAdvanceTableContext<Project>();
+    useAdvanceTableContext<Proceso>();
 
   const handleFilterItemClick = (columnId: string, value: string) => {
     const column = getColumn(columnId);
-    column?.setFilterValue(value === 'all' ? '' : value);
+    console.log('Column:', column);
+    column?.setFilterValue(value === '' ? '' : value);
+    console.log('Filter set to:', value);
   };
 
   const tabItems: FilterTabItem[] = useMemo(() => {
     const getDataCount = (label: string) =>
       getPrePaginationRowModel().rows.filter(
-        ({ original: { status } }) => status.label === label
+        ({ original: { MIEM } }) => MIEM? MIEM === label : []
       ).length;
 
     return [
       {
-        label: 'Todos',
-        value: 'all',
-        onClick: () => handleFilterItemClick('status', 'all'),
-        count: getPrePaginationRowModel().rows.length
-      },
-      {
-        label: 'CAP',
-        value: 'ongoing',
-        onClick: () => handleFilterItemClick('status', 'ongoing'),
-        count: getDataCount('ongoing')
-      },
-      {
-        label: 'Laborales Lomas',
-        value: 'ongoing',
-        onClick: () => handleFilterItemClick('status', 'ongoing'),
-        count: getDataCount('ongoing')
-      },
-      {
         label: 'EA',
-        value: 'cancelled',
-        onClick: () => handleFilterItemClick('status', 'cancelled'),
-        count: getDataCount('cancelled')
+        value: 'EA',
+        onClick: () => handleFilterItemClick('MIEM', 'EA'),
+        count: getDataCount('EA')
       },
       {
         label: 'IS',
-        value: 'completed',
-        onClick: () => handleFilterItemClick('status', 'completed'),
-        count: getDataCount('completed')
+        value: 'IS',
+        onClick: () => handleFilterItemClick('MIEM', 'IS'),
+        count: getDataCount('IS')
       },
       {
-        label: 'Critical',
-        value: 'critical',
-        onClick: () => handleFilterItemClick('status', 'critical'),
-        count: getDataCount('critical')
-      }
+        label: 'ISV',
+        value: 'ISV',
+        onClick: () => handleFilterItemClick('MIEM', 'ISV'),
+        count: getDataCount('IS')
+      },
+      {
+        label: 'LA',
+        value: 'LA',
+        onClick: () => handleFilterItemClick('MIEM', 'LA'),
+        count: getDataCount('IS')
+      },
+      {
+        label: 'MSJ',
+        value: 'MSJ',
+        onClick: () => handleFilterItemClick('MIEM', 'MSJ'),
+        count: getDataCount('IS')
+      },
+      {
+        label: 'ZCC',
+        value: 'ZCC',
+        onClick: () => handleFilterItemClick('MIEM', 'ZCC'),
+        count: getDataCount('IS')
+      },
+
+
+
+
     ];
   }, [getPrePaginationRowModel]);
 
@@ -77,48 +86,20 @@ const ProjectsTopSection = ({ activeView }: ProjectsTopSectionInterface) => {
 
   return (
     <Row className="g-3 justify-content-between align-items-center mb-4">
-      <Col xs={12} sm="auto">
+      {/* <Col xs={12} sm="auto">
         <FilterTab tabItems={tabItems} />
       </Col>
-      <Col xs={12} sm="auto">
+ */}      <Col xs={12} sm="auto">
         <div className="d-flex align-items-center gap-1">
           <SearchBox
             onChange={handleSearchInputChange}
-            placeholder="Search projects"
+            placeholder="Buscar Procesos"
             style={{ maxWidth: '30rem' }}
             className="me-3"
           />
-          <ToggleViewButton
-            tooltip="List view"
-            active={activeView === 'list'}
-            onClick={() => {
-              navigate('/apps/project-management/project-list-view');
-            }}
-          >
-            <FontAwesomeIcon icon={faList} className="fs-10" />
-          </ToggleViewButton>
-          <ToggleViewButton
-            tooltip="Board view"
-            active={activeView === 'board'}
-            onClick={() => {
-              navigate('/apps/project-management/project-board-view');
-            }}
-          >
-            <NineGrid />
-          </ToggleViewButton>
-          <ToggleViewButton
-            tooltip="Card view"
-            active={activeView === 'card'}
-            onClick={() => {
-              navigate('/apps/project-management/project-card-view');
-            }}
-          >
-            <FourGrid />
-          </ToggleViewButton>
         </div>
       </Col>
     </Row>
   );
 };
-
-export default ProjectsTopSection;
+export default ProcesosTopSection;

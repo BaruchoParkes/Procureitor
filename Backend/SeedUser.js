@@ -14,8 +14,6 @@ const db = require('./database/models');
 { Iniciales: 'SUCESION', password: 'Gomez&Verano99'}
 { Iniciales: 'FAM', password: 'Invierno&Sol-1995' }
 { Iniciales: 'ISV', password: 'Tuerca$Reloj-1980' }
-
-
  */
 
 

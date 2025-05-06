@@ -37,6 +37,7 @@ export interface Movimiento {
     ACTO: string;
     DEMA: string;
     TPRO: string;
+    Ojud: {nombre_corto: string}
   };
   Miembro: string,
   cobros_fk: number,
@@ -61,7 +62,10 @@ tpoProceso: "",
 Proc: {
   ACTO: "ZERRIZUELA SERGIO DANIEL",
   DEMA: "GALENO ASEGURADORA DE RIESGOS DEL TRABAJO S.A.",
-  TPRO: 'ENFERMEDAD'
+  TPRO: 'ENFERMEDAD',
+  Ojud: {
+    nombre_corto: 'TT1 LZ'
+  }
 },
 Miembro: "",
 cobros_fk: 0,

@@ -27,10 +27,10 @@ const MainLayout = () => {
       )}
       {navbarPosition === 'dual' && <NavbarDual />}
 
-      <div className={classNames(contentClass, 'content')}>
+     <div className={classNames(contentClass, 'content')}>
         <Outlet />
-        <Footer className={classNames(footerClass, 'position-absolute')} />
-      </div>
+       {/*  <Footer className={classNames(footerClass, 'position-absolute')} /> */}
+      </div> 
     </Container>
   );
 };

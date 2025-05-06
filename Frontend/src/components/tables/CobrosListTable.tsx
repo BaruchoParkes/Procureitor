@@ -16,11 +16,6 @@ import {NavLink} from 'react-router-dom'
 import { Col, FloatingLabel, Form, Row } from 'react-bootstrap';
 import { useAuth } from 'providers/AuthProvider';
 
-
-
-
-
-
 export const cobrosListTableColumns: ColumnDef<Cobro>[] = [
   {
     accessorKey: 'created_at',
@@ -35,7 +30,6 @@ export const cobrosListTableColumns: ColumnDef<Cobro>[] = [
         year: "2-digit"
       });
       
-
       return (
         <p className="text-decoration-none fw-bold fs-8">
            {
@@ -55,8 +49,6 @@ export const cobrosListTableColumns: ColumnDef<Cobro>[] = [
     cell: ({ row: { original } }) => {
       const { nombre } = original;
       const { mtos_fk } = original;
-
-
 
       return (
         <NavLink to={`/apps/project-management/movimiento/${mtos_fk}`} 
@@ -99,11 +91,7 @@ export const cobrosListTableColumns: ColumnDef<Cobro>[] = [
       const { nombre } = original;
       const { quien_cobra } = original;
       const { mtos_fk } = original;
-
-
-
-
-
+      const { PCL } = original;
       const { user, loading, logout } = useAuth();
 
       const handleEstadoChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -112,7 +100,7 @@ export const cobrosListTableColumns: ColumnDef<Cobro>[] = [
         
         try {
           const usuario = user?.iniciales
-          await axios.put(`/cobros/update/${cobro_id}`, {estado: newEstado, caja: quien_cobra, cobro_id, monto, usuario, capital_honorarios, notas, nombre, mtos_fk });
+          await axios.put(`/cobros/update/${cobro_id}`, {estado: newEstado, caja: quien_cobra, cobro_id, monto, usuario, capital_honorarios, notas, nombre, mtos_fk, PCL });
 
         } catch (error) {
           console.error('Error updating estado:', (error as AxiosError).response?.data || error);

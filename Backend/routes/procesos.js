@@ -7,6 +7,9 @@ let procesosController = require('../controllers/procesosController');
 router.get('/', procesosController.index);
 router.get('/procesosajson', procesosController.indexoa);
 router.get('/procesosbjson', procesosController.indexob);
+router.get('/procesoscjson', procesosController.indexo2Columns);
+router.get('/user/:user', procesosController.user);
+
 router.get('/procesosjsonCAP', procesosController.indexoCAP);
 router.get('/id/:id', procesosController.show);
 router.get('/procesoNuevo', procesosController.create);

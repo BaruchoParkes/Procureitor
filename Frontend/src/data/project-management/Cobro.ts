@@ -1,6 +1,7 @@
 export interface Cobro {
   cobro_id: number | null,
   created_at: Date,
+  fecha_de_pago: Date | string | null,
   fecha:  Date,
   usuario: string | null | undefined,
   proc:string,
@@ -28,6 +29,7 @@ export const cobroInicial: Cobro = {
     fecha:new Date(),
     cuota:'',
     created_at: new Date(),
+    fecha_de_pago: new Date(),
     confirmado_por_receptor:'',
     quien_cobra: '',	
     nombre: '',

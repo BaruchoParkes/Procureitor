@@ -6,7 +6,7 @@ let cobrosController = {
   index: function(req, res, next) {
     db.Cobros.findAll()
     .then(function(data){
-        return res.send(data);
+      return res.send(data);
     })
     .catch(function(e){
       console.log(e)
@@ -48,14 +48,24 @@ let cobrosController = {
 
   store: async function (req,res){
     try{
+
     const newCobro = await db.Cobros.create(req.body);
     console.log('New cobro created:', newCobro.toJSON());
     let  estado  = req.body.estado;
     console.log('req body estado: ',req.body.estado)
-   
+    let input 
+    let cap_o_pcl  = req.body.capital_honorarios;
+    if (cap_o_pcl ==='Capital'){
+      input = req.body.PCL;
+    } else if (cap_o_pcl ==='Honorarios') {
+      input = req.body.monto
+    }
+
+    console.log(input)
+
 
     if (estado === 'Cobrado') {
-      console.log('entra al if');
+
       let lastRow;
       let saldoAnterior;
       const newRow = {
@@ -64,125 +74,125 @@ let cobrosController = {
         categoria: req.body.capital_honorarios,
         notas: req.body.notas,
         cobros_fk: newCobro.cobro_id,
-        monto: req.body.monto,
+        monto: input,
         movimiento: req.body.nombre
       };
 
-      switch (req.body.quien_cobra) {
+        switch (req.body.quien_cobra) {
+          case "":
+            console.log('entra a case de cash')
+            lastRow = await db.Caja_cash.findOne({
+              order: [['id', 'DESC']],
+            });
+            saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0; // Fallback to 0 if no row exists
+            await db.Caja_cash.create({
+              ...newRow,
+              saldo: saldoAnterior + input,
+            });
+            message = 'cobro actualizado y movimiento de caja cash creado';
+            break;
 
-        case "":
-          console.log('entra a case de cash')
-          lastRow = await db.Caja_cash.findOne({
-            order: [['id', 'DESC']],
-          });
-          saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0; // Fallback to 0 if no row exists
-          await db.Caja_cash.create({
-            ...newRow,
-            saldo: saldoAnterior + req.body.monto,
-          });
-          message = 'cobro actualizado y movimiento de caja cash creado';
-          break;
+          case 'GEO':
+            lastRow = await db.Caja_geo.findOne({
+              order: [['id', 'DESC']],
+            });
+            saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0; // Fallback to 0 if no row exists
+            await db.Caja_geo.create({
+              ...newRow,
+              saldo: saldoAnterior + input,
+            });
+            message = 'cobro actualizado y movimiento de caja geo creado';
+            break;
 
-        case 'GEO':
-          lastRow = await db.Caja_geo.findOne({
-            order: [['id', 'DESC']],
-          });
-          saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0; // Fallback to 0 if no row exists
-          await db.Caja_geo.create({
-            ...newRow,
-            saldo: saldoAnterior + req.body.monto,
-          });
-          message = 'cobro actualizado y movimiento de caja geo creado';
-          break;
+          case 'CAP':
+            lastRow = await db.Caja_cap.findOne({
+              order: [['id', 'DESC']],
+            });
+            saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
+            await db.Caja_cap.create({
+              ...newRow,
+              saldo: saldoAnterior + input,
+            });
+            message = 'cobro actualizado y movimiento de caja cap creado';
+            break;
 
-        case 'CAP':
-          lastRow = await db.Caja_cap.findOne({
-            order: [['id', 'DESC']],
-          });
-          saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
-          await db.Caja_cap.create({
-            ...newRow,
-            saldo: saldoAnterior + req.body.monto,
-          });
-          message = 'cobro actualizado y movimiento de caja cap creado';
-          break;
+          case 'IS':
+            lastRow = await db.Caja_is.findOne({
+              order: [['id', 'DESC']],
+            });
+            saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
+            await db.Caja_is.create({
+              ...newRow,
+              saldo: saldoAnterior + input,
+            });
+            message = 'cobro actualizado y movimiento de caja IS creado';
+            break;
 
-        case 'IS':
-          lastRow = await db.Caja_is.findOne({
-            order: [['id', 'DESC']],
-          });
-          saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
-          await db.Caja_is.create({
-            ...newRow,
-            saldo: saldoAnterior + req.body.monto,
-          });
-          message = 'cobro actualizado y movimiento de caja IS creado';
-          break;
+          case 'ISV':
+            lastRow = await db.Caja_isv.findOne({
+              order: [['id', 'DESC']],
+            });
+            saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
+            await db.Caja_isv.create({
+              ...newRow,
+              saldo: saldoAnterior + input,
+            });
+            message = 'cobro actualizado y movimiento de caja isv creado';
+            break;
 
-        case 'ISV':
-          lastRow = await db.Caja_isv.findOne({
-            order: [['id', 'DESC']],
-          });
-          saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
-          await db.Caja_isv.create({
-            ...newRow,
-            saldo: saldoAnterior + req.body.monto,
-          });
-          message = 'cobro actualizado y movimiento de caja isv creado';
-          break;
+          case 'LA':
+            lastRow = await db.Caja_la.findOne({
+              order: [['id', 'DESC']],
+            });
+            saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
+            await db.Caja_la.create({
+              ...newRow,
+              saldo: saldoAnterior + input,
+            });
+            message = 'cobro actualizado y movimiento de caja la creado';
+            break;
 
-        case 'LA':
-          lastRow = await db.Caja_la.findOne({
-            order: [['id', 'DESC']],
-          });
-          saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
-          await db.Caja_la.create({
-            ...newRow,
-            saldo: saldoAnterior + req.body.monto,
-          });
-          message = 'cobro actualizado y movimiento de caja la creado';
-          break;
+          case 'SAG':
+            lastRow = await db.Caja_sag.findOne({
+              order: [['id', 'DESC']],
+            });
+            saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
+            await db.Caja_sag.create({
+              ...newRow,
+              saldo: saldoAnterior + input,
+            });
+            message = 'cobro actualizado y movimiento de caja sag creado';
+            break;
 
-        case 'SAG':
-          lastRow = await db.Caja_sag.findOne({
-            order: [['id', 'DESC']],
-          });
-          saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
-          await db.Caja_sag.create({
-            ...newRow,
-            saldo: saldoAnterior + req.body.monto,
-          });
-          message = 'cobro actualizado y movimiento de caja sag creado';
-          break;
+          case 'MVP':
+            lastRow = await db.Caja_mvp.findOne({
+              order: [['id', 'DESC']],
+            });
+            saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
+            await db.Caja_mvp.create({
+              ...newRow,
+              saldo: saldoAnterior + input,
+            });
+            message = 'cobro actualizado y movimiento de caja mvp creado';
+            break;
 
-        case 'MVP':
-          lastRow = await db.Caja_mvp.findOne({
-            order: [['id', 'DESC']],
-          });
-          saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
-          await db.Caja_mvp.create({
-            ...newRow,
-            saldo: saldoAnterior + req.body.monto,
-          });
-          message = 'cobro actualizado y movimiento de caja mvp creado';
-          break;
+          case 'ZCC':
+            lastRow = await db.Caja_zcc.findOne({
+              order: [['id', 'DESC']],
+            });
+            saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
+            await db.Caja_zcc.create({
+              ...newRow,
+              saldo: saldoAnterior + input,
+            });
+            message = 'cobro actualizado y movimiento de caja zcc creado';
+            break;
 
-        case 'ZCC':
-          lastRow = await db.Caja_zcc.findOne({
-            order: [['id', 'DESC']],
-          });
-          saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
-          await db.Caja_zcc.create({
-            ...newRow,
-            saldo: saldoAnterior + req.body.monto,
-          });
-          message = 'cobro actualizado y movimiento de caja zcc creado';
-          break;
-
-        default:
-          message = 'cobro actualizado pero caja no reconocida';
-          break;
-      }
+          default:
+            message = 'cobro actualizado pero caja no reconocida';
+            break;
+        }
+      
     }
     res.status(201).json(newCobro.cobro_id)}
     catch(error){
@@ -207,18 +217,30 @@ let cobrosController = {
       let message = 'cobro actualizado';
   
       if (estado === 'Cobrado') {
+  
+        let lastRow;
+        let saldoAnterior;
+
+        let input 
+        let cap_o_pcl  = req.body.capital_honorarios;
+        if (cap_o_pcl ==='Capital'){
+          input = req.body.PCL;
+        } else if (cap_o_pcl ==='Honorarios') {
+          input = req.body.monto
+        }
+
+        console.log('capital o pcl: ',req.body.capital_honorarios)
+        console.log(input)
+
         const newRow = {
           created_at: new Date(),
           usuario: req.body.usuario,
           categoria: req.body.capital_honorarios,
           notas: req.body.notas,
           cobros_fk: id, // Changed to match cobro_id
-          monto: req.body.monto,
+          monto: input,
           movimiento: req.body.nombre
         };
-  
-        let lastRow;
-        let saldoAnterior;
   
         switch (req.body.caja) {
           case "":
@@ -226,7 +248,7 @@ let cobrosController = {
             saldoAnterior = lastRow ? lastRow.saldo : 0;
             await db.Caja_cash.create({
               ...newRow,
-              saldo: saldoAnterior + req.body.monto,
+              saldo: saldoAnterior + input,
             });
             message = 'cobro actualizado y movimiento de caja cash creado';
             break;
@@ -238,7 +260,7 @@ let cobrosController = {
             saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0; // Fallback to 0 if no row exists
             await db.Caja_geo.create({
               ...newRow,
-              saldo: saldoAnterior + req.body.monto,
+              saldo: saldoAnterior + input,
             });
             message = 'cobro actualizado y movimiento de caja geo creado';
             break;
@@ -250,7 +272,7 @@ let cobrosController = {
             saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
             await db.Caja_cap.create({
               ...newRow,
-              saldo: saldoAnterior + req.body.monto,
+              saldo: saldoAnterior + input,
             });
             message = 'cobro actualizado y movimiento de caja cap creado';
             break;
@@ -262,7 +284,7 @@ let cobrosController = {
             saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
             await db.Caja_is.create({
               ...newRow,
-              saldo: saldoAnterior + req.body.monto,
+              saldo: saldoAnterior + input,
             });
             message = 'cobro actualizado y movimiento de caja IS creado';
             break;
@@ -274,7 +296,7 @@ let cobrosController = {
             saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
             await db.Caja_isv.create({
               ...newRow,
-              saldo: saldoAnterior + req.body.monto,
+              saldo: saldoAnterior + input,
             });
             message = 'cobro actualizado y movimiento de caja isv creado';
             break;
@@ -286,7 +308,7 @@ let cobrosController = {
             saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
             await db.Caja_la.create({
               ...newRow,
-              saldo: saldoAnterior + req.body.monto,
+              saldo: saldoAnterior + input,
             });
             message = 'cobro actualizado y movimiento de caja la creado';
             break;
@@ -298,7 +320,7 @@ let cobrosController = {
             saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
             await db.Caja_sag.create({
               ...newRow,
-              saldo: saldoAnterior + req.body.monto,
+              saldo: saldoAnterior + input,
             });
             message = 'cobro actualizado y movimiento de caja sag creado';
             break;
@@ -310,7 +332,7 @@ let cobrosController = {
             saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
             await db.Caja_mvp.create({
               ...newRow,
-              saldo: saldoAnterior + req.body.monto,
+              saldo: saldoAnterior + input,
             });
             message = 'cobro actualizado y movimiento de caja mvp creado';
             break;
@@ -322,7 +344,7 @@ let cobrosController = {
             saldoAnterior = lastRow ? lastRow.dataValues.saldo : 0;
             await db.Caja_zcc.create({
               ...newRow,
-              saldo: saldoAnterior + req.body.monto,
+              saldo: saldoAnterior + input,
             });
             message = 'cobro actualizado y movimiento de caja zcc creado';
             break;

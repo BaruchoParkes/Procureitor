@@ -49,9 +49,18 @@ module.exports = (sequelize, DataTypes) => {
   const Procesos = sequelize.define(alias, cols, config);
 
    Procesos.associate = function (db) {
+
     Procesos.belongsTo(db.Miembro, {
       foreignKey: 'MIEM'
     });
+
+    Procesos.belongsTo(db.Ojuds, {
+      foreignKey: 'OJUD'
+    });
+  
+  
+  
+  
   };
  
   return Procesos;

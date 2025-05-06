@@ -9,9 +9,7 @@ import { Cobro, cobroInicial } from 'data/project-management/Cobro';
 import axios from 'axios';
 import  { AxiosError } from 'axios';
 import { TextEditor } from 'components/Cap/TextEditor';
-import { MovimientoDeCaja } from 'data/project-management/movimientoDeCaja';
 import { useAuth } from 'providers/AuthProvider';
-
 
 const MovimientoComponent = () => {
 
@@ -26,7 +24,6 @@ const MovimientoComponent = () => {
   const [tmto, setTmto] = useState<TipoDeMovimiento>(tipoDeMtoInicial);
   const [tipos, setTipos] = useState<TipoDeMovimiento[]>([]);
   const [cobro, setCobro] = useState<Cobro>(cobroInicial)
-
   const autos = `${mto.Proc.ACTO} C/ ${mto.Proc.DEMA} S/ ${mto.Proc.TPRO}`;
   const autos_cortos = `${mto.Proc.ACTO.split(" ")[0]} C/ ${mto.Proc.DEMA.split(" ")[0]} S/ ${mto.Proc.TPRO.split(" ")[0]}`;
 
@@ -36,6 +33,7 @@ const MovimientoComponent = () => {
       try {
         const response = await axios.get(`/mtos/id/${id}`);
         setMto(response.data);
+        console.log(mto)
       } catch (error) {
         console.error('Error fetching movimiento:', error);
       }
@@ -94,9 +92,9 @@ const MovimientoComponent = () => {
   useEffect(() => {
     const isSaleTranfeActive = ['Transferencia'].includes(tmto.tipo);
     if (isSaleTranfeActive && (cobro.monto || cobro.quien_cobra)) {
-      const newDescripcion = `Cobro: $${cobro.monto || 0} - ${cobro.capital_honorarios} - Cobra: ${cobro.quien_cobra || 'Cash'} - ${cobro.estado}`;
+      const newDescripcion = `Cobro: $${cobro.monto}(${cobro.capital_honorarios}) ${cobro.capital_honorarios == 'Capital' ? ' - PCL: $' + cobro.PCL : ''}- Cobra: ${cobro.quien_cobra || 'Efectivo'} - ${cobro.estado}`;
       console.log('Setting cobro descripcion:', newDescripcion);
-      const newNombreCobro = `${autos_cortos || ''} - ${cobro.capital_honorarios} - $ ${cobro.monto} - Cobra: ${cobro.quien_cobra || 'Cash'}`;
+      const newNombreCobro = `${autos_cortos || ''} - ${cobro.capital_honorarios} - $ ${cobro.monto} - PCL: $${cobro.PCL}-  Cobra: ${cobro.quien_cobra || 'Efectivo'}`;
 
       let mtoid = mto.mtoId
       mto.descripcion= newDescripcion ;
@@ -116,10 +114,6 @@ const MovimientoComponent = () => {
     setTexto(newValue);
   };
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setRealizado(event.target.value === 'Realizado' ? 1 : 0);
-  };
-
   const handleTMtoSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
     const selectedTipo = tipos.find(tipo => tipo.movimiento === selectedValue) || tipoDeMtoInicial;
@@ -136,6 +130,11 @@ const MovimientoComponent = () => {
     let estado = ''
 
     switch (tmto.tipoMtoID){
+      case '01':
+          cobra = "";
+          ch = 'Capital';
+          estado = 'Pendiente';
+        break;
       case '011':
           cobra = "GEO";
           ch = 'Honorarios';
@@ -181,12 +180,30 @@ const MovimientoComponent = () => {
   };
 
   const handleMontoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newMonto = Number(event.target.value) || 0;
 
     let cobra = ''
     let concepto = ''
     let estado = ''
+    let pcl = 0
+    let capital = false;
 
     switch (tmto.tipoMtoID){
+      case '01':
+        cobra = "";
+        concepto = 'Capital';
+        estado = 'Pendiente';
+        if (
+        mto?.Proc?.Ojud?.nombre_corto?.substring(0, 3) === 'SRT'
+        ) {
+          console.log('entro al if de SRT')
+          pcl = newMonto * 0.1;
+      } else {
+        console.log('entro al else')
+        pcl = newMonto * 0.2;
+      };
+        capital = true;
+      break;
       case '011':
           cobra = 'GEO';
           concepto = 'Honorarios';
@@ -228,13 +245,23 @@ const MovimientoComponent = () => {
           estado = 'Cobrado';
         break;
     };
-    setCobro(prev => ({ ...prev, quien_cobra: cobra, capital_honorarios: concepto, estado : estado}));
-    setCobro(prev => ({ ...prev, monto: Number(event.target.value) || 0, usuario: user?.iniciales }));
-  };
+    const newNombreCobro = `${autos_cortos || ''} - ${cobro.capital_honorarios} - $ ${cobro.monto} - PCL: $${cobro.PCL}-  Cobra: ${cobro.quien_cobra || 'Cash'}`;
+    setCobro(prev => ({
+      ...prev,
+      mtos_fk: mto.mtoId,
+      monto: newMonto,
+      quien_cobra: cobra,
+      capital_honorarios: concepto,
+      estado: estado,
+      usuario: user?.iniciales,
+      PCL: pcl,
+      nombre: newNombreCobro
+    }));
+  }
   
   const handleCHchange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCobro(prev => ({ ...prev, capital_honorarios: event.target.value}));
-    const newNombreCobro = `${autos_cortos || ''} - ${cobro.capital_honorarios} - $ ${cobro.monto} - Cobra: ${cobro.quien_cobra || 'Cash'}`;
+    const newNombreCobro = `${autos_cortos || ''} - ${cobro.capital_honorarios} - $ ${cobro.monto} - Cobra: ${cobro.quien_cobra || 'Efectivo'}`;
     setCobro(prev => ({ ...prev, nombre: newNombreCobro }));
   };
 
@@ -251,17 +278,29 @@ const MovimientoComponent = () => {
   };
 
   const handleSelectChangeTranfeOLJ = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCobro(prev => ({ ...prev, Libranza_Judicial_Transferencia_Directa: event.target.value }));
+    setCobro(prev => ({ ...prev, libranza_judicial_transferencia_directa: event.target.value }));
+  };
+
+  const handleFechadepagoChange = (dates: Date[]) => {
+    const date = dates && dates.length > 0 ? dates[0] : null;
+    if (date) {
+    const formattedDate = date.toISOString().split('T')[0];
+    setCobro(prev => ({
+      ...prev,
+      fecha_de_pago: formattedDate,
+    }));
+    } else {
+    setCobro(prev => ({
+      ...prev,
+      fecha_de_pago: '',
+    }));
+  }  
   };
 
   const handleSelectChangeCobrado = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setCobro(prev => ({ ...prev, estado: event.target.value }));
     console.log(cobro);
   };
-
-  /* useEffect(() => {
-    //console.log(cobro); // This will log the updated value of cobro whenever it changes
-  }, [cobro]); */
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>, updatedMto?: Movimiento) => {
     e.preventDefault();
@@ -285,11 +324,23 @@ const MovimientoComponent = () => {
 
   const handleSubmitCobro = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setCobro(prev => ({ ...prev, proc: mto.proc, usuario: user?.iniciales }));
+
+    const newDescripcion = `Cobro: $${cobro.monto}(${cobro.capital_honorarios}) ${cobro.capital_honorarios == 'Capital' ? ' - PCL: $' + cobro.PCL : ''}- Cobra: ${cobro.quien_cobra || 'Efectivo'} - ${cobro.estado}`;
+    setMto(prev => ({ ...prev, descripcion: newDescripcion }));
+    const newNombreCobro = `${autos_cortos || ''} - ${cobro.capital_honorarios} - $ ${cobro.monto} - PCL: $${cobro.PCL}-  Cobra: ${cobro.quien_cobra || 'Efectivo'}`;
+    setCobro(prev => ({ ...prev, proc: mto.proc, usuario: user?.iniciales, nombre: newNombreCobro }));
+
     const confirmSave = window.confirm(
-      `Estas guardando un cobro por un monto de $${cobro.monto || 0} 
-      ${ (cobro.PCL>0) ? `PCL por una suma de $${cobro.PCL}`  : ''}
-      ${ (cobro.quien_cobra!='') ? `cobrado por ${cobro.quien_cobra}` : 'cobrado en efectivo'}
+      `Estas guardando este cobro:
+
+      Concepto: ${cobro.capital_honorarios}
+      Monto: $ ${cobro.monto || 0} 
+      PCL: $ ${cobro.PCL}
+      Estado: ${cobro.estado}
+      Cobra: ${ (cobro.quien_cobra!='') ?  `${cobro.quien_cobra}` : `efectivo`}
+      Modo de pago: ${cobro.libranza_judicial_transferencia_directa}
+      Notas: ${cobro.notas}
+      
       Confirmas?`
     );
 
@@ -317,12 +368,13 @@ const MovimientoComponent = () => {
     }
   };
 
-  return (
-    
+  return (       
     <div className="p-4">
+
       <h2 className="mb-4">Movimiento en {autos}</h2>
+
       <Row className="g-3 mb-4">
-        <Col xs={12} md={6}>
+        <Col xs={12} md={4}>
           <DatePicker
             value={fecha}
           />
@@ -330,7 +382,7 @@ const MovimientoComponent = () => {
       </Row>
 
       <Row className="g-3 mb-4">
-        <Col xs={12} md={6}>
+        <Col xs={12} md={4}>
           <Form.Select
             size="lg"
             onChange={handleTMtoSelectChange}
@@ -347,22 +399,24 @@ const MovimientoComponent = () => {
       </Row>
 
       {(tmto.tipo === 'Transferencia') && (
+
+
           <div id="saleTranfe" className="mb-4 p-3 bg-light border rounded" >
           <Row className="g-3">
             {/* Column for Monto and Capital/Honorarios */}
 
-            <Col xs={12} md={6}>
-              <FloatingLabel controlId="monto" label="Monto">
+            <Col md={4}>
+              <Form.Label>Monto</Form.Label>
                 <Form.Control
                   size="lg"
                   type="number"
                   value={cobro.monto || ''}
                   onChange={handleMontoChange}
                 />
-              </FloatingLabel>
+              
             </Col>
-            <Col xs={6} md={3}>
-              <FloatingLabel controlId="c/h" label="Capital/Honorarios">
+            <Col xs={6} md={4}>
+              <Form.Label>Capital/Honorarios</Form.Label>
                 <Form.Select
                   size="lg"
                   value={cobro.capital_honorarios || ''}
@@ -371,35 +425,21 @@ const MovimientoComponent = () => {
                   <option value="Capital">Capital</option>
                   <option value="Honorarios">Honorarios</option>
                 </Form.Select>
-              </FloatingLabel>
             </Col>
-            <Col xs={6} md={3}>
-              <FloatingLabel controlId="pcl" label="PCL">
+            <Col xs={6} md={4}>
+              <Form.Label>PCL</Form.Label>
                 <Form.Control
                   size="lg"
                   type="number"
                   value={cobro.PCL || ''}
                   onChange={handlePCLChange}
                 />
-              </FloatingLabel>
               </Col>
-            
-            {/* Column for Notas */}
-            <Col xs={12}>
-              <FloatingLabel controlId="notas" label="Notas">
-                <Form.Control
-                  size="lg"
-                  type="text"
-                  value={cobro.notas || ''}
-                  onChange={handleNotasChange}
-                />
-              </FloatingLabel>
-            </Col>
-        
+                                
             {/* Column for Quien Cobra */}
-            <Col xs={12} md={6}>
-              <FloatingLabel controlId="quien_cobra" label="Quien Cobra">
-                <Form.Select
+            <Col xs={12} md={4}>
+            <Form.Label>Quien Cobra</Form.Label>
+               <Form.Select
                   size="lg"
                   onChange={handleQuienCobraChange}
                   value={cobro.quien_cobra || ''}
@@ -418,22 +458,44 @@ const MovimientoComponent = () => {
                   <option value="EA">EA</option>
                   <option value="SUCESION">SUCESION</option>
                 </Form.Select>
-              </FloatingLabel>
             </Col>
         
             {/* Columns for Transferencia/Libranza and Estado */}
-            <Col xs={12} md={3}>
+            <Col xs={12} md={4}>
+            <Form.Label>Liranza Judicial / Transferencia Directa</Form.Label>
               <Form.Select
                 size="lg"
                 onChange={handleSelectChangeTranfeOLJ}
                 value={cobro.libranza_judicial_transferencia_directa || ''}
               >
-                <option value="Transferencia Directa">Transferencia Directa</option>
                 <option value="Libranza Judicial">Libranza Judicial</option>
+                <option value="Transferencia Directa">Transferencia Directa</option>
               </Form.Select>
             </Col>
-            <Col xs={12} md={3}>
-              <FloatingLabel controlId="estado" label="Estado">
+
+            <Col sm={6} md={4}>
+          <Form.Label>Fecha de Pago</Form.Label>
+          <DatePicker
+            value={cobro.fecha_de_pago ? new Date(cobro.fecha_de_pago) : new Date()}
+            onChange={handleFechadepagoChange}
+            render={(_, ref) => (
+              <Form.Floating>
+                <Form.Control
+                  type="date"
+                  ref={ref}
+                  id="fechadepago"
+                  placeholder="Fecha de Pago"
+                />
+              </Form.Floating>
+           
+            )}
+          />
+        </Col>
+
+
+
+            <Col xs={12} md={4}>
+              <Form.Label>Estado</Form.Label>
                 <Form.Select
                   size="lg"
                   onChange={handleSelectChangeCobrado}
@@ -444,20 +506,35 @@ const MovimientoComponent = () => {
                   <option value="Cancelado">Cancelado</option>
                   <option value="Actor Moroso">Actor Moroso</option>
                 </Form.Select>
-              </FloatingLabel>
             </Col>
-          </Row>
+
+{/* Column for Notas  */}
+              <Col md={4}>
+              <Form.Label>Notas</Form.Label>
+                <Form.Control
+                  size="lg"
+                  type="text"
+                  value={cobro.notas || ''}
+                  onChange={handleNotasChange}
+                />
+            </Col>
+
+
+        
         
           {/* Submit Button */}
-          <div className="mt-3">
+          <Col md={4} className="d-flex align-items-end">
+          
             <Button variant="primary" className="px-5" onClick={handleSubmitCobro}>
               Guardar Cobro
             </Button>
-            <span style={{ color: 'black' }}>             {cobro.nombre}</span>
-          </div>
-        </div>
+            </Col>
+            </Row>
+         </div>
       )}
 
+      {(tmto.tipo != 'Transferencia') && (
+      <div>
       <Row className="g-3 mb-4">
         <Col xs={12}>
           <FloatingLabel controlId="descripcion" label="Descripción">
@@ -495,6 +572,9 @@ const MovimientoComponent = () => {
           </Button>
         </Col>
       </Row>
+    </div>
+      )}
+
     </div>
   );
 };

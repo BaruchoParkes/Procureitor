@@ -34,11 +34,11 @@ export interface Pago {
   fechadepago: Date | string | null,
   usuario: string,
   categoria: string,
+  proceso: string
 }
 
 
 export const pagoInicial: Pago ={
-
   pagoId: 1, 
   pagoLabel: "",
   gastoIdFkEnPagos: "",
@@ -53,7 +53,7 @@ export const pagoInicial: Pago ={
   paga: "",
   fechadepago: new Date,
   usuario:"",
-  categoria: ""
-
+  categoria: "",
+  proceso: ""
 }
 

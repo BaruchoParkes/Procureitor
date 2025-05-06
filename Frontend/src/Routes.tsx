@@ -175,6 +175,8 @@ import { AuthProvider } from 'providers/AuthProvider';
 import CreateNewMovimiento from 'pages/apps/project-management/MovimientoComponent';
 import PendientesListView from 'pages/apps/project-management/Pendientes';
 import ProcesosListView from 'pages/apps/project-management/ProcesosListView';
+import ProcesosUserListView from 'pages/apps/project-management/ProcesosUserListView';
+
 import CajaListView from 'pages/apps/project-management/CajaListView';
 import CajaSucesionListView from 'pages/apps/project-management/CajaSucesionListView';
 
@@ -185,6 +187,7 @@ import ProcesoDetails from 'pages/apps/project-management/ProcesoDetails';
 import GastosListView from 'pages/apps/pagos/GastosListView';
 import GastoDetails from 'pages/apps/pagos/GastoDetails';
 import PagosListView from 'pages/apps/pagos/PagosListView';
+import PagosGeneralesListView from 'pages/apps/pagos/PagosGeneralesListView';
 import CobrosListView from 'pages/apps/project-management/CobrosListView';
 import PagoDetails from 'pages/apps/pagos/PagoDetails';
 import CreatePago from 'pages/apps/pagos/CreatePago';
@@ -255,7 +258,7 @@ const routes: RouteObject[] = [
             element: <Ecommerce />
           },
           {
-            path: '/dashboard',
+            path: '/',
             children: [
               {
                 path: 'project-management',
@@ -356,6 +359,11 @@ const routes: RouteObject[] = [
                     element: <ProcesosListView />
                   },
                   {
+                    path: 'procesos-user-list-view',
+                    element: <ProcesosUserListView />
+                  },
+
+                  {
                     path: 'caja-list-view',
                     element: <CajaListView />
                   },
@@ -405,8 +413,12 @@ const routes: RouteObject[] = [
                     element: <GastoDetails />
                   },
                   {
-                    path: 'pagos-list-view',
+                    path: 'pagos-usuario-list-view',
                     element: <PagosListView />
+                  },
+                  {
+                    path: 'pagos-generales-list-view',
+                    element: <PagosGeneralesListView />
                   },
                   {
                     path: 'createpago',

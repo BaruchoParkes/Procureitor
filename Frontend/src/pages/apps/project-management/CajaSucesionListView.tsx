@@ -45,7 +45,7 @@ const CajaSucesionListView = () => {
       <AdvanceTableProvider {...table}>
         <div className="d-flex flex-wrap mb-4 gap-3 gap-sm-6 align-items-center">
           <h2 className="mb-0">
-            <span className="me-3">Caja {user?.iniciales}</span>
+            <span className="me-3">Caja Sucesion</span>
           </h2>
         </div>
         <CajaListTable />

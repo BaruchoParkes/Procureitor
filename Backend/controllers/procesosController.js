@@ -46,6 +46,44 @@ let procesosController = {
     })
   },
 
+  indexo2Columns: function(req, res, next) {
+    db.Proc.findAll({
+      attributes: ['ACTO', 'DEMA', 'TPRO', 'PROC', 'AUX8'],
+      where:[{GRUP:'A'}]
+    })
+    .then(function(data){
+      // return res.send(data);
+      let procesosLista = data;
+      res.send(procesosLista);
+    })
+
+    .catch(function(e){
+      console.log(e)
+    })
+  },
+
+  user: function(req, res, next) {
+    const user = req.params.user
+    db.Proc.findAll({
+      where:[{GRUP:'A', MIEM: user}],
+      include: [
+      {
+        model: db.Miembro ,
+        as: 'Miembro',
+        attributes: ['Iniciales'], 
+      }
+    ]})
+    .then(function(data){
+      // return res.send(data);
+      let procesosLista = data;
+      res.send(procesosLista);
+    })
+
+    .catch(function(e){
+      console.log(e)
+    })
+  },
+
   indexoCAP: function(req, res, next) {
     db.Proc.findAll({
       where: [{MIEM: '5yURv4IQaM', AUX7:0}]

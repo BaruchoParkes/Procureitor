@@ -25,56 +25,55 @@ const formatDate = (dateString: string) => {
 
 
 const MovimientosTimeline = ({ data }: ActivityTimelineProps) => {
-
   return (
     <Timeline variant="vertical">
-      {data.map((item, index) => (
-        <Timeline.Item className="position-relative" key={item.mtoId}>
-          <Row className="g-md-3">
-            <Col xs={12} md="auto" className="d-flex">
-              <Timeline.OppositeContent>
-                <p className="fs-10 fw-semibold text-body-tertiary text-opacity-85 text-end">
-                  {/* item.oppositeContent.date */}
-                  <br className="d-none d-md-block" />{' '}
-                  {/* item.oppositeContent.time */}
-                </p>
-              </Timeline.OppositeContent>
-              <Timeline.Separator className="position-md-relative">
-                <Timeline.Dot className="bg-primary-subtle">
-                  {/*  <FontAwesomeIcon
-/*                     icon={item.separator.icon}
-                     className="text-primary-dark fs-10"
-                  /> 
- */}                </Timeline.Dot>
-                {index !== data.length - 1 && (
-                  <Timeline.Bar className="h-100 border-dashed" />
-                )}
-              </Timeline.Separator>
-            </Col>
-            <Col>
-            <NavLink to={ `/apps/project-management/movimiento/${item.mtoId}`}  >
-                 
-                <Timeline.Content>
-                 <h5 className="fs-9 lh-sm">{item.descripcion}</h5>
+      {data.map((item, index) => {
+        const isDisabled = item?.descripcion?.substring(0, 5) === "Cobro";
 
-                <p className="fs-9">
-                  
-                  {format(new Date(item.fecha), 'dd/MM/yyyy hh:mm')}
-                   
-                </p>
-                <p
-                  className={classNames('fs-9 text-body-secondary', {
-                    'mb-5': index !== data.length - 1,
-                    'mb-0': index === data.length - 1
-                  })}
+        return (
+          <Timeline.Item className="position-relative" key={item.mtoId}>
+            <Row className="g-md-3">
+              <Col xs={12} md="auto" className="d-flex">
+                <Timeline.OppositeContent>
+                  <p className="fs-10 fw-semibold text-body-tertiary text-opacity-85 text-end">
+                    {/* item.oppositeContent.date */}
+                    <br className="d-none d-md-block" />{" "}
+                    {/* item.oppositeContent.time */}
+                  </p>
+                </Timeline.OppositeContent>
+                <Timeline.Separator className="position-md-relative">
+                  <Timeline.Dot className="bg-primary-subtle"></Timeline.Dot>
+                  {index !== data.length - 1 && (
+                    <Timeline.Bar className="h-100 border-dashed" />
+                  )}
+                </Timeline.Separator>
+              </Col>
+              <Col>
+                <NavLink
+                  to={isDisabled ? "#" : `/apps/project-management/movimiento/${item.mtoId}`}
+                  className={isDisabled ? "disabled-link" : ""}
+                  onClick={(e) => {
+                    if (isDisabled) e.preventDefault();
+                  }}
                 >
-                </p>
-              </Timeline.Content>
-              </NavLink>
-            </Col>
-          </Row>
-        </Timeline.Item>
-      ))}
+                  <Timeline.Content>
+                    <h5 className="fs-9 lh-sm">{item.descripcion}</h5>
+                    <p className="fs-9">
+                      {format(new Date(item.fecha), "dd/MM/yyyy hh:mm")}
+                    </p>
+                    <p
+                      className={classNames("fs-9 text-body-secondary", {
+                        "mb-5": index !== data.length - 1,
+                        "mb-0": index === data.length - 1,
+                      })}
+                    ></p>
+                  </Timeline.Content>
+                </NavLink>
+              </Col>
+            </Row>
+          </Timeline.Item>
+        );
+      })}
     </Timeline>
   );
 };

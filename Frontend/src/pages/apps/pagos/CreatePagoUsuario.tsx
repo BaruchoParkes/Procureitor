@@ -7,12 +7,16 @@ import axios, { AxiosError } from 'axios';
 import { pagoInicial, Pago } from 'data/pagos/pago';
 import { TipoDeGasto, tipoDeGastoInicial } from 'data/pagos/tipoDeGasto';
 import { useAuth } from 'providers/AuthProvider';
+import { Proceso } from 'data/project-management/procesos';
 
 const CreatePagoUsuario = () => {
   const navigate = useNavigate();
   const { user, loading, logout } = useAuth();
   const [pago, setPago] = useState<Pago>(pagoInicial);
   const [tiposDeGastos, setTiposDeGastos] = useState<TipoDeGasto[]>([]);
+  const [procesos, setProcesos] = useState<Proceso[]>([]);
+  const [loaded, setLoaded] = useState(false);
+  
 
   // Fetch tiposDeGastos
   useEffect(() => {
@@ -27,17 +31,38 @@ const CreatePagoUsuario = () => {
     fetchTGasto();
   }, []);
 
+  const getFormattedDate = () => {
+    const date = new Date();
+    const day = String(date.getDate()).padStart(2, '0'); // Get day, pad with leading zero
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Get month (0-11, so +1), pad with leading zero
+    const year = String(date.getFullYear()).slice(-2); // Get last two digits of year
+    return `${day}-${month}-${year}`;
+  };
+
+  const fetchProcesos = async () => {
+    if (!loaded) { // Only fetch if data hasn't been loaded
+      try {
+        const response = await axios.get(`/procesos/procesoscjson`);
+        setProcesos(response.data);
+        setLoaded(true); // Mark as loaded to prevent repeated requests
+      } catch (error) {
+        console.error('Error fetching procesos:', error);
+      }
+    }
+  };
+  
   // Handlers for each field
   const handleTGastoSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
     const selectedTipo = tiposDeGastos.find(tipo => tipo.gasto === selectedValue) || tipoDeGastoInicial;
-    setPago(prev => ({
+    
+  setPago(prev => ({
       ...prev,       
       gastoIdFkEnPagos: selectedTipo.gastoId,
       concepto: selectedTipo.gasto,
       categoria: selectedTipo.concepto,
-      pagoLabel: `${selectedTipo.gasto} - ${prev.fechadepago || new Date().toISOString().split('T')[0]}`
-    }));
+      pagoLabel: `${selectedTipo.gasto} - ${getFormattedDate()} - usuario: ${user?.iniciales}`
+  }));
   };
 
   const handleImporteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +83,7 @@ const CreatePagoUsuario = () => {
       pagoLabel: `${prev.concepto || 'Pago'} - ${newFechadepago}`
     }));
   };
-
+  
   const handlePagaChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPago(prev => ({ ...prev, paga: event.target.value }));
   };
@@ -70,13 +95,11 @@ const CreatePagoUsuario = () => {
       setPago(prev => ({
         ...prev,
         fechadepago: formattedDate,
-        pagoLabel: `${prev.concepto || 'Pago'} - ${formattedDate}`
       }));
     } else {
       setPago(prev => ({
         ...prev,
-        fechadepago: '',
-        pagoLabel: `${prev.concepto || 'Pago'} - `
+        fechadepago: ''
       }));
     }
   };
@@ -88,30 +111,41 @@ const CreatePagoUsuario = () => {
     }
   };
 
+  const handleProcesoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+
+    function shortenString(str: string) {
+      const match = str.match(/^(\S+)\s.*\sC\/\s(\S+).*\/S\/\s(\S+)/);
+      return match ? `${match[1]} C/ ${match[2]} S/ ${match[3]}` : "";
+  }
+  
+    const newLabel = pago.pagoLabel + event.target.value
+    setPago(prev => ({ ...prev, pagoLabel: newLabel, proceso: event.target.value }));
+  };
+
+
   // Submit handler
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
     const confirmSave = window.confirm(
-      `Estás guardando un pago: ${pago.pagoLabel}\nImporte: $${pago.importe}\nEstado: ${pago.estado}\n¿Confirmas?`
+      `Estás guardando un pago: ${pago.pagoLabel}\nImporte: $${pago.importe}\n Notas: ${pago.aclaracion}\n¿Confirmas?`
     );
-
     if (!confirmSave) {
       console.log('Pago save cancelled');
       return;
     }
-
     try {
       const formData = new FormData();
       formData.append('gastoIdFkEnPagos', pago.gastoIdFkEnPagos);
       formData.append('concepto', pago.concepto);
       formData.append('importe', String(pago.importe));
-      formData.append('fechaDeCarga', new Date().toISOString());
+      formData.append('created_at', new Date().toISOString());
       formData.append('aclaracion', pago.aclaracion || '');
-      formData.append('estado', pago.estado || 'Pendiente');
-      formData.append('paga', pago.paga || '');
+      formData.append('estado', 'Pagado');
+      formData.append('paga', user?.iniciales || '');
       formData.append('fechadepago', new Date().toISOString());
-      formData.append('usuario', localStorage.getItem('iniciales') || 'unknown');
+      formData.append('usuario', user?.iniciales || 'unknown');
+      formData.append('pagoLabel', pago.pagoLabel || 'unknown');
+      formData.append('proceso', pago.proceso || 'unknown');
 
       // Append files if they exist
       if (pago.factura instanceof File) formData.append('factura', pago.factura);
@@ -124,7 +158,7 @@ const CreatePagoUsuario = () => {
       });
       console.log('Pago created with ID:', response.data);
       pago.pagoId = response.data;
-      navigate('/apps/pagos/pagos-list-view'); // Adjust route as needed
+      navigate('/apps/pagos/pagos-usuario-list-view'); // Adjust route as needed
     } catch (error) {
       console.error('Error creating pago:', (error as AxiosError).response?.data || (error as AxiosError).message);
     }
@@ -142,7 +176,7 @@ const CreatePagoUsuario = () => {
         created_at: new Date()
       };
 
-      console.log('cajaData: ',cajaData)
+      // console.log('cajaData: ',cajaData)
 
       let cajaResponse: any;
       try{
@@ -151,16 +185,15 @@ const CreatePagoUsuario = () => {
       }
       catch(error){console.log(error)}
     }
-
   };
 
   return (
     <div className="p-4">
-      <h2 className="mb-4">Crear un Pago: {pago.pagoLabel}</h2>
+      <h2 className="mb-4">Crear un Pago en la caja de {user?.iniciales} : {pago.pagoLabel}</h2>
       <Row as="form" className="g-3 mb-6">
         <Col sm={6} md={4}>
-          <FloatingLabel label="Tipo de Gasto">
-            <Form.Select size="lg" onChange={handleTGastoSelectChange} value={pago.concepto || ''}>
+          <Form.Label> Tipo de Gasto</Form.Label>
+            <Form.Select size="lg"  onChange={handleTGastoSelectChange} value={pago.concepto || ''}>
               <option value="">Seleccione Tipo de Gasto</option>
               {tiposDeGastos.map(tipo => (
                 <option key={tipo.gastoId} value={tipo.gasto}>
@@ -168,52 +201,31 @@ const CreatePagoUsuario = () => {
                 </option>
               ))}
             </Form.Select>
-          </FloatingLabel>
         </Col>
 
         <Col sm={6} md={4}>
-          <FloatingLabel label="Importe">
+          <Form.Label>Importe</Form.Label> 
             <Form.Control
               size="lg"
               type="number"
               value={pago.importe || ''}
               onChange={handleImporteChange}
             />
-          </FloatingLabel>
         </Col>
 
-        <Col sm={6} md={4}>
-          <FloatingLabel label="Estado">
+     {/*    <Col sm={6} md={4}>
+          <Form.Label>Estado</Form.Label>
             <Form.Select size="lg" onChange={handleEstadoChange} value={pago.estado || ''}>
               <option value="Pendiente">Pendiente</option>
               <option value="CAP entrega a FAM">CAP entrega a FAM</option>
               <option value="Pagado">Pagado</option>
               <option value="No Pagamos">No Pagamos</option>
             </Form.Select>
-          </FloatingLabel>
-        </Col>
+        </Col> */}
 
-{/*         <Col sm={6} md={4}>
-          <FloatingLabel label="Quien Paga">
-            <Form.Select size="lg" onChange={handlePagaChange} value={pago.paga || ''}>
-              <option value="">Select</option>
-              <option value="">Actor</option>
-              <option value="GEO">GEO</option>
-              <option value="SAG">SAG</option>
-              <option value="CAP">CAP</option>
-              <option value="LA">LA</option>
-              <option value="IS">IS</option>
-              <option value="MVP">MVP</option>
-              <option value="MSJ">MSJ</option>
-              <option value="ISV">ISV</option>
-              <option value="ZCC">ZCC</option>
-              <option value="EA">EA</option>
-              <option value="SUCESION">SUCESION</option>
-            </Form.Select>
-          </FloatingLabel>
-        </Col>
- */}
         <Col sm={6} md={4}>
+        <Form.Label>Fecha de Pago</Form.Label>
+
           <DatePicker
             value={pago.fechadepago ? new Date(pago.fechadepago) : new Date()}
             onChange={handleFechadepagoChange}
@@ -225,52 +237,47 @@ const CreatePagoUsuario = () => {
                   id="fechadepago"
                   placeholder="Fecha de Pago"
                 />
-                <label htmlFor="fechadepago">Fecha de Pago</label>
               </Form.Floating>
             )}
           />
         </Col>
 
         <Col sm={6} md={4}>
-          <FloatingLabel label="Aclaración">
+        <Form.Group controlId="factura" className="mb-3">
+          <Form.Label>Factura</Form.Label>
+            <Form.Control type="file" size="lg" onChange={handleFileChange('factura')} />
+        </Form.Group>        
+        </Col>
+
+        <Col sm={6} md={4}>
+        <Form.Group controlId="comprobante" className="mb-3">
+          <Form.Label>Comprobante</Form.Label>
+            <Form.Control type="file" size="lg" onChange={handleFileChange('comprobante')} />
+        </Form.Group>        
+        </Col>
+
+        <Col sm={6} md={4}>
+          <Form.Label> Proceso</Form.Label>
+          <Form.Select size="lg" onFocus={fetchProcesos} onChange={handleProcesoChange} value={pago.proceso || ''}>
+  <option value="">Seleccione un Proceso</option>
+  {procesos.map(proceso => (
+    <option key={proceso.PROC} value={proceso.PROC}>
+      {proceso.AUX8}
+    </option>
+  ))}
+</Form.Select>
+
+        </Col>
+
+        <Col sm={6} md={4}>
+          <Form.Label>Aclaración</Form.Label>
             <Form.Control
               as="textarea"
               size="lg"
               value={pago.aclaracion || ''}
               onChange={handleAclaracionChange}
-              style={{ height: '100px' }}
+              //style={{ height: '100px' }}
             />
-          </FloatingLabel>
-        </Col>
-
-        <Col sm={6} md={4}>
-          <FloatingLabel label="Factura">
-            <Form.Control
-              type="file"
-              size="lg"
-              onChange={handleFileChange('factura')}
-            />
-          </FloatingLabel>
-        </Col>
-
-        <Col sm={6} md={4}>
-          <FloatingLabel label="Documento">
-            <Form.Control
-              type="file"
-              size="lg"
-              onChange={handleFileChange('documento')}
-            />
-          </FloatingLabel>
-        </Col>
-
-        <Col sm={6} md={4}>
-          <FloatingLabel label="Comprobante">
-            <Form.Control
-              type="file"
-              size="lg"
-              onChange={handleFileChange('comprobante')}
-            />
-          </FloatingLabel>
         </Col>
 
         <Col xs={12} className="d-flex justify-content-end gap-3">
@@ -283,19 +290,6 @@ const CreatePagoUsuario = () => {
         </Col>
       </Row>
 
-      {/* Display for debugging */}
-      <div>
-        <p>Pago: {pago.pagoLabel}</p>
-        <p>Gasto ID: {pago.gastoIdFkEnPagos}</p>
-        <p>Concepto: {pago.concepto}</p>
-        <p>Importe: $ {pago.importe}</p>
-        <p>Fecha de Carga: {pago.fechaDeCarga || new Date().toISOString()}</p>
-        <p>Aclaración: {pago.aclaracion}</p>
-        <p>Estado: {pago.estado}</p>
-        <p>Quien Paga: {pago.paga}</p>
-        <p>Fecha de Pago: {pago.fechadepago?.toString()}</p>
-        <p>Usuario: {pago.usuario || localStorage.getItem('iniciales')}</p>
-      </div>
     </div>
   );
 };

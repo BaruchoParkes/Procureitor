@@ -53,6 +53,15 @@ const getRoutes = (nivel_acceso: string | null): RouteItems[] => {
           active: true,
           nivel_acceso: ['usuario', 'supervisor', 'LA','socio', 'pagos'] // Everyone
         },
+        {
+          name: 'mis-procesos',
+          icon: 'list',
+          path: '/apps/project-management/procesos-user-list-view',
+          pathName: 'project-management-procesos-user-list-view',
+          active: true,
+          nivel_acceso: ['usuario', 'supervisor', 'LA','socio', 'pagos'] // Everyone
+        },
+
 /*         {
           name: 'Movimientos Pendientes',
           icon: 'list',
@@ -72,7 +81,7 @@ const getRoutes = (nivel_acceso: string | null): RouteItems[] => {
         {
           name: 'Pagos', // para que cada usuario vea sus pagos
           icon: 'dollar-sign',
-          path: '/apps/pagos/pagos-list-view',
+          path: '/apps/pagos/pagos-usuario-list-view',
           pathName: 'pagos-list-view',
           active: true,
           nivel_acceso: ['usuario','socio', 'pagos', 'LA','supervisor']
@@ -80,10 +89,10 @@ const getRoutes = (nivel_acceso: string | null): RouteItems[] => {
         {
           name: 'Pagos Generales', // solo paga FAM y Socios
           icon: 'dollar-sign',
-          path: '/apps/pagos/pagos-list-view',
+          path: '/apps/pagos/pagos-generales-list-view',
           pathName: 'pagos-list-view',
           active: true,
-          nivel_acceso: ['socio', 'pagos']
+          nivel_acceso: ['socio', 'pagos', 'supervisor']
         },
         {
           name: 'Caja',

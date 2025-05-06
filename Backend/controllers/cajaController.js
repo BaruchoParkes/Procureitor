@@ -36,8 +36,7 @@ let cajaController = {
   },
 
   create: function (req,res){
-    then(
-    )
+    then()
     .catch(function(e){
       console.log(e)
     })
@@ -86,21 +85,8 @@ else {
     }
   });
 }
-
-
     const newRow = {...req.body, 
       saldo: lastRow.saldo + req.body.monto,
-      caja_cash : lastRow.dataValues.caja_cash,
-      caja_GEO : lastRow.dataValues.caja_GEO,
-      caja_CAP : lastRow.dataValues.caja_CAP,
-      caja_IS : lastRow.dataValues.caja_IS,
-      caja_SAG : lastRow.dataValues.caja_SAG,
-      caja_ISV : lastRow.dataValues.caja_ISV,
-      caja_LA : lastRow.dataValues.caja_LA,
-      caja_MVP : lastRow.dataValues.caja_MVP,
-      caja_ZCC : lastRow.dataValues.caja_ZCC,
-      caja_Sucesion : lastRow.dataValues.caja_Sucesion
-
     }
       console.log(newRow)
     db.Caja.create(newRow)

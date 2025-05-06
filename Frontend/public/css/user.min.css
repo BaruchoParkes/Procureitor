@@ -1,1 +1,5 @@
 
+.table-responsive {
+    overflow-x: auto;
+    width: 100%;
+  }

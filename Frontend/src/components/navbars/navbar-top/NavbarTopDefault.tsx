@@ -28,9 +28,9 @@ const NavbarTopDefault = () => {
       <div className="navbar-collapse justify-content-between">
         <NavbarBrand />
 
-        {navbarTopShape === 'default' ?  (
+        {navbarTopShape === 'default' ? (
           <>
-          {/*
+            {/*
             {breakpoints.up('lg') && (
               <DropdownSearchBox
                 className="navbar-top-search-box"
@@ -44,7 +44,7 @@ const NavbarTopDefault = () => {
               */}
             <NavItems />
           </>
-        )  : (
+        ) : (
           <NavItemsSlim />
         )}
       </div>

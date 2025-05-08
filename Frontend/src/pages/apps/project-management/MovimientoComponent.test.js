@@ -13,19 +13,21 @@ jest.mock('providers/AuthProvider', () => ({
   useAuth: () => ({
     user: { iniciales: 'TEST' },
     loading: false,
-    logout: jest.fn(),
-  }),
+    logout: jest.fn()
+  })
 }));
 
 // Mock other components to avoid rendering issues
-jest.mock('components/Cap/TextEditor', () => () => <div>Mocked TextEditor</div>);
+jest.mock('components/Cap/TextEditor', () => () => (
+  <div>Mocked TextEditor</div>
+));
 jest.mock('components/base/DatePicker', () => () => <input type="date" />);
 jest.mock('components/base/Button', () => () => <button>Mocked Button</button>);
 
 describe('MovimientoComponent', () => {
   it('renders without crashing', async () => {
     // Mock axios GET requests
-    axios.get.mockImplementation((url) => {
+    axios.get.mockImplementation(url => {
       if (url.includes('/mtos/id/')) {
         return Promise.resolve({
           data: {
@@ -36,15 +38,17 @@ describe('MovimientoComponent', () => {
             tipoDeMovimiento: '',
             cobros_fk: 0,
             descripcion: '',
-            proc: {},
-          },
+            proc: {}
+          }
         });
       }
       if (url.includes('/tMtos')) {
         return Promise.resolve({ data: [] });
       }
       if (url.includes('/cobros/id/')) {
-        return Promise.resolve({ data: { monto: 0, quien_cobra: '', estado: '' } });
+        return Promise.resolve({
+          data: { monto: 0, quien_cobra: '', estado: '' }
+        });
       }
       return Promise.resolve({ data: {} });
     });

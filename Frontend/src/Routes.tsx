@@ -171,18 +171,13 @@ import DraggableExample from 'pages/modules/components/DraggableExample';
 import Widgets from 'pages/modules/Widgets';
 import ComingSoon from 'pages/ComingSoon';
 import { AuthProvider } from 'providers/AuthProvider';
-
-import CreateNewMovimiento from 'pages/apps/project-management/MovimientoComponent';
 import PendientesListView from 'pages/apps/project-management/Pendientes';
 import ProcesosListView from 'pages/apps/project-management/ProcesosListView';
 import ProcesosUserListView from 'pages/apps/project-management/ProcesosUserListView';
-
 import CajaListView from 'pages/apps/project-management/CajaListView';
 import CajaSucesionListView from 'pages/apps/project-management/CajaSucesionListView';
-
 import CajaCashListView from 'pages/apps/project-management/CajaCashListView';
 import CajaGeneralListView from 'pages/apps/project-management/CajaGeneralListView';
-import ProjectDetails from 'pages/apps/project-management/ProjectDetails';
 import ProcesoDetails from 'pages/apps/project-management/ProcesoDetails';
 import GastosListView from 'pages/apps/pagos/GastosListView';
 import GastoDetails from 'pages/apps/pagos/GastoDetails';
@@ -194,7 +189,6 @@ import CreatePago from 'pages/apps/pagos/CreatePago';
 import CreatePagoUsuario from 'pages/apps/pagos/CreatePagoUsuario';
 import MovimientoComponent from 'pages/apps/project-management/MovimientoComponent';
 import ResumenComponent from 'pages/apps/project-management/ResumenComponent';
-
 
 const FontAwesomeExample = lazy(
   () => import('pages/modules/components/FontAwesomeExample')
@@ -237,20 +231,20 @@ import FileManagerProvider from 'providers/FileManagerProvider';
 
 const routes: RouteObject[] = [
   {
-    element: 
-    <AuthProvider>
-    <App />
-    </AuthProvider>,
+    element: (
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    ),
     children: [
       {
         path: '/',
         element: (
           <AuthProvider>
-          <MainLayoutProvider>
-            <MainLayout />
-          </MainLayoutProvider>
+            <MainLayoutProvider>
+              <MainLayout />
+            </MainLayoutProvider>
           </AuthProvider>
-
         ),
         children: [
           {
@@ -349,7 +343,7 @@ const routes: RouteObject[] = [
               },
               {
                 path: 'project-management',
-                children: [  
+                children: [
                   {
                     path: 'movimiento',
                     element: <MovimientoComponent />
@@ -399,7 +393,7 @@ const routes: RouteObject[] = [
                     path: 'resumenes/:id',
                     element: <ResumenComponent />
                   }
-                ]              
+                ]
               },
               {
                 path: 'pagos',

@@ -10,10 +10,9 @@ import RevealDropdown, {
 } from 'components/base/RevealDropdown';
 import ActionDropdownItems from 'components/common/ActionDropdownItems';
 import Badge from 'components/base/Badge';
-import { useState, useEffect} from 'react'
-import {NavLink} from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useAuth } from 'providers/AuthProvider';
-import axios, { AxiosError } from 'axios';
 
 export const pagosUserListTableColumns: ColumnDef<Pago>[] = [
   {
@@ -23,11 +22,12 @@ export const pagosUserListTableColumns: ColumnDef<Pago>[] = [
       const { pagoLabel } = original;
       const { pagoId } = original;
 
-
       return (
-        <NavLink to={`/apps/pagos/pago-details/${pagoId}`} 
-        className="text-decoration-none fw-bold fs-8">
-          {pagoLabel} 
+        <NavLink
+          to={`/apps/pagos/pago-details/${pagoId}`}
+          className="text-decoration-none fw-bold fs-8"
+        >
+          {pagoLabel}
         </NavLink>
       );
     },
@@ -42,11 +42,7 @@ export const pagosUserListTableColumns: ColumnDef<Pago>[] = [
     cell: ({ row: { original } }) => {
       const { importe } = original;
 
-      return (
-        <p className="text-decoration-none fw-bold fs-8">
-          {importe} 
-          </p>
-      );
+      return <p className="text-decoration-none fw-bold fs-8">{importe}</p>;
     },
     meta: {
       cellProps: { className: 'white-space-nowrap py-4' },

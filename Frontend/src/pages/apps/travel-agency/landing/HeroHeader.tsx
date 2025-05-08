@@ -18,8 +18,7 @@ const HeroHeader = () => {
           backgroundPosition: 'left bottom',
           backgroundSize: 'auto'
         }}
-      >
-      </div>
+      ></div>
       <div className="container-medium position-relative z-5">
         <h2 className="text-secondary-lighter fs-5 fs-md-3 fw-normal mb-3">
           Where is your

@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode
+} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,12 +31,11 @@ const AuthWrapper: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate(); // Now safe inside router context
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000'; 
 
   useEffect(() => {
     const fetchUser = async () => {
-
       const token = localStorage.getItem('token');
-
 
       if (!token) {
         setLoading(false);
@@ -39,15 +44,14 @@ const AuthWrapper: React.FC<AuthProviderProps> = ({ children }) => {
       }
 
       try {
-        const response = await axios.get('/auth/me', {
+        const response = await axios.get(`${apiUrl}/auth/me`, {
           headers: { Authorization: `Bearer ${token}` }
-          
         });
         setUser({
           iniciales: response.data.Iniciales,
           nombre: response.data.nombre,
           nivel_acceso: response.data.nivel_acceso,
-         avatar: response.data.avatar || null
+          avatar: response.data.avatar || null
         });
       } catch (error) {
         console.error('Error fetching user:', error);

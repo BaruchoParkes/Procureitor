@@ -5,81 +5,90 @@ import { Col, FloatingLabel, Form, Row } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom';
 import { Movimiento } from 'data/project-management/Movimiento';
-import  axios  from 'axios'
+import axios from 'axios';
 import { TextEditor } from 'components/Cap/TextEditor';
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000'; 
 
 
 const ResumenComponent = () => {
-
-
   const { id } = useParams(); // Get the id from the URL
 
   interface Resumen {
-    id:string
-    resumen: string
+    id: string;
+    resumen: string;
   }
-  
+
   const aidi = id;
 
-  const [resumenes, setresumenes] = useState<Resumen>({id:'1', resumen:'hola'})
+  const [resumenes, setresumenes] = useState<Resumen>({
+    id: '1',
+    resumen: 'hola'
+  });
 
-  const [resumen, setresumen] = useState<string>('hola')
-
+  const [resumen, setresumen] = useState<string>('hola');
 
   useEffect(() => {
-    const fetchResumen = async () => {  
-    try{
-      const response = await axios.get(`/resumenes/id/${id}`)
-      const data = await response.data
-      setresumenes(data)}
-    catch(error){
-      console.error('ha habido un error: ', error)}
-    };    
-    fetchResumen();}, 
-    [])
-
+    const fetchResumen = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/resumenes/id/${id}`);
+        const data = await response.data;
+        setresumenes(data);
+      } catch (error) {
+        console.error('ha habido un error: ', error);
+      }
+    };
+    fetchResumen();
+  }, []);
 
   const handleTextChange = (newValue: string) => {
     setresumen(newValue);
     console.log('resumen: ', newValue);
   };
-  
+
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent default form submission
     try {
-      const response = await axios.post('/resumenes/update', {
-        id: aidi, 
-        resumenes: resumen,  
+      const response = await axios.post(`${apiUrl}/resumenes/update`, {
+        id: aidi,
+        resumenes: resumen
       });
       console.log('Update successful:', response);
       console.log('resumenes:', resumen);
       console.log('aidi:', aidi);
 
-      Navigate 
+      Navigate;
     } catch (error) {
       console.error('Error updating:', error);
     }
   };
 
   return (
-    <div>          
-        <TextEditor text = '' titulo = '' cuerpo={resumenes.resumen} autos='' handleTextChange={handleTextChange} />
-            
-            <Col xs={12} className="gy-6">
-              <div className="d-flex justify-content-end gap-3">
-                <Button variant="phoenix-primary" className="px-5">
-                  Cancel
-                </Button>
-                <Button variant="primary" className="px-5 px-sm-15"
-                  type="submit" 
-                  onClick={handleSubmit}>
-                  Guardar
-                </Button>
-              </div>
-            </Col>
-          
+    <div>
+      <TextEditor
+        text=""
+        titulo=""
+        cuerpo={resumenes.resumen}
+        autos=""
+        handleTextChange={handleTextChange}
+      />
+
+      <Col xs={12} className="gy-6">
+        <div className="d-flex justify-content-end gap-3">
+          <Button variant="phoenix-primary" className="px-5">
+            Cancel
+          </Button>
+          <Button
+            variant="primary"
+            className="px-5 px-sm-15"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Guardar
+          </Button>
+        </div>
+      </Col>
     </div>
   );
 };

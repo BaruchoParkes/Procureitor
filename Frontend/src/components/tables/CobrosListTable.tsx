@@ -1,18 +1,20 @@
 import { ColumnDef } from '@tanstack/react-table';
 import AdvanceTable from 'components/base/AdvanceTable';
-import { Link } from 'react-router-dom';
+/* import { Link } from 'react-router-dom';
+ */
 import AdvanceTableFooter from 'components/base/AdvanceTableFooter';
 import { Cobro, cobroInicial } from 'data/project-management/Cobro';
-import Avatar from 'components/base/Avatar';
+/* import Avatar from 'components/base/Avatar';
 import { ProgressBar } from 'react-bootstrap';
-import RevealDropdown, {
+ */ import RevealDropdown, {
   RevealDropdownTrigger
 } from 'components/base/RevealDropdown';
 import ActionDropdownItems from 'components/common/ActionDropdownItems';
-import Badge from 'components/base/Badge';
-import { useState, useEffect, useContext} from 'react'
+/* import Badge from 'components/base/Badge';
+ */
+import { useState, useEffect, useContext } from 'react';
 import axios, { AxiosError } from 'axios';
-import {NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 import { Col, FloatingLabel, Form, Row } from 'react-bootstrap';
 import { useAuth } from 'providers/AuthProvider';
 
@@ -24,25 +26,21 @@ export const cobrosListTableColumns: ColumnDef<Cobro>[] = [
       const { created_at } = original;
       const dateObject = new Date(created_at);
 
-      const formattedDate = dateObject.toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "2-digit"
+      const formattedDate = dateObject.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: '2-digit'
       });
-      
+
       return (
-        <p className="text-decoration-none fw-bold fs-8">
-           {
-              formattedDate          
-           }  
-          </p>
+        <p className="text-decoration-none fw-bold fs-8">{formattedDate}</p>
       );
     },
     meta: {
       cellProps: { className: 'white-space-nowrap py-4' },
       headerProps: { style: { width: '10%' } }
     }
-  },  
+  },
   {
     accessorKey: 'Cobro',
     header: 'cobro',
@@ -51,9 +49,11 @@ export const cobrosListTableColumns: ColumnDef<Cobro>[] = [
       const { mtos_fk } = original;
 
       return (
-        <NavLink to={`/apps/project-management/movimiento/${mtos_fk}`} 
-        className="text-decoration-none fw-bold fs-8">
-          {nombre} 
+        <NavLink
+          to={`/apps/project-management/movimiento/${mtos_fk}`}
+          className="text-decoration-none fw-bold fs-8"
+        >
+          {nombre}
         </NavLink>
       );
     },
@@ -68,17 +68,13 @@ export const cobrosListTableColumns: ColumnDef<Cobro>[] = [
     cell: ({ row: { original } }) => {
       const { monto } = original;
 
-      return (
-        <p className="text-decoration-none fw-bold fs-8">
-          {monto} 
-          </p>
-      );
+      return <p className="text-decoration-none fw-bold fs-8">{monto}</p>;
     },
     meta: {
       cellProps: { className: 'white-space-nowrap py-4' },
       headerProps: { style: { width: '10%' } }
     }
-  },  
+  },
   {
     id: 'estado',
     header: 'Estado',
@@ -93,26 +89,38 @@ export const cobrosListTableColumns: ColumnDef<Cobro>[] = [
       const { mtos_fk } = original;
       const { PCL } = original;
       const { user, loading, logout } = useAuth();
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000'; 
 
-      const handleEstadoChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+      const handleEstadoChange = async (
+        event: React.ChangeEvent<HTMLSelectElement>
+      ) => {
         const newEstado = event.target.value;
         setEstado(newEstado);
-        
-        try {
-          const usuario = user?.iniciales
-          await axios.put(`/cobros/update/${cobro_id}`, {estado: newEstado, caja: quien_cobra, cobro_id, monto, usuario, capital_honorarios, notas, nombre, mtos_fk, PCL });
 
+        try {
+          const usuario = user?.iniciales;
+          await axios.put(`${apiUrl}/cobros/update/${cobro_id}`, {
+            estado: newEstado,
+            caja: quien_cobra,
+            cobro_id,
+            monto,
+            usuario,
+            capital_honorarios,
+            notas,
+            nombre,
+            mtos_fk,
+            PCL
+          });
         } catch (error) {
-          console.error('Error updating estado:', (error as AxiosError).response?.data || error);
+          console.error(
+            'Error updating estado:',
+            (error as AxiosError).response?.data || error
+          );
         }
       };
-  
+
       return (
-        <Form.Select 
-          size="lg" 
-          onChange={handleEstadoChange}
-          value={estado}
-        >
+        <Form.Select size="lg" onChange={handleEstadoChange} value={estado}>
           <option value="Pendiente">Pendiente</option>
           <option value="Cobrado">Cobrado</option>
           <option value="Cancelado">Cancelado</option>
@@ -124,10 +132,7 @@ export const cobrosListTableColumns: ColumnDef<Cobro>[] = [
       cellProps: { className: 'ps-3 py-4' },
       headerProps: { style: { width: '10%' }, className: 'ps-3' }
     }
-  }
-  
-  
-  ,
+  },
   /*,
   {
     header: 'Start date',
@@ -196,16 +201,15 @@ export const cobrosListTableColumns: ColumnDef<Cobro>[] = [
    },*/
   {
     id: 'action',
-    cell:  ({ row: { original } }) => {
-        let { estado } = original;
-        const { cobro_id } = original;
-
+    cell: ({ row: { original } }) => {
+      const { estado } = original;
+      const { cobro_id } = original;
 
       <RevealDropdownTrigger>
         <RevealDropdown>
           <ActionDropdownItems />
         </RevealDropdown>
-      </RevealDropdownTrigger>
+      </RevealDropdownTrigger>;
     },
     meta: {
       headerProps: { style: { width: '10%' }, className: 'text-end' },

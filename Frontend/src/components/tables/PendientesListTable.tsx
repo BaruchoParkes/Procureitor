@@ -4,20 +4,12 @@ import { Link } from 'react-router-dom';
 import AdvanceTableFooter from 'components/base/AdvanceTableFooter';
 import { Movimiento } from 'data/project-management/Recorrida';
 import Button from 'components/base/Button';
-import axios from 'axios';
-import BsButton  from 'components/base/Button';
-import  {ButtonVariant} from 'components/base/Button';
-
-
-
+import BsButton from 'components/base/Button';
+import { ButtonVariant } from 'components/base/Button';
 
 // const obj = JSON.parse(procesos);
 
-
-
 const today = new Date().toISOString();
-
-
 
 export const PendientesListTableColumns: ColumnDef<Movimiento>[] = [
   {
@@ -27,7 +19,7 @@ export const PendientesListTableColumns: ColumnDef<Movimiento>[] = [
       const { Proc } = original;
       return (
         <Link to="#!" className="text-decoration-none fw-bold fs-8">
-          {Proc.ACTO} c/ {Proc.DEMA} 
+          {Proc.ACTO} c/ {Proc.DEMA}
         </Link>
       );
     },
@@ -41,9 +33,7 @@ export const PendientesListTableColumns: ColumnDef<Movimiento>[] = [
     header: 'Fecha',
     cell: ({ row: { original } }) => {
       const { fecha } = original;
-      return (
-        <p>  {fecha.toString().split('T')[0]} </p>
-      );
+      return <p> {fecha.toString().split('T')[0]} </p>;
     },
     meta: {
       cellProps: { className: 'white-space-nowrap py-4' },
@@ -55,17 +45,13 @@ export const PendientesListTableColumns: ColumnDef<Movimiento>[] = [
     header: 'Descripcion',
     cell: ({ row: { original } }) => {
       const { descripcion } = original;
-      return (
-        <p>{descripcion}</p>
-        
-      );
+      return <p>{descripcion}</p>;
     },
     meta: {
       cellProps: { className: 'white-space-nowrap py-4' },
       headerProps: { style: { width: '30%' } }
     }
   }
-
 ];
 
 const PendientesListTable = () => {

@@ -25,9 +25,9 @@ export const TextEditor2 = () => {
   
 
 */
- // return (
-   // <div> </div>
-  //)
+// return (
+// <div> </div>
+//)
 //};
 /*       <Editor2
         ref={quillRef}
@@ -56,7 +56,7 @@ export const TextEditor2 = () => {
         >
           Get Content Length
         </button> */
-    /*   </div>
+/*   </div>
       <div className="state">
         <div className="state-title">Current Range:</div>
         {range ? JSON.stringify(range) : 'Empty'}
@@ -64,9 +64,6 @@ export const TextEditor2 = () => {
       <div className="state">
         <div className="state-title">Last Change:</div>
      {/*    {lastChange ? JSON.stringify(lastChange.ops) : 'Empty'} */
-     /*  </div> 
+/*  </div> 
     </div>
- */    
-
-
- 
+ */

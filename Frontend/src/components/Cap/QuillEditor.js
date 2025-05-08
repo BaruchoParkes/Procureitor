@@ -2,7 +2,10 @@ import React, { forwardRef, useEffect, useLayoutEffect, useRef } from 'react';
 
 // Editor is an uncontrolled React component
 const Editor = forwardRef(
-  ({ readOnly, defaultValue: string, onTextChange, onSelectionChange }, ref) => {
+  (
+    { readOnly, defaultValue: string, onTextChange, onSelectionChange },
+    ref
+  ) => {
     const containerRef = useRef(null);
     const defaultValueRef = useRef(defaultValue);
     const onTextChangeRef = useRef(onTextChange);
@@ -20,10 +23,10 @@ const Editor = forwardRef(
     useEffect(() => {
       const container = containerRef.current;
       const editorContainer = container.appendChild(
-        container.ownerDocument.createElement('div'),
+        container.ownerDocument.createElement('div')
       );
       const quill = new Quill(editorContainer, {
-        theme: 'snow',
+        theme: 'snow'
       });
 
       ref.current = quill;
@@ -47,7 +50,7 @@ const Editor = forwardRef(
     }, [ref]);
 
     return <div ref={containerRef}></div>;
-  },
+  }
 );
 
 Editor.displayName = 'Editor';

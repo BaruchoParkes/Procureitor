@@ -4,13 +4,13 @@ import React from 'react';
 import { HotKeys } from 'react-hotkeys';
 
 const keyMap = {
-  'SHOW_ALERT': 'ctrl+a', // Example shortcut
-  'NAVIGATE_HOME': 'ctrl+h'
+  SHOW_ALERT: 'ctrl+a', // Example shortcut
+  NAVIGATE_HOME: 'ctrl+h'
 };
 
 const handlers = {
-  'SHOW_ALERT': () => alert('Shortcut triggered!'),
-  'NAVIGATE_HOME': () => console.log('Navigate home shortcut triggered!')
+  SHOW_ALERT: () => alert('Shortcut triggered!'),
+  NAVIGATE_HOME: () => console.log('Navigate home shortcut triggered!')
 };
 
 const App = () => {

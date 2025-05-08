@@ -11,18 +11,17 @@ import MembersTable, {
   membersTablecolumns
 } from 'components/tables/MembersTable';
 import { faFileExport, faPlus } from '@fortawesome/free-solid-svg-icons';
-import {Miembro} from 'data/miembros'
+import { Miembro } from 'data/miembros';
 import axios from 'axios';
 
 const Members = () => {
-
-
-  const [miembros, setMiembros] = useState<Miembro[]>([])
+  const [miembros, setMiembros] = useState<Miembro[]>([]);
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000'; 
 
   useEffect(() => {
     const fetchMiembros = async () => {
       try {
-        const response = await axios.get(`/miembros/miembrosjson`);
+        const response = await axios.get(`${apiUrl}/miembros/miembrosjson`);
         setMiembros(response.data);
       } catch (error) {
         console.error('Error fetching movimiento:', error);
@@ -30,7 +29,6 @@ const Members = () => {
     };
     fetchMiembros();
   }, []);
-
 
   const table = useAdvanceTable({
     data: miembros,
@@ -47,25 +45,27 @@ const Members = () => {
 
   return (
     <div>
-{/*       <PageBreadcrumb items={memberBreadcrumbItems} />
- */}      <div className="mb-9">
+      {/*       <PageBreadcrumb items={memberBreadcrumbItems} />
+       */}{' '}
+      <div className="mb-9">
         <h2 className="mb-5">Miembros</h2>
 
         <AdvanceTableProvider {...table}>
           <div className="mb-4">
             <Row className="g-3">
-{/*               <Col xs="auto">
+              {/*               <Col xs="auto">
                 <SearchBox
                   placeholder="Search members"
                   onChange={handleSearchInputChange}
                 />
               </Col>
- */}              <Col
+ */}{' '}
+              <Col
                 xs="auto"
                 className="scrollbar overflow-hidden-y flex-grow-1"
               ></Col>
               <Col xs="auto">
-  {/*                 <Button variant="link" className="text-body me-4 px-0">
+                {/*                 <Button variant="link" className="text-body me-4 px-0">
                     <FontAwesomeIcon icon={faFileExport} className="fs-9 me-2" />
                     Export
                   </Button>
@@ -73,7 +73,8 @@ const Members = () => {
                     <FontAwesomeIcon icon={faPlus} className="me-2" />
                     Add member
                   </Button>
- */}              </Col>
+ */}{' '}
+              </Col>
             </Row>
           </div>
 

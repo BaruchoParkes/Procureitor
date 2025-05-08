@@ -1,5 +1,3 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageBreadcrumb from 'components/common/PageBreadcrumb';
 import ProcesosTopSection from 'components/modules/project-management/ProcesosTopSection';
 import ProcesosListTable, {
@@ -8,28 +6,26 @@ import ProcesosListTable, {
 import { defaultBreadcrumbItems } from 'data/commonData';
 import useAdvanceTable from 'hooks/useAdvanceTable';
 import AdvanceTableProvider from 'providers/AdvanceTableProvider';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react';
+
 
 const ProjectListView = () => {
-
   const [procesos, setProcesos] = useState([]);
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000'; 
 
   useEffect(() => {
-  const fetchProcesos = async () => {  
-    try{
-      const response = await axios.get(`/procesos/procesosajson`)
-      const data = await response.data
-      setProcesos(data)
-    }
-    catch(error){
-      console.error('ha habido un error: ', error)
-    }
-  };    
-    fetchProcesos()
-  }, 
-  );
+    const fetchProcesos = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/procesos/procesosajson`);
+        const data = await response.data;
+        setProcesos(data);
+      } catch (error) {
+        console.error('ha habido un error: ', error);
+      }
+    };
+    fetchProcesos();
+  });
 
   const table = useAdvanceTable({
     data: procesos,

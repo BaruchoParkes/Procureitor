@@ -227,7 +227,6 @@ export const projects2: Project[] = [
   }
 ];
 
-
 export const projects: Project[] = [
   {
     id: 1,

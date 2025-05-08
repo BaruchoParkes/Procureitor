@@ -13,9 +13,9 @@ root.render(
   <React.StrictMode>
     <AppProvider>
       <SettingsPanelProvider>
-          <BreakpointsProvider>
-            <RouterProvider router={router} />
-          </BreakpointsProvider>
+        <BreakpointsProvider>
+          <RouterProvider router={router} />
+        </BreakpointsProvider>
       </SettingsPanelProvider>
     </AppProvider>
   </React.StrictMode>

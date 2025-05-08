@@ -6,37 +6,34 @@ import RecorridaListTable, {
   RecorridaListTableColumns
 } from 'components/tables/RecorridaListTable';
 import { defaultBreadcrumbItems } from 'data/commonData';
-import {Movimiento } from 'data/project-management/Recorrida';
+import { Movimiento } from 'data/project-management/Recorrida';
 import useAdvanceTable from 'hooks/useAdvanceTable';
 import AdvanceTableProvider from 'providers/AdvanceTableProvider';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useState, useEffect} from 'react'
-import PendientesListTable, { PendientesListTableColumns } from 'components/tables/PendientesListTable';
+import { useState, useEffect } from 'react';
+import PendientesListTable, {
+  PendientesListTableColumns
+} from 'components/tables/PendientesListTable';
 
 //let mtos: Movimiento[] = [];
 
-
 const PendientesListView = () => {
-
   const [mtos, setMtos] = useState([]);
 
   useEffect(() => {
-    const fetchMtos = async () => {  
-      try{
-        const response = await axios.get(`/mtos/pendientes`)
-        const data = await response.data
-        setMtos(data)
+    const fetchMtos = async () => {
+      try {
+        const response = await axios.get(`/mtos/pendientes`);
+        const data = await response.data;
+        setMtos(data);
+      } catch (error) {
+        console.error('ha habido un error: ', error);
       }
-      catch(error){
-        console.error('ha habido un error: ', error)
-      }
-    };    
-    fetchMtos()
-    }, 
-  );
-  
- 
+    };
+    fetchMtos();
+  });
+
   const table = useAdvanceTable({
     data: mtos,
     columns: PendientesListTableColumns,
@@ -52,9 +49,8 @@ const PendientesListView = () => {
             <span className="fw-normal text-body-tertiary">
               ({mtos.length})
             </span>{' '}
-            <span className="me-3">  Hoy</span>{' '}
-            <span className="fw-normal text-body-tertiary">
-            </span>
+            <span className="me-3"> Hoy</span>{' '}
+            <span className="fw-normal text-body-tertiary"></span>
           </h2>
           <Link className="btn btn-primary px-5" to="/">
             <FontAwesomeIcon icon={faPlus} className="me-2" />

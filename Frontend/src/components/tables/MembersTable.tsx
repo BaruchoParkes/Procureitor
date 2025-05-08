@@ -6,7 +6,6 @@ import Avatar from 'components/base/Avatar';
 import { Member } from 'data/members';
 import { Miembro } from 'data/miembros';
 
-
 export const membersTablecolumns: ColumnDef<Miembro>[] = [
   {
     accessorKey: 'Name',
@@ -71,8 +70,8 @@ export const membersTablecolumns: ColumnDef<Miembro>[] = [
       headerProps: { style: { width: '10%' } },
       cellProps: { className: 'text-body' }
     }
-  },
-/*   {
+  }
+  /*   {
     accessorKey: 'lastActive',
     header: 'Last Active',
     meta: {
@@ -98,13 +97,14 @@ export const membersTablecolumns: ColumnDef<Miembro>[] = [
       }
     }
   }
- */];
+ */
+];
 
 const MembersTable = () => {
   return (
     <div>
       <AdvanceTable tableProps={{ className: 'phoenix-table fs-9' }} />
-{/*       <AdvanceTableFooter pagination /> */}
+      {/*       <AdvanceTableFooter pagination /> */}
     </div>
   );
 };

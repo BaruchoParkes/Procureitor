@@ -10,7 +10,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Proceso, procesoInicial } from 'data/project-management/procesos';
 
-
 const ProcesoDetailsSummary = (data: Proceso) => {
   return (
     <>
@@ -40,7 +39,7 @@ const ProcesoDetailsSummary = (data: Proceso) => {
               </td>
               <td className="ps-1 py-1">
                 <Link className="fw-semibold d-block lh-sm" to="#!">
-                {data.EXP1}
+                  {data.EXP1}
                 </Link>
               </td>
             </tr>
@@ -56,7 +55,7 @@ const ProcesoDetailsSummary = (data: Proceso) => {
               </td>
               <td className="ps-1 py-1">
                 <Link className="fw-semibold d-block lh-sm" to="#!">
-                {data.CARP}
+                  {data.CARP}
                 </Link>
               </td>
             </tr>
@@ -72,7 +71,7 @@ const ProcesoDetailsSummary = (data: Proceso) => {
               </td>
               <td className="ps-1 py-1">
                 <Link className="fw-semibold d-block lh-sm" to="#!">
-                {data.MIEM}
+                  {data.MIEM}
                 </Link>
               </td>
             </tr>
@@ -88,7 +87,7 @@ const ProcesoDetailsSummary = (data: Proceso) => {
               </td>
               <td className="ps-1 py-1">
                 <Link className="fw-semibold d-block lh-sm" to="#!">
-                {data.ACTO}
+                  {data.ACTO}
                 </Link>
               </td>
             </tr>
@@ -104,11 +103,11 @@ const ProcesoDetailsSummary = (data: Proceso) => {
               </td>
               <td className="ps-1 py-1">
                 <Link className="fw-semibold d-block lh-sm" to="#!">
-                {data.DEMA}
+                  {data.DEMA}
                 </Link>
               </td>
             </tr>
-    {/*         <tr>
+            {/*         <tr>
               <td className="align-top py-1">
                 <div className="d-flex">
                   <FontAwesomeIcon
@@ -120,7 +119,8 @@ const ProcesoDetailsSummary = (data: Proceso) => {
               </td>
               <td className="fw-bold ps-1 py-1 text-body-highlight">$8,742</td>
             </tr>
- */}          </tbody>
+ */}{' '}
+          </tbody>
         </table>
         <table className="lh-sm">
           <tbody>
@@ -129,10 +129,10 @@ const ProcesoDetailsSummary = (data: Proceso) => {
                 Fecha :{' '}
               </td>
               <td className="text-body-tertiary text-opacity-85 fw-semibold ps-3">
-              {data.INIC}
+                {data.INIC}
               </td>
             </tr>
-{/*             <tr>
+            {/*             <tr>
               <td className="align-top py-1 text-body text-nowrap fw-bold">
                 Deadline :
               </td>
@@ -148,8 +148,8 @@ const ProcesoDetailsSummary = (data: Proceso) => {
             </tr>*/}
           </tbody>
         </table>
-       </div>
-{/*       <div>
+      </div>
+      {/*       <div>
         <div className="d-flex align-items-center">
           <FontAwesomeIcon
             icon={faListCheck}

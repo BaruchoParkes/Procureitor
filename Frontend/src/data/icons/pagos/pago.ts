@@ -8,8 +8,6 @@ import bg57 from 'assets/img/generic/57.png';
 
 import { BadgeBg } from 'components/base/Badge';
 
-
-
 export interface Status {
   ongoing: number;
   critical: number;
@@ -18,42 +16,37 @@ export interface Status {
 }
 
 export interface Pago {
-
-  pagoId:  number, 
-  pagoLabel: string,
-  gastoIdFkEnPagos: string,
-  concepto: string,
-  importe:  number,
-  fechaDeCarga: string,
-  factura:  File |string | null,
-  documento:  File |string | null,
-  aclaracion: string,
-  comprobante: File | string | null,
-  estado: string,
-  paga: string,
-  fechadepago: Date | string | null,
-  usuario: string,
-  categoria: string,
+  pagoId: number;
+  pagoLabel: string;
+  gastoIdFkEnPagos: string;
+  concepto: string;
+  importe: number;
+  fechaDeCarga: string;
+  factura: File | string | null;
+  documento: File | string | null;
+  aclaracion: string;
+  comprobante: File | string | null;
+  estado: string;
+  paga: string;
+  fechadepago: Date | string | null;
+  usuario: string;
+  categoria: string;
 }
 
-
-export const pagoInicial: Pago ={
-
-  pagoId: 1, 
-  pagoLabel: "",
-  gastoIdFkEnPagos: "",
-  concepto: "",
-  importe:  0,
-  fechaDeCarga: "",
+export const pagoInicial: Pago = {
+  pagoId: 1,
+  pagoLabel: '',
+  gastoIdFkEnPagos: '',
+  concepto: '',
+  importe: 0,
+  fechaDeCarga: '',
   factura: null,
   documento: null,
-  aclaracion:"",
+  aclaracion: '',
   comprobante: null,
-  estado: "",
-  paga: "",
-  fechadepago: new Date,
-  usuario:"",
-  categoria: ""
-
-}
-
+  estado: '',
+  paga: '',
+  fechadepago: new Date(),
+  usuario: '',
+  categoria: ''
+};

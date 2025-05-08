@@ -12,12 +12,7 @@ import AdvanceTableProvider from 'providers/AdvanceTableProvider';
 import { Link } from 'react-router-dom';
 
 const GastosListView = () => {
-  
-
-  return (
-    <div>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default GastosListView;

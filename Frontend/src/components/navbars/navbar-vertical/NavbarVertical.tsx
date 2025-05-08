@@ -16,7 +16,6 @@ import { useAuth } from 'providers/AuthProvider';
 const NavbarVerical = () => {
   const { user } = useAuth();
 
-
   const routes = getRoutes(user?.nivel_acceso || null);
   const {
     config: {
@@ -43,7 +42,7 @@ const NavbarVerical = () => {
         <Navbar.Collapse id="navbarVerticalCollapse" in={openNavbarVertical}>
           <div className="navbar-vertical-content">
             <Nav className="flex-column" as="ul" id="navbarVerticalNav">
-              {routes.map((route: RouteItems ) => (
+              {routes.map((route: RouteItems) => (
                 <Nav.Item key={route.label}>
                   {!route.labelDisabled && (
                     <>

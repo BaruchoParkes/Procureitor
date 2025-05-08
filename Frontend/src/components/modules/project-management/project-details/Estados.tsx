@@ -20,8 +20,9 @@ const tags = [
 const Estados = () => {
   return (
     <div>
-{/*       <h4 className="text-body-emphasis mb-4">Estados</h4>
- */}      <div className="d-flex flex-wrap gap-2">
+      {/*       <h4 className="text-body-emphasis mb-4">Estados</h4>
+       */}{' '}
+      <div className="d-flex flex-wrap gap-2">
         {tags.map(tag => (
           <Badge variant="tag" key={tag}>
             {tag}

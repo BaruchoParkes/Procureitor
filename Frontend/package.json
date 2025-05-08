@@ -85,7 +85,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,jsx,ts,tsx,json ./src",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
-    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.js",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.cjs",
     "predeploy": "npm run build && cp ./build/index.html ./build/404.html",
     "predeploy:alt": "npm run build && cp ./build/index.html ./build/404.html",
     "deploy": "echo https://phoenix-react.prium.me > ./build/CNAME && gh-pages -d build",

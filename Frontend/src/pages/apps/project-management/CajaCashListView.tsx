@@ -1,6 +1,8 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CajaListTable, { cajaListTableColumns } from 'components/tables/CajaListTable';
+import CajaListTable, {
+  cajaListTableColumns
+} from 'components/tables/CajaListTable';
 import useAdvanceTable from 'hooks/useAdvanceTable';
 import AdvanceTableProvider from 'providers/AdvanceTableProvider';
 import axios from 'axios';
@@ -9,23 +11,21 @@ import { MovimientoDeCaja } from 'data/project-management/movimientoDeCaja';
 import { Link } from 'react-router-dom';
 import { useAuth } from 'providers/AuthProvider';
 
-
 const CajaCashListView = () => {
   const [caja, setCaja] = useState<MovimientoDeCaja[]>([]);
   const { user, loading, logout } = useAuth();
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000'; 
 
   useEffect(() => {
-
-    let fetchCaja =  async () => {
-
-        try {
-          const response = await axios.get(`/caja/cash`);
-          console.log('Fetched caja data:', response.data); // Debug log
-          setCaja(response.data);
-        } catch (error) {
-          console.error('Ha habido un error:', error);
-        }
+    const fetchCaja = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/caja/cash`);
+        console.log('Fetched caja data:', response.data); // Debug log
+        setCaja(response.data);
+      } catch (error) {
+        console.error('Ha habido un error:', error);
       }
+    };
 
     fetchCaja();
   }, []);
@@ -38,7 +38,7 @@ const CajaCashListView = () => {
     sortable: true
   });
 
-  console.log(caja)
+  console.log(caja);
 
   return (
     <div>

@@ -12,17 +12,20 @@ interface ProfileDropdownMenuProps {
   className?: string;
 }
 
-const ProfileDropdownMenu: React.FC<ProfileDropdownMenuProps> = ({ className }) => {
+const ProfileDropdownMenu: React.FC<ProfileDropdownMenuProps> = ({
+  className
+}: {
+  className?: string;
+}) => {
   const { user, loading, logout } = useAuth();
   const [navItems] = useState([
-    { label: 'Perfil', icon: 'user' },
+    { label: 'Perfil', icon: 'user' }
     // Add more as needed
   ]);
 
   if (loading) {
     return <div>Loading...</div>;
   }
-
 
   // Base URL for backend assets (adjust as needed)
   const baseURL = 'http://localhost:2000';

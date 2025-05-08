@@ -1,12 +1,5 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import {
-  Icon,
-  UilChartPie,
-  UilCube,
-  UilDocumentLayoutRight,
-  UilFilesLandscapesAlt,
-  UilPuzzlePiece
-} from '@iconscout/react-unicons'; 
+import { Icon, UilChartPie } from '@iconscout/react-unicons';
 import { useAuth } from 'providers/AuthProvider';
 
 export interface Route {
@@ -51,7 +44,7 @@ const getRoutes = (nivel_acceso: string | null): RouteItems[] => {
           path: '/apps/project-management/procesos-list-view',
           pathName: 'project-management-procesos-list-view',
           active: true,
-          nivel_acceso: ['usuario', 'supervisor', 'LA','socio', 'pagos'] // Everyone
+          nivel_acceso: ['usuario', 'supervisor', 'LA', 'socio', 'pagos'] // Everyone
         },
         {
           name: 'mis-procesos',
@@ -59,10 +52,10 @@ const getRoutes = (nivel_acceso: string | null): RouteItems[] => {
           path: '/apps/project-management/procesos-user-list-view',
           pathName: 'project-management-procesos-user-list-view',
           active: true,
-          nivel_acceso: ['usuario', 'supervisor', 'LA','socio', 'pagos'] // Everyone
+          nivel_acceso: ['usuario', 'supervisor', 'LA', 'socio', 'pagos'] // Everyone
         },
 
-/*         {
+        /*         {
           name: 'Movimientos Pendientes',
           icon: 'list',
           path: '/apps/project-management/pendientes-list-view',
@@ -70,13 +63,13 @@ const getRoutes = (nivel_acceso: string | null): RouteItems[] => {
           active: true,
           nivel_acceso: [ 'supervisor', 'socio', 'pagos', 'usuario']
         },
- */        {
+ */ {
           name: 'Cobros Pendientes', // cada usuario ve sus pagos pendientes
           icon: 'dollar-sign',
           path: '/apps/project-management/cobros-list-view',
           pathName: 'project-management-cobros-list-view',
           active: true,
-          nivel_acceso: [ 'supervisor', 'socio', 'LA','pagos', 'usuario']
+          nivel_acceso: ['supervisor', 'socio', 'LA', 'pagos', 'usuario']
         },
         {
           name: 'Pagos', // para que cada usuario vea sus pagos
@@ -84,7 +77,7 @@ const getRoutes = (nivel_acceso: string | null): RouteItems[] => {
           path: '/apps/pagos/pagos-usuario-list-view',
           pathName: 'pagos-list-view',
           active: true,
-          nivel_acceso: ['usuario','socio', 'pagos', 'LA','supervisor']
+          nivel_acceso: ['usuario', 'socio', 'pagos', 'LA', 'supervisor']
         },
         {
           name: 'Pagos Generales', // solo paga FAM y Socios
@@ -100,7 +93,7 @@ const getRoutes = (nivel_acceso: string | null): RouteItems[] => {
           path: '/apps/project-management/caja-list-view',
           pathName: 'caja-list-view',
           active: true,
-          nivel_acceso: ['usuario', 'LA','supervisor', 'socio', 'pagos']
+          nivel_acceso: ['usuario', 'LA', 'supervisor', 'socio', 'pagos']
         },
         {
           name: 'Caja Cash',
@@ -132,7 +125,7 @@ const getRoutes = (nivel_acceso: string | null): RouteItems[] => {
           path: '/pages/members',
           pathName: 'members-page',
           active: true,
-          nivel_acceso: ['usuario', 'LA','supervisor', 'socio', 'pagos']
+          nivel_acceso: ['usuario', 'LA', 'supervisor', 'socio', 'pagos']
         }
       ]
     }
@@ -141,8 +134,10 @@ const getRoutes = (nivel_acceso: string | null): RouteItems[] => {
   // Filter routes based on role
   return baseRoutes.map(route => ({
     ...route,
-    pages: route.pages.filter(page =>
-      page.nivel_acceso?.includes(nivel_acceso || 'user') || !page.nivel_acceso
+    pages: route.pages.filter(
+      page =>
+        page.nivel_acceso?.includes(nivel_acceso || 'user') ||
+        !page.nivel_acceso
     )
   }));
 };

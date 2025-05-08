@@ -5,15 +5,10 @@ import AdvanceTableFooter from 'components/base/AdvanceTableFooter';
 import { Movimiento } from 'data/project-management/Recorrida';
 import Button from 'components/base/Button';
 import axios from 'axios';
-import BsButton  from 'components/base/Button';
-import  {ButtonVariant} from 'components/base/Button';
-
-
-
+import BsButton from 'components/base/Button';
+import { ButtonVariant } from 'components/base/Button';
 
 const today = new Date().toISOString();
-
-
 
 export const RecorridaListTableColumns: ColumnDef<Movimiento>[] = [
   {
@@ -23,7 +18,7 @@ export const RecorridaListTableColumns: ColumnDef<Movimiento>[] = [
       const { Proc } = original;
       return (
         <Link to="#!" className="text-decoration-none fw-bold fs-8">
-          {Proc.ACTO} c/ {Proc.DEMA} 
+          {Proc.ACTO} c/ {Proc.DEMA}
         </Link>
       );
     },
@@ -39,10 +34,10 @@ export const RecorridaListTableColumns: ColumnDef<Movimiento>[] = [
       const handleUpdate = () => {
         axios
           .post('0/mtos/update2', { id: original.mtoId })
-          .then((response) => {
+          .then(response => {
             console.log('Update successful:', response.data);
           })
-          .catch((error) => {
+          .catch(error => {
             console.error('Error updating:', error);
           });
       };

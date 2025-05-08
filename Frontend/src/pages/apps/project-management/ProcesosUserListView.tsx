@@ -10,30 +10,26 @@ import useAdvanceTable from 'hooks/useAdvanceTable';
 import AdvanceTableProvider from 'providers/AdvanceTableProvider';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react';
 import { useAuth } from 'providers/AuthProvider';
 
-
 const ProjectListView = () => {
-
   const [procesos, setProcesos] = useState([]);
   const { user, loading, logout } = useAuth();
-
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000'; 
 
   useEffect(() => {
-  const fetchProcesos = async () => {  
-    try{
-      const response = await axios.get(`/procesos/user/${user?.iniciales}`)
-      const data = await response.data
-      setProcesos(data)
-    }
-    catch(error){
-      console.error('ha habido un error: ', error)
-    }
-  };    
-    fetchProcesos()
-  }, 
-  );
+    const fetchProcesos = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/procesos/user/${user?.iniciales}`);
+        const data = await response.data;
+        setProcesos(data);
+      } catch (error) {
+        console.error('ha habido un error: ', error);
+      }
+    };
+    fetchProcesos();
+  });
 
   const table = useAdvanceTable({
     data: procesos,

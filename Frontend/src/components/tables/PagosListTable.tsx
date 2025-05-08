@@ -10,8 +10,8 @@ import RevealDropdown, {
 } from 'components/base/RevealDropdown';
 import ActionDropdownItems from 'components/common/ActionDropdownItems';
 import Badge from 'components/base/Badge';
-import { useState, useEffect} from 'react'
-import {NavLink} from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useAuth } from 'providers/AuthProvider';
 import axios, { AxiosError } from 'axios';
 
@@ -23,11 +23,12 @@ export const pagosListTableColumns: ColumnDef<Pago>[] = [
       const { pagoLabel } = original;
       const { pagoId } = original;
 
-
       return (
-        <NavLink to={`/apps/pagos/pago-details/${pagoId}`} 
-        className="text-decoration-none fw-bold fs-8">
-          {pagoLabel} 
+        <NavLink
+          to={`/apps/pagos/pago-details/${pagoId}`}
+          className="text-decoration-none fw-bold fs-8"
+        >
+          {pagoLabel}
         </NavLink>
       );
     },
@@ -42,17 +43,13 @@ export const pagosListTableColumns: ColumnDef<Pago>[] = [
     cell: ({ row: { original } }) => {
       const { importe } = original;
 
-      return (
-        <p className="text-decoration-none fw-bold fs-8">
-          {importe} 
-          </p>
-      );
+      return <p className="text-decoration-none fw-bold fs-8">{importe}</p>;
     },
     meta: {
       cellProps: { className: 'white-space-nowrap py-4' },
       headerProps: { style: { width: '10%' } }
     }
-  },  
+  },
   {
     id: 'estado',
     header: 'Estado',
@@ -60,16 +57,20 @@ export const pagosListTableColumns: ColumnDef<Pago>[] = [
       const [estado, setEstado] = useState(original.estado);
       const { pagoId, aclaracion, importe, pagoLabel } = original;
       const { user } = useAuth();
-    
-      const handleEstadoChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000'; 
+
+
+      const handleEstadoChange = async (
+        event: React.ChangeEvent<HTMLSelectElement>
+      ) => {
         const newEstado = event.target.value;
         setEstado(newEstado);
-        console.log('pagoId: ',pagoId)
-        console.log('estado: ',newEstado)
+        console.log('pagoId: ', pagoId);
+        console.log('estado: ', newEstado);
 
         try {
           const usuario = user?.iniciales;
-          await axios.put(`/pagos/update/${pagoId}`, {
+          await axios.put(`${apiUrl}/pagos/update/${pagoId}`, {
             pagoId,
             estado: newEstado,
             usuario,
@@ -80,10 +81,13 @@ export const pagosListTableColumns: ColumnDef<Pago>[] = [
             movimiento: pagoLabel
           });
         } catch (error) {
-          console.error('Error updating estado:', (error as AxiosError).response?.data || error);
+          console.error(
+            'Error updating estado:',
+            (error as AxiosError).response?.data || error
+          );
         }
       };
-    
+
       // Proper conditional rendering using a ternary operator
       return estado === 'Pagado' ? (
         <span>{estado}</span>
@@ -95,12 +99,12 @@ export const pagosListTableColumns: ColumnDef<Pago>[] = [
           <option value="CAP entrega a FAM">CAP entrega a FAM</option>
         </Form.Select>
       );
-    },        
+    },
     meta: {
       cellProps: { className: 'ps-3 py-4' },
       headerProps: { style: { width: '10%' }, className: 'ps-3' }
-    },
-  },
+    }
+  }
   /*,
   {
     header: 'Start date',

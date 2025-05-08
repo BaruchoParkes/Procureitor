@@ -10,8 +10,7 @@ import { useLocation } from 'react-router-dom';
 const NavbarTopNav = () => {
   return (
     <Nav className="navbar-nav-top pb-4 pb-lg-0">
-
-{/*       {routes.map(route => (
+      {/*       {routes.map(route => (
         <NavbarTopNavItem route={route} key={route.label} />
       ))}
  */}

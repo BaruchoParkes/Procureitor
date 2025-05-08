@@ -32,8 +32,8 @@ const ProcesosTopSection = ({ activeView }: ProcesosTopSectionInterface) => {
 
   const tabItems: FilterTabItem[] = useMemo(() => {
     const getDataCount = (label: string) =>
-      getPrePaginationRowModel().rows.filter(
-        ({ original: { MIEM } }) => MIEM? MIEM === label : []
+      getPrePaginationRowModel().rows.filter(({ original: { MIEM } }) =>
+        MIEM ? MIEM === label : []
       ).length;
 
     return [
@@ -72,11 +72,7 @@ const ProcesosTopSection = ({ activeView }: ProcesosTopSectionInterface) => {
         value: 'ZCC',
         onClick: () => handleFilterItemClick('MIEM', 'ZCC'),
         count: getDataCount('IS')
-      },
-
-
-
-
+      }
     ];
   }, [getPrePaginationRowModel]);
 
@@ -89,7 +85,8 @@ const ProcesosTopSection = ({ activeView }: ProcesosTopSectionInterface) => {
       {/* <Col xs={12} sm="auto">
         <FilterTab tabItems={tabItems} />
       </Col>
- */}      <Col xs={12} sm="auto">
+ */}{' '}
+      <Col xs={12} sm="auto">
         <div className="d-flex align-items-center gap-1">
           <SearchBox
             onChange={handleSearchInputChange}

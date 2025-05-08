@@ -1,5 +1,4 @@
 .first-line-indent p::first-line {
-    text-indent: 2em; /* Adjust as needed */
-    background-color: red;
-  }
-  
+  text-indent: 2em; /* Adjust as needed */
+  background-color: red;
+}

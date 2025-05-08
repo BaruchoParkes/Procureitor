@@ -8,14 +8,16 @@ import { useAuth } from 'providers/AuthProvider';
 const PagoDetails = () => {
   const [pago, setPago] = useState<Pago>(pagoInicial);
   const { id } = useParams();
-  const { user } = useAuth();  
+  const { user } = useAuth();
   const [estado, setEstado] = useState(pago.estado);
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:2000'; 
 
+  
 
   useEffect(() => {
     const fetchPago = async () => {
       try {
-        const response = await axios.get(`/pagos/id/${id}`);
+        const response = await axios.get(`${apiUrl}/pagos/id/${id}`);
         const data = await response.data;
         console.log('Fetched pago:', data);
         setPago(data);
@@ -30,7 +32,9 @@ const PagoDetails = () => {
   const baseURL = 'http://localhost:2000';
 
   // Helper function to build URL safely
-  const getFileUrl = (file: string | File | null | undefined): string | null => {
+  const getFileUrl = (
+    file: string | File | null | undefined
+  ): string | null => {
     if (typeof file === 'string') {
       return `${baseURL}/${file.replace(/\\/g, '/')}`;
     }
@@ -41,7 +45,8 @@ const PagoDetails = () => {
   const getFileType = (url: string | null): string => {
     if (!url) return 'unknown';
     const extension = url.split('.').pop()?.toLowerCase();
-    if (['png', 'jpg', 'jpeg', 'gif', 'bmp'].includes(extension || '')) return 'image';
+    if (['png', 'jpg', 'jpeg', 'gif', 'bmp'].includes(extension || ''))
+      return 'image';
     if (extension === 'pdf') return 'pdf';
     return 'other'; // For other file types (e.g., doc, txt)
   };
@@ -49,13 +54,13 @@ const PagoDetails = () => {
   const facturaURL = getFileUrl(pago.factura);
   const comprobanteURL = getFileUrl(pago.comprobante);
 
-  const handleFileChange = (field:  'comprobante') => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setPago(prev => ({ ...prev, [field]: file }));
-    }
-  };
-
+  const handleFileChange =
+    (field: 'comprobante') => (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (file) {
+        setPago(prev => ({ ...prev, [field]: file }));
+      }
+    };
 
   /* const handleEstadoChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newEstado = event.target.value;
@@ -77,42 +82,43 @@ const PagoDetails = () => {
   };
  */
 
-  const handleEstadoChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleEstadoChange = async (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const newEstado = event.target.value;
-    console.log('newEstado', newEstado)
+    console.log('newEstado', newEstado);
     setEstado(newEstado);
     const pagoId = id;
     const usuario = user?.iniciales;
-  
+
     try {
       const formData = new FormData();
-      formData.append("pagoLabel", pago.pagoLabel);
-      formData.append("estado", newEstado);
-      formData.append("usuario", usuario || "");
-      formData.append('pagoId', id || "");
-      formData.append('paga', "");
-      formData.append('concepto', pago.concepto|| "");
-      formData.append('importe', String(pago.importe) || "");
+      formData.append('pagoLabel', pago.pagoLabel);
+      formData.append('estado', newEstado);
+      formData.append('usuario', usuario || '');
+      formData.append('pagoId', id || '');
+      formData.append('paga', '');
+      formData.append('concepto', pago.concepto || '');
+      formData.append('importe', String(pago.importe) || '');
 
-
-      
       // Append file only if it exists
       if (pago.comprobante instanceof File) {
-        formData.append("comprobante", pago.comprobante);
+        formData.append('comprobante', pago.comprobante);
       }
-  
-      console.log("Updating Pago with ID:", id);
-      console.log("Updating Pago with pagoId:", pagoId);
 
+      console.log('Updating Pago with ID:', id);
+      console.log('Updating Pago with pagoId:', pagoId);
 
-
-      await axios.put(`/pagos/update2/${pagoId}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      await axios.put(`${apiUrl}/pagos/update2/${pagoId}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
-  
-      console.log("Estado updated successfully");
+
+      console.log('Estado updated successfully');
     } catch (error) {
-      console.error("Error updating estado:", (error as AxiosError).response?.data || error);
+      console.error(
+        'Error updating estado:',
+        (error as AxiosError).response?.data || error
+      );
     } finally {
       setPago(prev => ({ ...prev, estado: newEstado }));
     }
@@ -132,7 +138,7 @@ const PagoDetails = () => {
             src={url}
             alt={label}
             style={{ maxWidth: '100%', height: 'auto' }}
-            onError={(e) => console.error(`${label} load error:`, e)}
+            onError={e => console.error(`${label} load error:`, e)}
           />
         )}
         {fileType === 'pdf' && (
@@ -165,24 +171,28 @@ const PagoDetails = () => {
         <p>Estado: {pago.estado}</p>
         <p>Quien Paga: {pago.paga}</p>
         <p>Fecha de Pago: {pago.fechadepago?.toString()}</p>
-        
+
         <Col sm={6} md={4}>
-        <Form.Group controlId="comprobante" className="mb-3">
-          <Form.Label>Comprobante de Pago</Form.Label>
-            <Form.Control type="file" size="lg" onChange={handleFileChange('comprobante')} />
-        </Form.Group>        
+          <Form.Group controlId="comprobante" className="mb-3">
+            <Form.Label>Comprobante de Pago</Form.Label>
+            <Form.Control
+              type="file"
+              size="lg"
+              onChange={handleFileChange('comprobante')}
+            />
+          </Form.Group>
         </Col>
 
         {pago.estado === 'Pagado' ? (
-        <span>{pago.estado}</span>
-      ) : (
-        <Form.Select size="lg" onChange={handleEstadoChange} value={estado}>
-          <option value="Pendiente">Pendiente</option>
-          <option value="Pagado">Pagado</option>
-          <option value="Cancelado">Cancelado</option>
-          <option value="CAP entrega a FAM">CAP entrega a FAM</option>
-        </Form.Select>
-      )}
+          <span>{pago.estado}</span>
+        ) : (
+          <Form.Select size="lg" onChange={handleEstadoChange} value={estado}>
+            <option value="Pendiente">Pendiente</option>
+            <option value="Pagado">Pagado</option>
+            <option value="Cancelado">Cancelado</option>
+            <option value="CAP entrega a FAM">CAP entrega a FAM</option>
+          </Form.Select>
+        )}
       </form>
       <div>
         {renderFile(facturaURL, 'Factura')}

@@ -4,7 +4,7 @@ import Timeline from 'components/base/Timeline';
 import { Movimiento } from 'data/project-management/Recorrida';
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import {NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 import { format } from 'date-fns';
 
 interface ActivityTimelineProps {
@@ -18,17 +18,15 @@ const formatDate = (dateString: string) => {
     month: '2-digit',
     year: 'numeric',
     hour: '2-digit',
-    minute: '2-digit',
+    minute: '2-digit'
   });
-}; 
-
-
+};
 
 const MovimientosTimeline = ({ data }: ActivityTimelineProps) => {
   return (
     <Timeline variant="vertical">
       {data.map((item, index) => {
-        const isDisabled = item?.descripcion?.substring(0, 5) === "Cobro";
+        const isDisabled = item?.descripcion?.substring(0, 5) === 'Cobro';
 
         return (
           <Timeline.Item className="position-relative" key={item.mtoId}>
@@ -37,7 +35,7 @@ const MovimientosTimeline = ({ data }: ActivityTimelineProps) => {
                 <Timeline.OppositeContent>
                   <p className="fs-10 fw-semibold text-body-tertiary text-opacity-85 text-end">
                     {/* item.oppositeContent.date */}
-                    <br className="d-none d-md-block" />{" "}
+                    <br className="d-none d-md-block" />{' '}
                     {/* item.oppositeContent.time */}
                   </p>
                 </Timeline.OppositeContent>
@@ -50,21 +48,25 @@ const MovimientosTimeline = ({ data }: ActivityTimelineProps) => {
               </Col>
               <Col>
                 <NavLink
-                  to={isDisabled ? "#" : `/apps/project-management/movimiento/${item.mtoId}`}
-                  className={isDisabled ? "disabled-link" : ""}
-                  onClick={(e) => {
+                  to={
+                    isDisabled
+                      ? '#'
+                      : `/apps/project-management/movimiento/${item.mtoId}`
+                  }
+                  className={isDisabled ? 'disabled-link' : ''}
+                  onClick={e => {
                     if (isDisabled) e.preventDefault();
                   }}
                 >
                   <Timeline.Content>
                     <h5 className="fs-9 lh-sm">{item.descripcion}</h5>
                     <p className="fs-9">
-                      {format(new Date(item.fecha), "dd/MM/yyyy hh:mm")}
+                      {format(new Date(item.fecha), 'dd/MM/yyyy hh:mm')}
                     </p>
                     <p
-                      className={classNames("fs-9 text-body-secondary", {
-                        "mb-5": index !== data.length - 1,
-                        "mb-0": index === data.length - 1,
+                      className={classNames('fs-9 text-body-secondary', {
+                        'mb-5': index !== data.length - 1,
+                        'mb-0': index === data.length - 1
                       })}
                     ></p>
                   </Timeline.Content>

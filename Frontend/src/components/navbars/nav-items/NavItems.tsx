@@ -15,7 +15,6 @@ import classNames from 'classnames';
 import { useAuth } from 'providers/AuthProvider';
 import defaultAvatar from 'assets/img/team/72x72/avatar.webp';
 
-
 const NavItems = () => {
   const { user, loading, logout } = useAuth();
   const baseURL = 'http://localhost:2000';
@@ -35,7 +34,7 @@ const NavItems = () => {
       <Nav.Item>
         <ThemeToggler className="px-2" />
       </Nav.Item>
-{/*       <Nav.Item
+      {/*       <Nav.Item
         className={classNames({
           'd-lg-none':
             navbarPosition === 'vertical' || navbarPosition === 'dual'
@@ -45,7 +44,7 @@ const NavItems = () => {
           <FeatherIcon icon="search" size={19} style={{ marginBottom: 2 }} />
         </Nav.Link>
       </Nav.Item> */}
-{/*       <Nav.Item>
+      {/*       <Nav.Item>
         <Dropdown autoClose="outside" className="h-100">
           <Dropdown.Toggle
             as={Link}
@@ -58,7 +57,7 @@ const NavItems = () => {
           <NotificationDropdownMenu />
         </Dropdown>
       </Nav.Item> */}
-{/*       <Nav.Item>
+      {/*       <Nav.Item>
         <Dropdown autoClose="outside" className="h-100">
           <Dropdown.Toggle
             as={Link}
@@ -101,7 +100,7 @@ const NavItems = () => {
         </Dropdown>
       </Nav.Item>
 
-{/*       <Modal
+      {/*       <Modal
         show={openSearchModal}
         onHide={() => setOpenSearchModal(false)}
         className="search-box-modal mt-15"
